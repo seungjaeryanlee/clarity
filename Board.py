@@ -7,7 +7,7 @@ from BitBoard import BitBoard
 
 class Board:
     """
-    This class has represents the status of a board.
+    This class represents the status of a board.
     """
 
     def __init__(self):
