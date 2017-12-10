@@ -24,7 +24,7 @@ class TestBitBoardClass(unittest.TestCase):
         """
         bb = BitBoard(int('01000010', 2))
         for i in range(64):
-            if i is 1 or i is 6:
+            if i == 1 or i == 6:
                 self.assertEqual(bb[i], 1)
             else:
                 self.assertEqual(bb[i], 0)
