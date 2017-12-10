@@ -52,23 +52,54 @@ class Board:
         :return: the FEN string of the board if fen_str is not specified, None if fen_str is specified
         """
         if fen_str is None:
-            self._get_fen()
+            return self._get_fen()
         else:
-            return self._set_fen(fen_str)
+            self._set_fen(fen_str)
 
     def _get_fen(self):
         """
         Returns the FEN string of the board
         :return: the FEN string of the board
         """
-        pass
+        fen_str = ''
+
+        # TODO write board
+
+        fen_str += ' ' + 'w' if self.turn == Color.WHITE else 'b'
+        fen_str += ' ' + 'K' if self.wk_castling else ''
+        fen_str += 'Q' if self.wq_castling else ''
+        fen_str += 'k' if self.bk_castling else ''
+        fen_str += 'q' if self.wq_castling else ''
+        fen_str += '-' if not (self.wk_castling or self.wq_castling or self.bk_castling or self.bq_castling) else ''
+        # TODO check that ep_square uses Sq enum
+        fen_str += ' ' + '-' if self.ep_square == -1 else self.ep_square
+        fen_str += ' ' + str(self.half_move_clock)
+        fen_str += ' ' + str(self.full_move_count)
+
+        return fen_str
 
     def _set_fen(self, fen_str):
         """
         Sets the board according to the given FEN string
         :param fen_str: FEN string to set the board to
         """
-        pass
+        # TODO validate fen_str
+        board_str, turn_str, castling_str, ep_str, half_move_str, full_move_str = fen_str.split(' ')
+
+        # TODO parse board_str
+        # TODO create to_char() in Piece enum that translates Piece.WP to P, Piece.BP to p, etc...
+
+        self.turn = Color.WHITE if turn_str == 'w' else Color.BLACK
+        self.wk_castling = True if 'K' in castling_str else False
+        self.wq_castling = True if 'Q' in castling_str else False
+        self.bk_castling = True if 'k' in castling_str else False
+        self.bq_castling = True if 'q' in castling_str else False
+
+        # TODO parse ep_str
+        # TODO create filerank_to_sq() in Sq enum that translate 'c6' to Sq.C6, etc..
+
+        self.half_move_clock = int(half_move_str)
+        self.full_move_count = int(full_move_str)
 
 
 # only runs when this module is called directly
