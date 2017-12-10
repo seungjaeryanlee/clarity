@@ -16,22 +16,21 @@ class BitBoard:
         Run when a BitBoard object is created.
         """
         # a 64-bit integer that represents the bitboard
-        self.board = np.uint64(board)
+        self.num = np.uint64(board)
 
     def __getitem__(self, n):
         """
         Allows using [] operator for a BitBoard object to retrieve nth bit from the right
         :return: nth bit from the right
         """
-        return (self.board >> np.uint64(n)) & np.uint64(1)
+        return (self.num >> np.uint64(n)) & np.uint64(1)
 
     def __str__(self):
         """
         Overrides default function to a string showing a 8x8 chessboard with bits
         :return: a string of 64 bits
         """
-        return textwrap.fill('{:064b}'.format(self.board), 8)
-
+        return textwrap.fill('{:064b}'.format(self.num), 8)
 
 
 # only runs when this module is called directly
