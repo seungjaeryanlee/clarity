@@ -24,9 +24,17 @@ class BitBoard:
         """
         return (self.board >> np.uint64(n)) & np.uint64(1)
 
+    def __str__(self):
+        """
+        Overrides default function to print 64 bits
+        :return: a string of 64 bits
+        """
+        return '{:064b}'.format(self.board)
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':
     bb = BitBoard(1)
     print(bb[0])
     print(bb[1])
+    print(bb)
