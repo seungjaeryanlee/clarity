@@ -75,7 +75,7 @@ class TestBoardClass(unittest.TestCase):
         board.ep_square = Sq.A8
         board.half_move_clock = 13
         board.full_move_count = 20
-        self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/8/4P3/PPPP1PPP/RNBQKBNR b Qq a8 13 20')
+        self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b Qq a8 13 20')
 
     def _test_set_fen(self):
         """

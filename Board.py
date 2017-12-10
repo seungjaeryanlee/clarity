@@ -64,15 +64,34 @@ class Board:
         """
         fen_str = ''
 
-        # TODO write board
+        # counter for empty squares
+        empty_count = 0
+        # reversed since index 0 starts at the right end for BitBoard
+        for i in reversed(range(64)):
+            is_empty = True
+            for piece in Piece:
+                if self.bitboards[piece][i] == 1:
+                    if empty_count > 0:
+                        fen_str += str(empty_count)
+                        empty_count = 0
+                    fen_str += Piece.to_char(piece)
+                    is_empty = False
+                    break
+            if is_empty:
+                empty_count += 1
+            if i % 8 == 0 and i != 0:
+                if empty_count > 0:
+                    fen_str += str(empty_count)
+                    empty_count = 0
+                fen_str += '/'
 
-        fen_str += ' ' + 'w' if self.turn == Color.WHITE else 'b'
-        fen_str += ' ' + 'K' if self.wk_castling else ''
+        fen_str += ' ' + ('w' if self.turn == Color.WHITE else 'b')
+        fen_str += ' ' + ('K' if self.wk_castling else '')
         fen_str += 'Q' if self.wq_castling else ''
         fen_str += 'k' if self.bk_castling else ''
         fen_str += 'q' if self.wq_castling else ''
         fen_str += '-' if not (self.wk_castling or self.wq_castling or self.bk_castling or self.bq_castling) else ''
-        fen_str += ' ' + '-' if self.ep_square == -1 else self.ep_square
+        fen_str += ' ' + ('-' if self.ep_square == -1 else Sq.sq_to_filerank(self.ep_square))
         fen_str += ' ' + str(self.half_move_clock)
         fen_str += ' ' + str(self.full_move_count)
 
