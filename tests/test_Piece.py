@@ -46,3 +46,21 @@ class TestPieceEnum(unittest.TestCase):
         self.assertEqual(Piece.to_char(Piece.BR), 'r')
         self.assertEqual(Piece.to_char(Piece.BQ), 'q')
         self.assertEqual(Piece.to_char(Piece.BK), 'k')
+
+    def test_from_char(self):
+        """
+        Tests the from_char() function of the Piece enum.
+        """
+
+        self.assertEqual(Piece.from_char('P'), Piece.WP)
+        self.assertEqual(Piece.from_char('N'), Piece.WN)
+        self.assertEqual(Piece.from_char('B'), Piece.WB)
+        self.assertEqual(Piece.from_char('R'), Piece.WR)
+        self.assertEqual(Piece.from_char('Q'), Piece.WQ)
+        self.assertEqual(Piece.from_char('K'), Piece.WK)
+        self.assertEqual(Piece.from_char('p'), Piece.BP)
+        self.assertEqual(Piece.from_char('n'), Piece.BN)
+        self.assertEqual(Piece.from_char('b'), Piece.BB)
+        self.assertEqual(Piece.from_char('r'), Piece.BR)
+        self.assertEqual(Piece.from_char('q'), Piece.BQ)
+        self.assertEqual(Piece.from_char('k'), Piece.BK)

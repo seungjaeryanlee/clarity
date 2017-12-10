@@ -56,6 +56,29 @@ class Piece(Enum):
             Piece.BK: 'k',
         }[piece]
 
+    @staticmethod
+    def from_char(char):
+        """
+        Returns the Piece value of the given character notation
+        :param char: the character notation to return Piece value of
+        :return: the Piece value of the given character notation
+        """
+        # TODO validate piece or add default value for dictionary?
+        return {
+            'P': Piece.WP,
+            'N': Piece.WN,
+            'B': Piece.WB,
+            'R': Piece.WR,
+            'Q': Piece.WQ,
+            'K': Piece.WK,
+            'p': Piece.BP,
+            'n': Piece.BN,
+            'b': Piece.BB,
+            'r': Piece.BR,
+            'q': Piece.BQ,
+            'k': Piece.BK,
+        }[char]
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':
