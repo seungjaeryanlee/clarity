@@ -25,6 +25,13 @@ class BitBoard:
         """
         return (self.num >> np.uint64(n)) & np.uint64(1)
 
+    def __setitem__(self, n, bit):
+        """
+        Allows using [] operator for a BitBoard object to set nth bit from the right
+        """
+        if self[n] != bit:
+            self.num ^= (np.uint64(1) << np.uint64(n))
+
     def __str__(self):
         """
         Overrides default function to a string showing a 8x8 chessboard with bits

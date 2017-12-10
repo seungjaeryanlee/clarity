@@ -29,6 +29,18 @@ class TestBitBoardClass(unittest.TestCase):
             else:
                 self.assertEqual(bb[i], 0)
 
+    def test_setitem(self):
+        """
+        Tests the __setitem__() function of the BitBoard class.
+        """
+        bb = BitBoard(int('00100100', 2))
+        bb[0] = 1
+        self.assertEqual(bb.__str__(), '00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00100101')
+        bb[63] = 1
+        self.assertEqual(bb.__str__(), '10000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00100101')
+        bb[2] = 0
+        self.assertEqual(bb.__str__(), '10000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00100001')
+
     def test_str(self):
         """
         Tests the __str__() function of the BitBoard class.
