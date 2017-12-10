@@ -4,6 +4,7 @@ This file defines unit tests for the Board class.
 """
 import unittest
 from Board import Board
+from Color import Color
 from Piece import Piece
 
 
@@ -42,3 +43,11 @@ class TestBoardClass(unittest.TestCase):
                          int('0001000000000000000000000000000000000000000000000000000000000000', 2))
         self.assertEqual(board.bitboards[Piece.BK].num,
                          int('0000100000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.turn, Color.WHITE)
+        self.assertEqual(board.ep_square, -1)
+        self.assertEqual(board.wk_castling, True)
+        self.assertEqual(board.wq_castling, True)
+        self.assertEqual(board.bk_castling, True)
+        self.assertEqual(board.bq_castling, True)
+        self.assertEqual(board.half_move_clock, 0)
+        self.assertEqual(board.full_move_count, 1)

@@ -3,6 +3,7 @@
 This file defines the Board class.
 """
 from BitBoard import BitBoard
+from Color import Color
 from Piece import Piece
 
 
@@ -30,6 +31,19 @@ class Board:
             Piece.BQ: BitBoard(1152921504606846976),
             Piece.BK: BitBoard(576460752303423488),
         }
+        # color to play next move
+        self.turn = Color.WHITE
+        # en passant square (if no square, -1)
+        self.ep_square = -1
+        # possibility to castling (checked based on rook/king being moved)
+        self.wk_castling = True
+        self.wq_castling = True
+        self.bk_castling = True
+        self.bq_castling = True
+        # number of half moves for the fifty move rule
+        self.half_move_clock = 0
+        # number of full moves made
+        self.full_move_count = 1
 
 
 # only runs when this module is called directly
