@@ -51,3 +51,52 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board.bq_castling, True)
         self.assertEqual(board.half_move_clock, 0)
         self.assertEqual(board.full_move_count, 1)
+
+    def test_fen(self):
+        """
+        Tests the fen() function of the Board class
+        """
+        self._test_get_fen()
+        self._test_set_fen()
+
+    def _test_get_fen(self):
+        """
+        Tests the _get_fen() function of the Board class
+        """
+        board = Board()
+        self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+
+        # TODO Add more tests once __setitem__ is implemented for BitBoard class
+
+    def _test_set_fen(self):
+        """
+        Tests the _set_fen() function of the Board class
+        """
+        board = Board()
+        board.fen('rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
+        # TODO De-comment this test once Sq enum is implemented
+        # self.assertEqual(board.bitboards[Piece.WP][Sq.E2], 0)
+        # self.assertEqual(board.bitboards[Piece.WP][Sq.E4], 1)
+        self.assertEqual(board.turn, Color.BLACK)
+        self.assertEqual(board.wk_castling, True)
+        self.assertEqual(board.wq_castling, True)
+        self.assertEqual(board.bk_castling, True)
+        self.assertEqual(board.bq_castling, True)
+        # TODO De-comment this test once Sq enum is implemented
+        # self.assertEqual(board.ep_square, Sq.E3)
+        self.assertEqual(board.half_move_clock, 0)
+        self.assertEqual(board.full_move_count, 1)
+
+        board.fen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w - c6 1 2')
+        # TODO De-comment this test once Sq enum is implemented
+        # self.assertEqual(board.bitboards[Piece.BP][Sq.C7], 0)
+        # self.assertEqual(board.bitboards[Piece.BP][Sq.C5], 1)
+        self.assertEqual(board.turn, Color.WHITE)
+        self.assertEqual(board.wk_castling, False)
+        self.assertEqual(board.wq_castling, False)
+        self.assertEqual(board.bk_castling, False)
+        self.assertEqual(board.bq_castling, False)
+        # TODO De-comment this test once Sq enum is implemented
+        # self.assertEqual(board.ep_square, Sq.C6)
+        self.assertEqual(board.half_move_clock, 1)
+        self.assertEqual(board.full_move_count, 2)

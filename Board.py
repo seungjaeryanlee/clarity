@@ -45,6 +45,31 @@ class Board:
         # number of full moves made
         self.full_move_count = 1
 
+    def fen(self, fen_str=None):
+        """
+        Returns a FEN string or sets the board according to given FEN string
+        :param fen_str: FEN string given to set the board
+        :return: the FEN string of the board if fen_str is not specified, None if fen_str is specified
+        """
+        if fen_str is None:
+            self._get_fen()
+        else:
+            return self._set_fen(fen_str)
+
+    def _get_fen(self):
+        """
+        Returns the FEN string of the board
+        :return: the FEN string of the board
+        """
+        pass
+
+    def _set_fen(self, fen_str):
+        """
+        Sets the board according to the given FEN string
+        :param fen_str: FEN string to set the board to
+        """
+        pass
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':
