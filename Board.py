@@ -3,6 +3,7 @@
 This file defines the Board class.
 """
 from BitBoard import BitBoard
+from Piece import Piece
 
 
 class Board:
@@ -14,45 +15,47 @@ class Board:
         """
         Run when a Board object is created.
         """
-        # bitboard for each piece on their starting positions
-        self.wp = BitBoard(65280)
-        self.wn = BitBoard(66)
-        self.wb = BitBoard(36)
-        self.wr = BitBoard(129)
-        self.wq = BitBoard(16)
-        self.wk = BitBoard(8)
-        self.bp = BitBoard(71776119061217280)
-        self.bn = BitBoard(4755801206503243776)
-        self.bb = BitBoard(2594073385365405696)
-        self.br = BitBoard(9295429630892703744)
-        self.bq = BitBoard(1152921504606846976)
-        self.bk = BitBoard(576460752303423488)
+        # dictionary of bitboards for each piece. bits set to their starting positions
+        self.bitboards = {
+            Piece.WP: BitBoard(65280),
+            Piece.WN: BitBoard(66),
+            Piece.WB: BitBoard(36),
+            Piece.WR: BitBoard(129),
+            Piece.WQ: BitBoard(16),
+            Piece.WK: BitBoard(8),
+            Piece.BP: BitBoard(71776119061217280),
+            Piece.BN: BitBoard(4755801206503243776),
+            Piece.BB: BitBoard(2594073385365405696),
+            Piece.BR: BitBoard(9295429630892703744),
+            Piece.BQ: BitBoard(1152921504606846976),
+            Piece.BK: BitBoard(576460752303423488),
+        }
 
 
 # only runs when this module is called directly
 if __name__ == '__main__':
     board = Board()
     print("White Pawns:")
-    print(board.wp)
+    print(board.bitboards[Piece.WP])
     print("White Knights:")
-    print(board.wn)
+    print(board.bitboards[Piece.WN])
     print("White Bishops:")
-    print(board.wb)
+    print(board.bitboards[Piece.WB])
     print("White Rooks:")
-    print(board.wr)
+    print(board.bitboards[Piece.WR])
     print("White Queen:")
-    print(board.wq)
+    print(board.bitboards[Piece.WQ])
     print("White King:")
-    print(board.wk)
+    print(board.bitboards[Piece.WK])
     print("Black Pawns:")
-    print(board.bp)
+    print(board.bitboards[Piece.BP])
     print("Black Knights:")
-    print(board.bn)
+    print(board.bitboards[Piece.BN])
     print("Black Bishops:")
-    print(board.bb)
+    print(board.bitboards[Piece.BB])
     print("Black Rooks:")
-    print(board.br)
+    print(board.bitboards[Piece.BR])
     print("Black Queen:")
-    print(board.bq)
+    print(board.bitboards[Piece.BQ])
     print("Black King:")
-    print(board.bk)
+    print(board.bitboards[Piece.BK])
