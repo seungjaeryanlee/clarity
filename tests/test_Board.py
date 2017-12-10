@@ -77,7 +77,6 @@ class TestBoardClass(unittest.TestCase):
         board.full_move_count = 20
         self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/8/4P3/PPPP1PPP/RNBQKBNR b Qq a8 13 20')
 
-
     def _test_set_fen(self):
         """
         Tests the _set_fen() function of the Board class

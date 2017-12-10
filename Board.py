@@ -5,6 +5,7 @@ This file defines the Board class.
 from BitBoard import BitBoard
 from Color import Color
 from Piece import Piece
+from Sq import Sq
 
 
 class Board:
@@ -71,7 +72,6 @@ class Board:
         fen_str += 'k' if self.bk_castling else ''
         fen_str += 'q' if self.wq_castling else ''
         fen_str += '-' if not (self.wk_castling or self.wq_castling or self.bk_castling or self.bq_castling) else ''
-        # TODO check that ep_square uses Sq enum
         fen_str += ' ' + '-' if self.ep_square == -1 else self.ep_square
         fen_str += ' ' + str(self.half_move_clock)
         fen_str += ' ' + str(self.full_move_count)
@@ -86,18 +86,26 @@ class Board:
         # TODO validate fen_str
         board_str, turn_str, castling_str, ep_str, half_move_str, full_move_str = fen_str.split(' ')
 
-        # TODO parse board_str
-        # TODO create to_char() in Piece enum that translates Piece.WP to P, Piece.BP to p, etc...
+        # reset all bitboards
+        for piece in Piece:
+            self.bitboards[piece] = BitBoard(0)
+        board_str = board_str.replace('/', '')
+        bit_index = 0
+        for i, char in enumerate(board_str):
+            # empty squares
+            if char.isdigit():
+                bit_index += int(char)
+                continue
+            piece = Piece.from_char(char)
+            self.bitboards[piece][63 - bit_index] = 1
+            bit_index += 1
 
         self.turn = Color.WHITE if turn_str == 'w' else Color.BLACK
         self.wk_castling = True if 'K' in castling_str else False
         self.wq_castling = True if 'Q' in castling_str else False
         self.bk_castling = True if 'k' in castling_str else False
         self.bq_castling = True if 'q' in castling_str else False
-
-        # TODO parse ep_str
-        # TODO create filerank_to_sq() in Sq enum that translate 'c6' to Sq.C6, etc..
-
+        self.ep_square = -1 if ep_str == '-' else Sq.filerank_to_sq(ep_str)
         self.half_move_clock = int(half_move_str)
         self.full_move_count = int(full_move_str)
 
