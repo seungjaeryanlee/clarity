@@ -128,6 +128,35 @@ class Board:
         self.half_move_clock = int(half_move_str)
         self.full_move_count = int(full_move_str)
 
+    def make_move(self, move):
+        """
+        Make a given move and return the captured piece
+        :param move: captured piece from the move
+        """
+        moved_piece = -1
+        for piece in Piece:
+            if self.bitboards[piece][move.init_sq()]:
+                moved_piece = piece
+                self.bitboards[piece][move.init_sq()] = 0
+                self.bitboards[piece][move.dest_sq()] = 1
+        # TODO use the union bitboard of all opponent piece
+        for piece in Piece:
+            # ignore piece that just moved there
+            if piece == moved_piece:
+                continue
+            if self.bitboards[piece][move.dest_sq()]:
+                self.bitboards[piece][move.dest_sq()] = 0
+                return self.bitboards[piece][move.dest_sq()]
+
+        self.turn = Color.switch(self.turn)
+
+        # TODO check for castling
+        # TODO check for en passant square
+        # TODO  - implement MoveType enum
+
+        # TODO add Piece enum key EMPTY
+        return -1
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':

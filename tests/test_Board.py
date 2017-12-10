@@ -5,6 +5,7 @@ This file defines unit tests for the Board class.
 import unittest
 from Board import Board
 from Color import Color
+from Move import Move
 from Piece import Piece
 from Sq import Sq
 
@@ -105,3 +106,13 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board.ep_square, Sq.C6)
         self.assertEqual(board.half_move_clock, 1)
         self.assertEqual(board.full_move_count, 2)
+
+    def test_make_move(self):
+        """
+        Tests the make_move() function of the Board class
+        """
+        board = Board()
+        move = Move(Sq.E2, Sq.E4, 0)
+        board.make_move(move)
+        self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
+
