@@ -3,6 +3,7 @@
 This file defines the BitBoard class.
 """
 import numpy as np
+import textwrap
 
 
 class BitBoard:
@@ -26,10 +27,11 @@ class BitBoard:
 
     def __str__(self):
         """
-        Overrides default function to print 64 bits
+        Overrides default function to a string showing a 8x8 chessboard with bits
         :return: a string of 64 bits
         """
-        return '{:064b}'.format(self.board)
+        return textwrap.fill('{:064b}'.format(self.board), 8)
+
 
 
 # only runs when this module is called directly
