@@ -185,6 +185,11 @@ class Board:
         else:
             self.ep_square = -1
 
+        self.half_move_clock = 0 if moved_piece == Piece.WP or moved_piece == Piece.BP else self.half_move_clock + 1
+        # note that turn is switched before this
+        if self.turn == Color.WHITE:
+            self.full_move_count += 1
+
         # TODO add Piece enum key EMPTY
         return -1
 
