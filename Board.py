@@ -251,6 +251,25 @@ class Board:
         Returns a list of all possible legal bishop moves
         :return: a list of all possible legal bishop moves
         """
+
+        # PSEUDOCODE
+        # moves = []
+        #
+        # for bishop_sq in self.piece_sq[Piece.WB]: (or Piece.BB)
+        #     get ATTACK_BB (4 directions)
+        #     for ATTACK_BB_DIR in ATTACK_BB:
+        #         capture_or_block = ATTACK_BB_DIR & self.color_bb[Color.BLACK]
+        #         if capture_or_block == 0:
+        #             add all moves in ATTACK_BB_DIR
+        #         else
+        #             get the first one (least difference)
+        #             add all moves before that
+        #             capture = ATTACK_BB_DIR & self.color_bb[Color.BLACK]
+        #             if capture[bit] == 1:
+        #                 add move
+        #
+        # return moves
+
         return []
 
     def _rook_move_gen(self):
@@ -259,6 +278,25 @@ class Board:
         Returns a list of all possible legal rook moves
         :return: a list of all possible legal rook moves
         """
+
+        # PSEUDOCODE
+        # moves = []
+        #
+        # for rook_sq in self.piece_sq[Piece.WR]: (or Piece.BR)
+        #     get ATTACK_BB (4 directions)
+        #     for ATTACK_BB_DIR in ATTACK_BB:
+        #         capture_or_block = ATTACK_BB_DIR & self.color_bb[Color.BLACK]
+        #         if capture_or_block == 0:
+        #             add all moves in ATTACK_BB_DIR
+        #         else
+        #             get the first one (least difference)
+        #             add all moves before that
+        #             capture = ATTACK_BB_DIR & self.color_bb[Color.BLACK]
+        #             if capture[bit] == 1:
+        #                 add move
+        #
+        # return moves
+
         return []
 
     def _queen_move_gen(self):
@@ -267,6 +305,11 @@ class Board:
         Returns a list of all possible legal queen moves
         :return: a list of all possible legal queen moves
         """
+
+        # PSEUDOCODE
+        # _bishop_move_gen()
+        # _rook_move_gen()
+
         return []
 
     def _king_move_gen(self):
