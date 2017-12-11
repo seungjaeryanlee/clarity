@@ -113,6 +113,9 @@ class Board:
         # reset all bitboards
         for piece in Piece:
             self.bitboards[piece] = BitBoard(0)
+        self.color_bb[Color.WHITE] = BitBoard(0)
+        self.color_bb[Color.BLACK] = BitBoard(0)
+
         board_str = board_str.replace('/', '')
         bit_index = 0
         for i, char in enumerate(board_str):
@@ -122,6 +125,7 @@ class Board:
                 continue
             piece = Piece.from_char(char)
             self.bitboards[piece][63 - bit_index] = 1
+            self.color_bb[Piece.color(piece)][63 - bit_index] = 1
             bit_index += 1
 
         self.turn = Color.WHITE if turn_str == 'w' else Color.BLACK
