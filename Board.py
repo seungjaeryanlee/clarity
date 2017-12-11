@@ -200,6 +200,14 @@ class Board:
         # TODO add Piece enum key EMPTY
         return captured_piece
 
+    def move_gen(self):
+        """
+        TODO implement
+        Returns a list of all possible legal moves
+        :return: a list of all possible legal moves
+        """
+        return []
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':
