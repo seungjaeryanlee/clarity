@@ -138,6 +138,7 @@ class Board:
         Make a given move and return the captured piece
         :param move: captured piece from the move
         """
+        capture = -1
         moved_piece = -1
         for piece in Piece:
             if self.bitboards[piece][move.init_sq()]:
@@ -154,7 +155,8 @@ class Board:
             if self.bitboards[piece][move.dest_sq()]:
                 self.bitboards[piece][move.dest_sq()] = 0
                 self.color_bb[Color.switch(self.turn)][move.dest_sq()] = 0
-                return self.bitboards[piece][move.dest_sq()]
+                capture = self.bitboards[piece][move.dest_sq()]
+                break
 
         self.turn = Color.switch(self.turn)
 
