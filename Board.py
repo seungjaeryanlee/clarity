@@ -206,6 +206,61 @@ class Board:
         Returns a list of all possible legal moves
         :return: a list of all possible legal moves
         """
+        # TODO find if king is checked and for pinned pieces
+        moves = self._pawn_move_gen()
+        moves.extend(self._knight_move_gen())
+        moves.extend(self._bishop_move_gen())
+        moves.extend(self._rook_move_gen())
+        moves.extend(self._queen_move_gen())
+        moves.extend(self._king_move_gen())
+        return moves
+
+    def _pawn_move_gen(self):
+        """
+        TODO implement
+        Returns a list of all possible legal pawn moves
+        :return: a list of all possible legal pawn moves
+        """
+        return []
+
+    def _knight_move_gen(self):
+        """
+        TODO implement
+        Returns a list of all possible legal knight moves
+        :return: a list of all possible legal knight moves
+        """
+        return []
+
+    def _bishop_move_gen(self):
+        """
+        TODO implement
+        Returns a list of all possible legal bishop moves
+        :return: a list of all possible legal bishop moves
+        """
+        return []
+
+    def _rook_move_gen(self):
+        """
+        TODO implement
+        Returns a list of all possible legal rook moves
+        :return: a list of all possible legal rook moves
+        """
+        return []
+
+    def _queen_move_gen(self):
+        """
+        TODO implement
+        Returns a list of all possible legal queen moves
+        :return: a list of all possible legal queen moves
+        """
+        return []
+
+    def _king_move_gen(self):
+        """
+        TODO implement
+        Returns a list of all possible legal king moves
+        :return: a list of all possible legal king moves
+        """
         return []
 
 
