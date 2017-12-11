@@ -55,6 +55,16 @@ class BitBoard:
         """
         return BitBoard(self.num | other.num)
 
+    def indices(self):
+        """
+        Returns the indices of bits with value 1
+        :return: the indices of bits with value 1
+        """
+        bits = []
+        for i in range(64):
+            if self[i] == 1:
+                bits.append(i)
+        return bits
 
 # only runs when this module is called directly
 if __name__ == '__main__':

@@ -67,3 +67,17 @@ class TestBitBoardClass(unittest.TestCase):
         bb2 = BitBoard(int('10000001', 2))
         bb = bb1 | bb2
         self.assertEqual(bb.__str__(), '00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n11000011')
+
+    def test_indices(self):
+        """
+        Tests the indices() function of the BitBoard class.
+        """
+        bit_str = '1110010101'
+        bb = BitBoard(int(bit_str, 2))
+        indices = bb.indices()
+        self.assertIn(0, indices)
+        self.assertIn(2, indices)
+        self.assertIn(4, indices)
+        self.assertIn(7, indices)
+        self.assertIn(8, indices)
+        self.assertIn(9, indices)
