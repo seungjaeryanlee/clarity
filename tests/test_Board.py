@@ -12,6 +12,7 @@ from Sq import Sq
 
 class TestBoardClass(unittest.TestCase):
     """
+    TODO check if adding color_bb changes some tests
     This class tests the Board class.
     """
 
@@ -87,7 +88,9 @@ class TestBoardClass(unittest.TestCase):
         board = Board()
         board.fen('rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
         self.assertEqual(board.bitboards[Piece.WP][Sq.E2], 0)
+        self.assertEqual(board.color_bb[Color.WHITE][Sq.E2], 0)
         self.assertEqual(board.bitboards[Piece.WP][Sq.E4], 1)
+        self.assertEqual(board.color_bb[Color.WHITE][Sq.E4], 1)
         self.assertEqual(board.turn, Color.BLACK)
         self.assertEqual(board.wk_castling, True)
         self.assertEqual(board.wq_castling, True)
@@ -99,7 +102,9 @@ class TestBoardClass(unittest.TestCase):
 
         board.fen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w - c6 1 2')
         self.assertEqual(board.bitboards[Piece.BP][Sq.C7], 0)
+        self.assertEqual(board.color_bb[Color.BLACK][Sq.C7], 0)
         self.assertEqual(board.bitboards[Piece.BP][Sq.C5], 1)
+        self.assertEqual(board.color_bb[Color.BLACK][Sq.C5], 1)
         self.assertEqual(board.turn, Color.WHITE)
         self.assertEqual(board.wk_castling, False)
         self.assertEqual(board.wq_castling, False)
