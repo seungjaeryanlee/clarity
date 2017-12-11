@@ -229,6 +229,20 @@ class Board:
         Returns a list of all possible legal knight moves
         :return: a list of all possible legal knight moves
         """
+        # PSEUDOCODE
+        # moves = []
+        #
+        # for knight_sq in self.piece_sq[Piece.WN]: (or Piece.BN)
+        #     get ATTACK_BB
+        #     capture = ATTACK_BB & self.color_bb[Color.BLACK]
+        #     for index in capture.indices():
+        #         moves.append(knight_sq, index, 1)
+        #     noncapture = ATTACK_BB & !self.color_bb[Color.BLACK]
+        #     for index in noncapture.indices():
+        #         moves.append(knight_sq, index, 0)
+        #
+        # return moves
+
         return []
 
     def _bishop_move_gen(self):
