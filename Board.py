@@ -94,7 +94,7 @@ class Board:
         fen_str += ' ' + ('K' if self.wk_castling else '')
         fen_str += 'Q' if self.wq_castling else ''
         fen_str += 'k' if self.bk_castling else ''
-        fen_str += 'q' if self.wq_castling else ''
+        fen_str += 'q' if self.bq_castling else ''
         fen_str += '-' if not (self.wk_castling or self.wq_castling or self.bk_castling or self.bq_castling) else ''
         fen_str += ' ' + ('-' if self.ep_square == -1 else Sq.sq_to_filerank(self.ep_square))
         fen_str += ' ' + str(self.half_move_clock)
@@ -160,21 +160,21 @@ class Board:
 
         # update castling
         if moved_piece == Piece.WR:
-            if move.init_sq() == 'A1':
+            if move.init_sq() == Sq.A1:
                 self.wq_castling = False
-            if move.init_sq() == 'H1':
+            if move.init_sq() == Sq.H1:
                 self.wk_castling = False
         elif moved_piece == Piece.WK:
-            if move.init_sq() == 'E1':
+            if move.init_sq() == Sq.E1:
                 self.wk_castling = False
                 self.wq_castling = False
-        if moved_piece == Piece.BR:
-            if move.init_sq() == 'A8':
+        elif moved_piece == Piece.BR:
+            if move.init_sq() == Sq.A8:
                 self.bq_castling = False
-            if move.init_sq() == 'H8':
+            if move.init_sq() == Sq.H8:
                 self.bk_castling = False
         elif moved_piece == Piece.BK:
-            if move.init_sq() == 'E8':
+            if move.init_sq() == Sq.E8:
                 self.bk_castling = False
                 self.bq_castling = False
 

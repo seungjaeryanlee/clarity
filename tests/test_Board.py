@@ -63,6 +63,7 @@ class TestBoardClass(unittest.TestCase):
 
     def _test_get_fen(self):
         """
+        TODO Add more tests
         Tests the _get_fen() function of the Board class
         """
         board = Board()
@@ -80,6 +81,7 @@ class TestBoardClass(unittest.TestCase):
 
     def _test_set_fen(self):
         """
+        TODO Add more tests
         Tests the _set_fen() function of the Board class
         """
         board = Board()
