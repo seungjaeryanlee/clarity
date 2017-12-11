@@ -139,8 +139,9 @@ class Board:
 
     def make_move(self, move):
         """
-        Make a given move and return the captured piece
+        Make a given move and return the captured piece or 1 if no piece was captured
         :param move: captured piece from the move
+        :return: the captured piece if a piece was captured, otherwise 1
         """
         captured_piece = -1
         moved_piece = -1
