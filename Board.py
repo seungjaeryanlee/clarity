@@ -33,8 +33,10 @@ class Board:
             Piece.BK: BitBoard(576460752303423488),
         }
         # bitboards for every piece, each color
-        self.white_bb = BitBoard(65535)
-        self.black_bb = BitBoard(18446462598732840960)
+        self.color_bb = {
+            Color.WHITE: BitBoard(65535),
+            Color.BLACK: BitBoard(18446462598732840960),
+        }
         # color to play next move
         self.turn = Color.WHITE
         # en passant square (if no square, -1)

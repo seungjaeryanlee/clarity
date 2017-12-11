@@ -115,20 +115,20 @@ class TestBoardClass(unittest.TestCase):
         move = Move(Sq.E2, Sq.E4, 2)
         board.make_move(move)
         self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
-        self.assertEqual(board.white_bb.num, int('00001000000000001111011111111111', 2))
-        self.assertEqual(board.black_bb.num,
+        self.assertEqual(board.color_bb[Color.WHITE].num, int('00001000000000001111011111111111', 2))
+        self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1111111111111111000000000000000000000000000000000000000000000000', 2))
 
         move = Move(Sq.B8, Sq.C7, 0)
         board.make_move(move)
         self.assertEqual(board.fen(), 'r1bqkbnr/pppppppp/2n5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2')
-        self.assertEqual(board.white_bb.num, int('00001000000000001111011111111111', 2))
-        self.assertEqual(board.black_bb.num,
+        self.assertEqual(board.color_bb[Color.WHITE].num, int('00001000000000001111011111111111', 2))
+        self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1011111111111111001000000000000000000000000000000000000000000000', 2))
 
         move = Move(Sq.B8, Sq.C7, 0)
         board.make_move(move)
         self.assertEqual(board.fen(), 'r1bqkbnr/pppppppp/2n5/8/4P3/8/PPPPKPPP/RNBQ1BNR b kq - 2 2')
-        self.assertEqual(board.white_bb.num, int('00001000000000001111111111110111', 2))
-        self.assertEqual(board.black_bb.num,
+        self.assertEqual(board.color_bb[Color.WHITE].num, int('00001000000000001111111111110111', 2))
+        self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1011111111111111001000000000000000000000000000000000000000000000', 2))
