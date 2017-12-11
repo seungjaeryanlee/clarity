@@ -142,6 +142,7 @@ class Board:
                 moved_piece = piece
                 self.bitboards[piece][move.init_sq()] = 0
                 self.bitboards[piece][move.dest_sq()] = 1
+                # TODO update white_bb or black_bb
         # TODO use the union bitboard of all opponent piece
         for piece in Piece:
             # ignore piece that just moved there
@@ -149,13 +150,37 @@ class Board:
                 continue
             if self.bitboards[piece][move.dest_sq()]:
                 self.bitboards[piece][move.dest_sq()] = 0
+                # TODO update white_bb or black_bb
                 return self.bitboards[piece][move.dest_sq()]
 
         self.turn = Color.switch(self.turn)
 
-        # TODO check for castling
-        # TODO check for en passant square
-        # TODO  - implement MoveType enum
+        # update castling
+        if moved_piece == Piece.WR:
+            if move.init_sq() == 'A1':
+                self.wq_castling = False
+            if move.init_sq() == 'H1':
+                self.wk_castling = False
+        elif moved_piece == Piece.WK:
+            if move.init_sq() == 'E1':
+                self.wk_castling = False
+                self.wq_castling = False
+        if moved_piece == Piece.BR:
+            if move.init_sq() == 'A8':
+                self.bq_castling = False
+            if move.init_sq() == 'H8':
+                self.bk_castling = False
+        elif moved_piece == Piece.BK:
+            if move.init_sq() == 'E8':
+                self.bk_castling = False
+                self.bq_castling = False
+
+        # compute en passant square
+        # TODO implement MoveType enum
+        if move.move_type() == 2:
+            self.ep_square = Sq((move.init_sq() + move.dest_sq()) / 2)
+        else:
+            self.ep_square = -1
 
         # TODO add Piece enum key EMPTY
         return -1

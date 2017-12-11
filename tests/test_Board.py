@@ -113,7 +113,7 @@ class TestBoardClass(unittest.TestCase):
         Tests the make_move() function of the Board class
         """
         board = Board()
-        move = Move(Sq.E2, Sq.E4, 0)
+        move = Move(Sq.E2, Sq.E4, 2)
         board.make_move(move)
         self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
         self.assertEqual(board.white_bb.num, int('00001000000000001111011111111111', 2))
