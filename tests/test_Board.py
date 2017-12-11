@@ -3,6 +3,7 @@
 This file defines unit tests for the Board class.
 """
 import unittest
+from BitBoard import BitBoard
 from Board import Board
 from Color import Color
 from Move import Move
@@ -115,4 +116,6 @@ class TestBoardClass(unittest.TestCase):
         move = Move(Sq.E2, Sq.E4, 0)
         board.make_move(move)
         self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
-
+        self.assertEqual(board.white_bb.num, int('00001000000000001111011111111111', 2))
+        self.assertEqual(board.black_bb.num,
+                         int('1111111111111111000000000000000000000000000000000000000000000000', 2))
