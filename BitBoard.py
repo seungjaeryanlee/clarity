@@ -39,6 +39,22 @@ class BitBoard:
         """
         return textwrap.fill('{:064b}'.format(self.num), 8)
 
+    def __and__(self, other):
+        """
+        Returns the result of bitwise and (&) of two BitBoard objects
+        :param other: a BitBoard object to AND with self
+        :return: the result of bitwise and (&) of two BitBoard objects
+        """
+        return BitBoard(self.num & other.num)
+
+    def __or__(self, other):
+        """
+        Returns the result of bitwise or (|) of two BitBoard objects
+        :param other: a BitBoard object to OR with self
+        :return: the result of bitwise or (|) of two BitBoard objects
+        """
+        return BitBoard(self.num | other.num)
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':

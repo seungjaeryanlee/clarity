@@ -47,3 +47,23 @@ class TestBitBoardClass(unittest.TestCase):
         """
         bb = BitBoard(int('1111111100000000', 2))
         self.assertEqual(bb.__str__(), '00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n11111111\n00000000')
+
+
+    def test_and(self):
+        """
+        Tests the __and__() function of the BitBoard class.
+        """
+        bb1 = BitBoard(int('11011001', 2))
+        bb2 = BitBoard(int('10101001', 2))
+        bb = bb1 & bb2
+        self.assertEqual(bb.__str__(), '00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n10001001')
+
+
+    def test_or(self):
+        """
+        Tests the __or__() function of the BitBoard class.
+        """
+        bb1 = BitBoard(int('01000010', 2))
+        bb2 = BitBoard(int('10000001', 2))
+        bb = bb1 | bb2
+        self.assertEqual(bb.__str__(), '00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n11000011')
