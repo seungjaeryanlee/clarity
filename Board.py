@@ -144,15 +144,16 @@ class Board:
                 moved_piece = piece
                 self.bitboards[piece][move.init_sq()] = 0
                 self.bitboards[piece][move.dest_sq()] = 1
-                # TODO update white_bb or black_bb
-        # TODO use the union bitboard of all opponent piece
+                self.color_bb[self.turn][move.init_sq()] = 0
+                self.color_bb[self.turn][move.dest_sq()] = 1
+        # TODO how about iterating over all opponent piece and setting the bit as 0 without check?
         for piece in Piece:
             # ignore piece that just moved there
             if piece == moved_piece:
                 continue
             if self.bitboards[piece][move.dest_sq()]:
                 self.bitboards[piece][move.dest_sq()] = 0
-                # TODO update white_bb or black_bb
+                self.color_bb[Color.switch(self.turn)][move.dest_sq()] = 0
                 return self.bitboards[piece][move.dest_sq()]
 
         self.turn = Color.switch(self.turn)
