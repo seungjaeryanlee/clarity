@@ -4,6 +4,8 @@ This file defines the Board class.
 """
 from BitBoard import BitBoard
 from Color import Color
+import constants as CN
+from Move import Move
 from Piece import Piece
 from Sq import Sq
 
@@ -252,21 +254,19 @@ class Board:
         Returns a list of all possible legal knight moves
         :return: a list of all possible legal knight moves
         """
-        # PSEUDOCODE
-        # moves = []
-        #
-        # for knight_sq in self.piece_sq[Piece.WN]: (or Piece.BN)
-        #     get ATTACK_BB
-        #     capture = ATTACK_BB & self.color_bb[Color.BLACK]
-        #     for index in capture.indices():
-        #         moves.append(knight_sq, index, 1)
-        #     noncapture = ATTACK_BB & !self.color_bb[Color.BLACK]
-        #     for index in noncapture.indices():
-        #         moves.append(knight_sq, index, 0)
-        #
-        # return moves
+        moves = []
+        piece = Piece.WN if self.turn == Color.WHITE else Piece.BN
 
-        return []
+        for knight_sq in self.piece_sq[piece]:
+            capture = CN.ATTACK[piece][knight_sq] & self.color_bb[Color.switch(self.turn)]
+            for index in capture.indices():
+                moves.append(Move(knight_sq, index, 1))
+                # TODO implement BitBoard.__invert__()
+            noncapture = CN.ATTACK[piece][knight_sq] & ~self.color_bb[Color.switch(self.turn)]
+            for index in noncapture.indices():
+                moves.append(Move(knight_sq, index, 0))
+
+        return moves
 
     def _bishop_move_gen(self):
         """
