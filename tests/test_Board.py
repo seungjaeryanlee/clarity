@@ -299,7 +299,7 @@ class TestBoardClass(unittest.TestCase):
     def test_move_gen(self):
         """
         # TODO add more specific tests comparing individual moves using Counter()
-        Tests the make_move() function of the Board class
+        Tests the move_gen() function of the Board class
         """
         board = Board()
         moves = board.move_gen()
