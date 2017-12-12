@@ -421,27 +421,27 @@ class TestBoardClass(unittest.TestCase):
     def test_bishop_move_gen(self):
         """
         TODO write tests
-        Tests the pawn_move_gen() function of the Board class
+        Tests the bishop_move_gen() function of the Board class
         """
         pass
 
     def test_rook_move_gen(self):
         """
         TODO write tests
-        Tests the knight_move_gen() function of the Board class
+        Tests the rook_move_gen() function of the Board class
         """
         pass
 
     def test_queen_move_gen(self):
         """
         TODO write tests
-        Tests the pawn_move_gen() function of the Board class
+        Tests the queen_move_gen() function of the Board class
         """
         pass
 
     def test_king_move_gen(self):
         """
         TODO write tests
-        Tests the knight_move_gen() function of the Board class
+        Tests the king_move_gen() function of the Board class
         """
         pass
