@@ -17,12 +17,12 @@ class TestMoveClass(unittest.TestCase):
         """
         Tests the __init__() function of the Move class.
         """
-        move = Move(Sq.E2, Sq.E4, MoveType.CAPTURE)
-        expected = int('{:06b}'.format(Sq.E2) + '{:06b}'.format(Sq.E4) + '{:04b}'.format(1), 2)
+        move = Move(Sq.E2, Sq.E4, MoveType.DOUBLE)
+        expected = int('{:06b}'.format(Sq.E2) + '{:06b}'.format(Sq.E4) + '{:04b}'.format(MoveType.DOUBLE), 2)
         self.assertEqual(move.num, expected)
 
         move = Move(Sq.E7, Sq.E6, MoveType.QUIET)
-        expected = int('{:06b}'.format(Sq.E7) + '{:06b}'.format(Sq.E6) + '{:04b}'.format(0), 2)
+        expected = int('{:06b}'.format(Sq.E7) + '{:06b}'.format(Sq.E6) + '{:04b}'.format(MoveType.QUIET), 2)
         self.assertEqual(move.num, expected)
 
     def test_init_sq(self):
