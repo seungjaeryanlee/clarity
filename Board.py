@@ -250,7 +250,7 @@ class Board:
 
     def _knight_move_gen(self):
         """
-        TODO implement
+        TODO check if knight is pinned
         Returns a list of all possible legal knight moves
         :return: a list of all possible legal knight moves
         """
@@ -261,8 +261,8 @@ class Board:
             capture = CN.ATTACK[piece][knight_sq] & self.color_bb[Color.switch(self.turn)]
             for index in capture.indices():
                 moves.append(Move(knight_sq, index, 1))
-                # TODO implement BitBoard.__invert__()
-            noncapture = CN.ATTACK[piece][knight_sq] & ~self.color_bb[Color.switch(self.turn)]
+            noncapture = CN.ATTACK[piece][knight_sq] & ~(self.color_bb[self.turn]
+                                                         | self.color_bb[Color.switch(self.turn)])
             for index in noncapture.indices():
                 moves.append(Move(knight_sq, index, 0))
 
