@@ -75,6 +75,16 @@ class Board:
         if fen_str is not None:
             self._set_fen(fen_str)
 
+    def __str__(self):
+        """
+        Overrides default function to a string showing a 8x8 chessboard with character notation strings
+        :return: a string of 8x8 chessboard with character notation strings
+        """
+        return self._get_fen().split(' ')[0].replace('/', '\n').replace('1', '-').replace('2', '--')\
+                                                               .replace('3', '---').replace('4', '----')\
+                                                               .replace('5', '-----').replace('6', '------')\
+                                                               .replace('7', '-------').replace('8', '--------')
+
     def fen(self, fen_str=None):
         """
         Returns a FEN string or sets the board according to given FEN string

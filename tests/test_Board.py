@@ -90,6 +90,20 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board.half_move_clock, 0)
         self.assertEqual(board.full_move_count, 1)
 
+    def test_str(self):
+        """
+        Tests the __str__() function of the Board class
+        """
+        board = Board()
+        self.assertEqual(str(board),'rnbqkbnr\n'
+                                    'pppppppp\n'
+                                    '--------\n'
+                                    '--------\n'
+                                    '--------\n'
+                                    '--------\n'
+                                    'PPPPPPPP\n'
+                                    'RNBQKBNR')
+
     def test_fen(self):
         """
         Tests the fen() function of the Board class
