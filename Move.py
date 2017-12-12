@@ -26,6 +26,13 @@ class Move:
         self.num = self.num << 4
         self.num += np.uint16(move_type)
 
+    def __lt__(self, other):
+        """
+        Returns True if self < other for their underlying 16 bit numbers, otherwise False.
+        Used for calling sorted() on a list of moves.
+        """
+        return self.num < other.num
+
     def init_sq(self):
         """
         Returns the bit index of the initial square

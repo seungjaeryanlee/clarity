@@ -25,6 +25,32 @@ class TestMoveClass(unittest.TestCase):
         expected = int('{:06b}'.format(Sq.E7) + '{:06b}'.format(Sq.E6) + '{:04b}'.format(MoveType.QUIET), 2)
         self.assertEqual(move.num, expected)
 
+    def test_lt(self):
+        """
+        Tests the lt() function of the Move class.
+        """
+        # Sq.E2 < Sq.E7
+        move1 = Move(Sq.E2, Sq.E4, MoveType.DOUBLE)
+        move2 = Move(Sq.E7, Sq.E6, MoveType.QUIET)
+        self.assertLess(move1, move2)
+        self.assertListEqual(sorted([move1, move2]), [move1, move2])
+        self.assertListEqual(sorted([move2, move1]), [move1, move2])
+
+        # Sq.H4 < Sq.F4
+        move1 = Move(Sq.G2, Sq.H4, MoveType.QUIET)
+        move2 = Move(Sq.G2, Sq.F4, MoveType.QUIET)
+        self.assertLess(move1, move2)
+        self.assertListEqual(sorted([move1, move2]), [move1, move2])
+        self.assertListEqual(sorted([move2, move1]), [move1, move2])
+
+        # MoveType.N_PROMO < MoveType.Q_PROMO
+        move1 = Move(Sq.G2, Sq.H4, MoveType.N_PROMO)
+        move2 = Move(Sq.G2, Sq.F4, MoveType.Q_PROMO)
+        self.assertLess(move1, move2)
+        self.assertListEqual(sorted([move1, move2]), [move1, move2])
+        self.assertListEqual(sorted([move2, move1]), [move1, move2])
+
+
     def test_init_sq(self):
         """
         Tests the init_sq() function of the Move class.
