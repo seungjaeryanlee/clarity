@@ -13,7 +13,6 @@ from Sq import Sq
 
 class TestBoardClass(unittest.TestCase):
     """
-    TODO check if adding color_bb changes some tests
     This class tests the Board class.
     """
 

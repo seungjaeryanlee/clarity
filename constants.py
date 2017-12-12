@@ -74,7 +74,6 @@ _ATTACK_R = {
 
 _ATTACK_K = [BitBoard(0)] * 64
 
-# TODO create Direction enum for bishop, rook, and queen
 ATTACK = {
     Piece.WP: _ATTACK_WP,
     Piece.WN: _ATTACK_N,

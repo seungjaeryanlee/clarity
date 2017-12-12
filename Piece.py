@@ -11,6 +11,7 @@ class Piece(Enum):
     This enum contains names and values for each chess piece
     """
 
+    # Piece.EMPTY is not defined to make iteration simple, but one should use value -1 to denote such thing
     WP = 0
     WN = 1
     WB = 2
