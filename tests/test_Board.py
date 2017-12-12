@@ -384,9 +384,38 @@ class TestBoardClass(unittest.TestCase):
 
     def test_knight_move_gen(self):
         """
-        TODO write tests
         Tests the knight_move_gen() function of the Board class
         """
+        board = Board()
+        knight_moves = board._knight_move_gen()
+        self.assertEqual(len(knight_moves), 4)
+        self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.B1, Sq.A3, MoveType.QUIET),
+                                                           Move(Sq.B1, Sq.C3, MoveType.QUIET),
+                                                           Move(Sq.G1, Sq.F3, MoveType.QUIET),
+                                                           Move(Sq.G1, Sq.H3, MoveType.QUIET)]))
+
+        board = Board('K6k/8/8/8/8/6p1/8/7N w - - 0 1')
+        knight_moves = board._knight_move_gen()
+        self.assertEqual(len(knight_moves), 2)
+        self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.H1, Sq.G3, MoveType.CAPTURE),
+                                                           Move(Sq.H1, Sq.F2, MoveType.QUIET)]))
+
+        board = Board('K7/8/8/6R1/4n3/8/4n3/2k5 b - - 0 1')
+        knight_moves = board._knight_move_gen()
+        self.assertEqual(len(knight_moves), 13)
+        self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.E2, Sq.C3, MoveType.QUIET),
+                                                           Move(Sq.E2, Sq.D4, MoveType.QUIET),
+                                                           Move(Sq.E2, Sq.F4, MoveType.QUIET),
+                                                           Move(Sq.E2, Sq.G3, MoveType.QUIET),
+                                                           Move(Sq.E2, Sq.G1, MoveType.QUIET),
+                                                           Move(Sq.E4, Sq.D2, MoveType.QUIET),
+                                                           Move(Sq.E4, Sq.C3, MoveType.QUIET),
+                                                           Move(Sq.E4, Sq.C5, MoveType.QUIET),
+                                                           Move(Sq.E4, Sq.D6, MoveType.QUIET),
+                                                           Move(Sq.E4, Sq.F6, MoveType.QUIET),
+                                                           Move(Sq.E4, Sq.G5, MoveType.CAPTURE),
+                                                           Move(Sq.E4, Sq.G3, MoveType.QUIET),
+                                                           Move(Sq.E4, Sq.F2, MoveType.QUIET)]))
         pass
 
     def test_bishop_move_gen(self):
