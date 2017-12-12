@@ -325,3 +325,45 @@ class TestBoardClass(unittest.TestCase):
         board.fen('r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10')
         moves = board.move_gen()
         self.assertEqual(len(moves), 1)
+
+    def test_pawn_move_gen(self):
+        """
+        TODO write tests
+        Tests the pawn_move_gen() function of the Board class
+        """
+        pass
+
+    def test_knight_move_gen(self):
+        """
+        TODO write tests
+        Tests the knight_move_gen() function of the Board class
+        """
+        pass
+
+    def test_bishop_move_gen(self):
+        """
+        TODO write tests
+        Tests the pawn_move_gen() function of the Board class
+        """
+        pass
+
+    def test_rook_move_gen(self):
+        """
+        TODO write tests
+        Tests the knight_move_gen() function of the Board class
+        """
+        pass
+
+    def test_queen_move_gen(self):
+        """
+        TODO write tests
+        Tests the pawn_move_gen() function of the Board class
+        """
+        pass
+
+    def test_king_move_gen(self):
+        """
+        TODO write tests
+        Tests the knight_move_gen() function of the Board class
+        """
+        pass
