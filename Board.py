@@ -291,26 +291,33 @@ class Board:
         Returns a list of all possible legal bishop moves
         :return: a list of all possible legal bishop moves
         """
+        moves = []
+        piece = Piece.WB if self.turn == Color.WHITE else Piece.BB
+        for bishop_sq in self.piece_sq[piece]:
+             # TODO make Direction iterable
+            for _, ATTACK_DIR in CN.ATTACK[piece]:
+                capture_or_block = ATTACK_DIR & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+                if capture_or_block == 0:
+                    for index in ATTACK_DIR.indices():
+                        moves.append(Move(bishop_sq, index, MoveType.QUIET))
+                else:
+                    min_diff = 64
+                    min_sq = -1
+                    # Get the closest piece in the way of movement
+                    for index in capture_or_block.indices():
+                        if min_diff > abs(bishop_sq - index):
+                            min_diff = abs(bishop_sq - index)
+                            min_sq = index
+                    # Add all moves before that piece
+                    for index in ATTACK_DIR.indices():
+                        if min_diff < abs(bishop_sq - index):
+                            moves.append(Move(bishop_sq, index, MoveType.QUIET))
+                    capture = ATTACK_DIR & self.color_bb[Color.switch(self.turn)]
+                    # If enemy piece, add CAPTURE move
+                    if capture[min_sq] == 1:
+                        moves.append(Move(bishop_sq, min_sq, MoveType.CAPTURE))
 
-        # PSEUDOCODE
-        # moves = []
-        #
-        # for bishop_sq in self.piece_sq[Piece.WB]: (or Piece.BB)
-        #     get ATTACK_BB (4 directions)
-        #     for ATTACK_BB_DIR in ATTACK_BB:
-        #         capture_or_block = ATTACK_BB_DIR & self.color_bb[Color.BLACK]
-        #         if capture_or_block == 0:
-        #             add all moves in ATTACK_BB_DIR
-        #         else
-        #             get the first one (least difference)
-        #             add all moves before that
-        #             capture = ATTACK_BB_DIR & self.color_bb[Color.BLACK]
-        #             if capture[bit] == 1:
-        #                 add move
-        #
-        # return moves
-
-        return []
+        return moves
 
     def _rook_move_gen(self):
         """
