@@ -5,6 +5,7 @@ from BitBoard import BitBoard
 from Direction import Direction
 from MoveType import MoveType
 from Piece import Piece
+from Sq import Sq
 
 
 # Move bitboards for pawns
@@ -30,6 +31,22 @@ _ATTACK_WP = [BitBoard(0)] * 64
 _ATTACK_BP = [BitBoard(0)] * 64
 
 _ATTACK_N = [BitBoard(0)] * 64
+_ATTACK_N[Sq.B1] = BitBoard(int('00000000'
+                                '00000000'
+                                '00000000'
+                                '00000000'
+                                '00000000'
+                                '10100000'
+                                '00010000'
+                                '00000000', 2))
+_ATTACK_N[Sq.G1] = BitBoard(int('00000000'
+                                '00000000'
+                                '00000000'
+                                '00000000'
+                                '00000000'
+                                '00000101'
+                                '00001000'
+                                '00000000', 2))
 
 _ATTACK_B_UL = [BitBoard(0)] * 64
 _ATTACK_B_UR = [BitBoard(0)] * 64
