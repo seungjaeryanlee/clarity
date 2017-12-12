@@ -420,9 +420,34 @@ class TestBoardClass(unittest.TestCase):
 
     def test_bishop_move_gen(self):
         """
-        TODO write tests
         Tests the bishop_move_gen() function of the Board class
         """
+        board = Board()
+        knight_moves = board._bishop_move_gen()
+        self.assertEqual(len(knight_moves), 0)
+
+        board = Board('K6k/8/8/8/8/6p1/8/7B w - - 0 1')
+        knight_moves = board._bishop_move_gen()
+        self.assertEqual(len(knight_moves), 6)
+        self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.H1, Sq.G2, MoveType.QUIET),
+                                                           Move(Sq.H1, Sq.F3, MoveType.QUIET),
+                                                           Move(Sq.H1, Sq.E4, MoveType.QUIET),
+                                                           Move(Sq.H1, Sq.D5, MoveType.QUIET),
+                                                           Move(Sq.H1, Sq.C6, MoveType.QUIET),
+                                                           Move(Sq.H1, Sq.B7, MoveType.QUIET)]))
+
+        board = Board('k6K/8/2N5/8/8/5b2/8/7b b - - 0 1')
+        knight_moves = board._bishop_move_gen()
+        self.assertEqual(len(knight_moves), 9)
+        self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.H1, Sq.G2, MoveType.QUIET),
+                                                           Move(Sq.F3, Sq.G2, MoveType.QUIET),
+                                                           Move(Sq.F3, Sq.E2, MoveType.QUIET),
+                                                           Move(Sq.F3, Sq.D1, MoveType.QUIET),
+                                                           Move(Sq.F3, Sq.G4, MoveType.QUIET),
+                                                           Move(Sq.F3, Sq.H5, MoveType.QUIET),
+                                                           Move(Sq.F3, Sq.E4, MoveType.QUIET),
+                                                           Move(Sq.F3, Sq.D5, MoveType.QUIET),
+                                                           Move(Sq.F3, Sq.C6, MoveType.CAPTURE)]))
         pass
 
     def test_rook_move_gen(self):
