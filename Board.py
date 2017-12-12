@@ -37,6 +37,21 @@ class Board:
             Color.WHITE: BitBoard(65535),
             Color.BLACK: BitBoard(18446462598732840960),
         }
+        # TODO update when fen() or make_move() is called
+        self.piece_sq = {
+            Piece.WP: [Sq.A2, Sq.B2, Sq.C2, Sq.D2, Sq.E2, Sq.F2, Sq.G2, Sq.H2],
+            Piece.WN: [Sq.B1, Sq.G1],
+            Piece.WB: [Sq.C1, Sq.F1],
+            Piece.WR: [Sq.A1, Sq.H1],
+            Piece.WQ: [Sq.D1],
+            Piece.WK: [Sq.E1], # TODO no need for a list?
+            Piece.BP: [Sq.A7, Sq.B7, Sq.C7, Sq.D7, Sq.E7, Sq.F7, Sq.G7, Sq.H7],
+            Piece.BN: [Sq.B8, Sq.G8],
+            Piece.BB: [Sq.C8, Sq.F8],
+            Piece.BR: [Sq.A8, Sq.H8],
+            Piece.BQ: [Sq.D8],
+            Piece.BK: [Sq.E8], # TODO no need for a list?
+        }
         # color to play next move
         self.turn = Color.WHITE
         # en passant square (if no square, -1)
