@@ -6,6 +6,7 @@ import unittest
 from Board import Board
 from Color import Color
 from Move import Move
+from MoveType import MoveType
 from Piece import Piece
 from Sq import Sq
 
@@ -167,7 +168,7 @@ class TestBoardClass(unittest.TestCase):
         Tests the make_move() function of the Board class
         """
         board = Board()
-        move = Move(Sq.E2, Sq.E4, 2)
+        move = Move(Sq.E2, Sq.E4, MoveType.QUIET)
         capture = board.make_move(move)
         self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
         self.assertEqual(board.color_bb[Color.WHITE].num, int('00001000000000001111011111111111', 2))
@@ -199,7 +200,7 @@ class TestBoardClass(unittest.TestCase):
         self.assertListEqual(sorted(board.piece_sq[Piece.BK]),
                              sorted([Sq.E8]))
 
-        move = Move(Sq.B8, Sq.C6, 0)
+        move = Move(Sq.B8, Sq.C6, MoveType.QUIET)
         capture = board.make_move(move)
         self.assertEqual(board.fen(), 'r1bqkbnr/pppppppp/2n5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2')
         self.assertEqual(board.color_bb[Color.WHITE].num, int('00001000000000001111011111111111', 2))
@@ -231,7 +232,7 @@ class TestBoardClass(unittest.TestCase):
         self.assertListEqual(sorted(board.piece_sq[Piece.BK]),
                              sorted([Sq.E8]))
 
-        move = Move(Sq.E1, Sq.E2, 0)
+        move = Move(Sq.E1, Sq.E2, MoveType.QUIET)
         capture = board.make_move(move)
         self.assertEqual(board.fen(), 'r1bqkbnr/pppppppp/2n5/8/4P3/8/PPPPKPPP/RNBQ1BNR b kq - 2 2')
         self.assertEqual(board.color_bb[Color.WHITE].num, int('00001000000000001111111111110111', 2))
@@ -264,7 +265,7 @@ class TestBoardClass(unittest.TestCase):
                              sorted([Sq.E8]))
 
         board.fen('rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w - - 0 2')
-        move = Move(Sq.E4, Sq.D5, 1)
+        move = Move(Sq.E4, Sq.D5, MoveType.CAPTURE)
         capture = board.make_move(move)
         self.assertEqual(board.fen(), 'rnbqkbnr/ppp1pppp/8/3P4/8/8/PPPP1PPP/RNBQKBNR b - - 0 2')
         self.assertEqual(board.color_bb[Color.WHITE].num, int('0001000000000000000000001111011111111111', 2))

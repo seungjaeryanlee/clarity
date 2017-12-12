@@ -6,6 +6,7 @@ from BitBoard import BitBoard
 from Color import Color
 import constants as CN
 from Move import Move
+from MoveType import MoveType
 from Piece import Piece
 from Sq import Sq
 
@@ -211,8 +212,7 @@ class Board:
                 self.bq_castling = False
 
         # compute en passant square
-        # TODO implement MoveType enum
-        if move.move_type() == 2:
+        if move.move_type() == MoveType.DOUBLE:
             self.ep_square = Sq((move.init_sq() + move.dest_sq()) / 2)
         else:
             self.ep_square = -1
@@ -260,11 +260,11 @@ class Board:
         for knight_sq in self.piece_sq[piece]:
             capture = CN.ATTACK[piece][knight_sq] & self.color_bb[Color.switch(self.turn)]
             for index in capture.indices():
-                moves.append(Move(knight_sq, index, 1))
+                moves.append(Move(knight_sq, index, MoveType.CAPTURE))
             noncapture = CN.ATTACK[piece][knight_sq] & ~(self.color_bb[self.turn]
                                                          | self.color_bb[Color.switch(self.turn)])
             for index in noncapture.indices():
-                moves.append(Move(knight_sq, index, 0))
+                moves.append(Move(knight_sq, index, MoveType.QUIET))
 
         return moves
 

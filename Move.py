@@ -3,6 +3,7 @@
 This file defines the Board class.
 """
 import numpy as np
+from MoveType import MoveType
 from Sq import Sq
 
 
@@ -44,13 +45,12 @@ class Move:
         Returns the move type index
         :return: the move type index
         """
-        return self.num & np.uint16(15)
+        return MoveType(self.num & np.uint16(15))
 
 
 # only runs when this module is called directly
 if __name__ == '__main__':
-    # TODO implement MoveType enum
-    move = Move(Sq.E2, Sq.E4, 0)
+    move = Move(Sq.E2, Sq.E4, MoveType.QUIET)
     print('{0:b}'.format(move.num))
     print('Init: ' + str(Sq(move.init_sq())))
     print('Dest: ' + str(Sq(move.dest_sq())))
