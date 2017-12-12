@@ -7,6 +7,23 @@ from MoveType import MoveType
 from Piece import Piece
 
 
+# Move bitboards for pawns
+_MOVE_WP_QUIET = [BitBoard(0)] * 64
+_MOVE_WP_DOUBLE = [BitBoard(0)] * 64
+
+MOVE_WP = {
+    MoveType.QUIET: _MOVE_WP_QUIET,
+    MoveType.DOUBLE: _MOVE_WP_DOUBLE,
+}
+
+_MOVE_BP_QUIET = [BitBoard(0)] * 64
+_MOVE_BP_DOUBLE = [BitBoard(0)] * 64
+
+MOVE_BP = {
+    MoveType.QUIET: _MOVE_BP_QUIET,
+    MoveType.DOUBLE: _MOVE_BP_DOUBLE,
+}
+
 # Attack bitboards
 # TODO fill data
 _ATTACK_WP = [BitBoard(0)] * 64
