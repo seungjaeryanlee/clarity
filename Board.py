@@ -118,11 +118,13 @@ class Board:
                     break
             if is_empty:
                 empty_count += 1
-            if i % 8 == 0 and i != 0:
+            if i % 8 == 0:
                 if empty_count > 0:
                     fen_str += str(empty_count)
                     empty_count = 0
+            if i % 8 == 0 and i != 0:
                 fen_str += '/'
+
 
         fen_str += ' ' + ('w' if self.turn == Color.WHITE else 'b')
         fen_str += ' ' + ('K' if self.wk_castling else '')
