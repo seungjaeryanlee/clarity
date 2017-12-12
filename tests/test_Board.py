@@ -55,6 +55,41 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board.half_move_clock, 0)
         self.assertEqual(board.full_move_count, 1)
 
+        board = Board('K7/8/8/8/8/8/8/7k b - - 0 1')
+        self.assertEqual(board.bitboards[Piece.WP].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.bitboards[Piece.WN].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.bitboards[Piece.WB].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.bitboards[Piece.WR].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.bitboards[Piece.WQ].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.bitboards[Piece.WK].num,
+                         int('1000000000000000000000000000000000000000000000000000000000000000', 2))
+
+        self.assertEqual(board.bitboards[Piece.BP].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.bitboards[Piece.BN].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.bitboards[Piece.BB].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.bitboards[Piece.BR].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.bitboards[Piece.BQ].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000000', 2))
+        self.assertEqual(board.bitboards[Piece.BK].num,
+                         int('0000000000000000000000000000000000000000000000000000000000000001', 2))
+        self.assertEqual(board.turn, Color.BLACK)
+        self.assertEqual(board.ep_square, -1)
+        self.assertEqual(board.wk_castling, False)
+        self.assertEqual(board.wq_castling, False)
+        self.assertEqual(board.bk_castling, False)
+        self.assertEqual(board.bq_castling, False)
+        self.assertEqual(board.half_move_clock, 0)
+        self.assertEqual(board.full_move_count, 1)
+
     def test_fen(self):
         """
         Tests the fen() function of the Board class

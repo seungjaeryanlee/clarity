@@ -16,9 +16,11 @@ class Board:
     This class represents the status of a board.
     """
 
-    def __init__(self):
+    def __init__(self, fen_str=None):
         """
-        Run when a Board object is created.
+        Run when a Board object is created. If fen_str is specified, set the board according to the given FEN string.
+        Otherwise, set the board to the starting position.
+        :param fen_str: FEN string to set the board to (if specified)
         """
         # dictionary of bitboards for each piece. bits set to their starting positions
         self.bitboards = {
@@ -69,6 +71,9 @@ class Board:
         self.half_move_clock = 0
         # number of full moves made
         self.full_move_count = 1
+
+        if fen_str is not None:
+            self._set_fen(fen_str)
 
     def fen(self, fen_str=None):
         """
