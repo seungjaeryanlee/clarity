@@ -174,6 +174,30 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1111111111111111000000000000000000000000000000000000000000000000', 2))
         self.assertEqual(capture, -1)
+        self.assertListEqual(sorted(board.piece_sq[Piece.WP]),
+                             sorted([Sq.A2, Sq.B2, Sq.C2, Sq.D2, Sq.E4, Sq.F2, Sq.G2, Sq.H2]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WN]),
+                             sorted([Sq.B1, Sq.G1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WB]),
+                             sorted([Sq.C1, Sq.F1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WR]),
+                             sorted([Sq.A1, Sq.H1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WQ]),
+                             sorted([Sq.D1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WK]),
+                             sorted([Sq.E1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BP]),
+                             sorted([Sq.A7, Sq.B7, Sq.C7, Sq.D7, Sq.E7, Sq.F7, Sq.G7, Sq.H7]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BN]),
+                             sorted([Sq.B8, Sq.G8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BB]),
+                             sorted([Sq.C8, Sq.F8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BR]),
+                             sorted([Sq.A8, Sq.H8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BQ]),
+                             sorted([Sq.D8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BK]),
+                             sorted([Sq.E8]))
 
         move = Move(Sq.B8, Sq.C6, 0)
         capture = board.make_move(move)
@@ -182,6 +206,30 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1011111111111111001000000000000000000000000000000000000000000000', 2))
         self.assertEqual(capture, -1)
+        self.assertListEqual(sorted(board.piece_sq[Piece.WP]),
+                             sorted([Sq.A2, Sq.B2, Sq.C2, Sq.D2, Sq.E4, Sq.F2, Sq.G2, Sq.H2]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WN]),
+                             sorted([Sq.B1, Sq.G1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WB]),
+                             sorted([Sq.C1, Sq.F1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WR]),
+                             sorted([Sq.A1, Sq.H1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WQ]),
+                             sorted([Sq.D1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WK]),
+                             sorted([Sq.E1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BP]),
+                             sorted([Sq.A7, Sq.B7, Sq.C7, Sq.D7, Sq.E7, Sq.F7, Sq.G7, Sq.H7]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BN]),
+                             sorted([Sq.C6, Sq.G8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BB]),
+                             sorted([Sq.C8, Sq.F8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BR]),
+                             sorted([Sq.A8, Sq.H8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BQ]),
+                             sorted([Sq.D8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BK]),
+                             sorted([Sq.E8]))
 
         move = Move(Sq.E1, Sq.E2, 0)
         capture = board.make_move(move)
@@ -190,6 +238,30 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1011111111111111001000000000000000000000000000000000000000000000', 2))
         self.assertEqual(capture, -1)
+        self.assertListEqual(sorted(board.piece_sq[Piece.WP]),
+                             sorted([Sq.A2, Sq.B2, Sq.C2, Sq.D2, Sq.E4, Sq.F2, Sq.G2, Sq.H2]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WN]),
+                             sorted([Sq.B1, Sq.G1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WB]),
+                             sorted([Sq.C1, Sq.F1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WR]),
+                             sorted([Sq.A1, Sq.H1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WQ]),
+                             sorted([Sq.D1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WK]),
+                             sorted([Sq.E2]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BP]),
+                             sorted([Sq.A7, Sq.B7, Sq.C7, Sq.D7, Sq.E7, Sq.F7, Sq.G7, Sq.H7]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BN]),
+                             sorted([Sq.C6, Sq.G8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BB]),
+                             sorted([Sq.C8, Sq.F8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BR]),
+                             sorted([Sq.A8, Sq.H8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BQ]),
+                             sorted([Sq.D8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BK]),
+                             sorted([Sq.E8]))
 
         board.fen('rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w - - 0 2')
         move = Move(Sq.E4, Sq.D5, 1)
@@ -199,6 +271,30 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1111111111101111000000000000000000000000000000000000000000000000', 2))
         self.assertEqual(capture, Piece.BP)
+        self.assertListEqual(sorted(board.piece_sq[Piece.WP]),
+                             sorted([Sq.A2, Sq.B2, Sq.C2, Sq.D2, Sq.D5, Sq.F2, Sq.G2, Sq.H2]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WN]),
+                             sorted([Sq.B1, Sq.G1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WB]),
+                             sorted([Sq.C1, Sq.F1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WR]),
+                             sorted([Sq.A1, Sq.H1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WQ]),
+                             sorted([Sq.D1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.WK]),
+                             sorted([Sq.E1]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BP]),
+                             sorted([Sq.A7, Sq.B7, Sq.C7, Sq.E7, Sq.F7, Sq.G7, Sq.H7]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BN]),
+                             sorted([Sq.B8, Sq.G8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BB]),
+                             sorted([Sq.C8, Sq.F8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BR]),
+                             sorted([Sq.A8, Sq.H8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BQ]),
+                             sorted([Sq.D8]))
+        self.assertListEqual(sorted(board.piece_sq[Piece.BK]),
+                             sorted([Sq.E8]))
 
     def test_move_gen(self):
         """

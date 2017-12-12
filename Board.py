@@ -180,6 +180,12 @@ class Board:
                 captured_piece = piece
                 break
 
+        # update self.piece_sq
+        self.piece_sq[moved_piece].remove(move.init_sq())
+        self.piece_sq[moved_piece].append(move.dest_sq())
+        if captured_piece != -1:
+            self.piece_sq[captured_piece].remove(move.dest_sq())
+
         self.turn = Color.switch(self.turn)
 
         # update castling
