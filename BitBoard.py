@@ -55,6 +55,12 @@ class BitBoard:
         """
         return BitBoard(self.num | other.num)
 
+    def __invert__(self):
+        """
+        Returns the inverse of the encapsulated 64-bit integer
+        """
+        return BitBoard(~self.num)
+
     def indices(self):
         """
         Returns the indices of bits with value 1
@@ -65,6 +71,7 @@ class BitBoard:
             if self[i] == 1:
                 bits.append(i)
         return bits
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':

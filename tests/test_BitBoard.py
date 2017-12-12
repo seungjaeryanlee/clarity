@@ -68,6 +68,13 @@ class TestBitBoardClass(unittest.TestCase):
         bb = bb1 | bb2
         self.assertEqual(bb.__str__(), '00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n11000011')
 
+    def test_invert(self):
+        """
+        Tests the __or__() function of the BitBoard class.
+        """
+        bb = ~BitBoard(int('1111111111111111000000000000000000011000100001001110011110111101', 2))
+        self.assertEqual(bb.__str__(), '00000000\n00000000\n11111111\n11111111\n11100111\n01111011\n00011000\n01000010')
+
     def test_indices(self):
         """
         Tests the indices() function of the BitBoard class.
