@@ -125,9 +125,10 @@ class Board:
         # TODO validate fen_str
         board_str, turn_str, castling_str, ep_str, half_move_str, full_move_str = fen_str.split(' ')
 
-        # reset all bitboards
+        # reset all bitboards and piece_sq
         for piece in Piece:
             self.bitboards[piece] = BitBoard(0)
+            self.piece_sq[piece] = []
         self.color_bb[Color.WHITE] = BitBoard(0)
         self.color_bb[Color.BLACK] = BitBoard(0)
 
@@ -141,6 +142,7 @@ class Board:
             piece = Piece.from_char(char)
             self.bitboards[piece][63 - bit_index] = 1
             self.color_bb[Piece.color(piece)][63 - bit_index] = 1
+            self.piece_sq[piece].append(Sq(63 - bit_index))
             bit_index += 1
 
         self.turn = Color.WHITE if turn_str == 'w' else Color.BLACK
