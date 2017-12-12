@@ -50,6 +50,27 @@ class TestMoveClass(unittest.TestCase):
         self.assertListEqual(sorted([move1, move2]), [move1, move2])
         self.assertListEqual(sorted([move2, move1]), [move1, move2])
 
+    def test_eq(self):
+        """
+        Tests the eq() function of the Move class.
+        """
+        move1 = Move(Sq.E2, Sq.E4, MoveType.DOUBLE)
+        move2 = Move(Sq.E7, Sq.E6, MoveType.QUIET)
+        self.assertNotEqual(move1, move2)
+
+        move1 = Move(Sq.E2, Sq.E4, MoveType.DOUBLE)
+        move2 = Move(Sq.E2, Sq.E3, MoveType.QUIET)
+        self.assertNotEqual(move1, move2)
+
+        move1 = Move(Sq.G7, Sq.G8, MoveType.N_PROMO)
+        move2 = Move(Sq.G7, Sq.G8, MoveType.Q_PROMO)
+        self.assertNotEqual(move1, move2)
+
+        move1 = Move(Sq.D2, Sq.D4, MoveType.DOUBLE)
+        move2 = Move(Sq.D2, Sq.D4, MoveType.DOUBLE)
+        move3 = move1
+        self.assertEqual(move1, move3)
+        self.assertEqual(move1, move2)
 
     def test_init_sq(self):
         """

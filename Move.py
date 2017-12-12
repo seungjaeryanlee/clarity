@@ -26,6 +26,12 @@ class Move:
         self.num = self.num << 4
         self.num += np.uint16(move_type)
 
+    def __eq__(self, other):
+        """
+        Returns True if self and other represent the same chess move
+        """
+        return self.num == other.num
+
     def __lt__(self, other):
         """
         Returns True if self < other for their underlying 16 bit numbers, otherwise False.
