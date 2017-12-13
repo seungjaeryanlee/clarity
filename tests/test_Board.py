@@ -553,7 +553,27 @@ class TestBoardClass(unittest.TestCase):
 
     def test_king_move_gen(self):
         """
-        TODO write tests
         Tests the king_move_gen() function of the Board class
         """
-        pass
+        board = Board()
+        king_moves = board._king_move_gen()
+        self.assertEqual(len(king_moves), 0)
+
+        board = Board('k7/8/8/8/8/6p1/8/6nK w - - 0 1')
+        king_moves = board._king_move_gen()
+        self.assertEqual(len(king_moves), 3)
+        self.assertListEqual(sorted(king_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.G2, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.G1, MoveType.CAPTURE)]))
+
+        board = Board('8/8/8/3kb3/3N4/8/8/6nK b - - 0 1')
+        print(board)
+        king_moves = board._king_move_gen()
+        self.assertEqual(len(king_moves), 7)
+        self.assertListEqual(sorted(king_moves), sorted([Move(Sq.D5, Sq.C4, MoveType.QUIET),
+                                                         Move(Sq.D5, Sq.C5, MoveType.QUIET),
+                                                         Move(Sq.D5, Sq.C6, MoveType.QUIET),
+                                                         Move(Sq.D5, Sq.D6, MoveType.QUIET),
+                                                         Move(Sq.D5, Sq.E6, MoveType.QUIET),
+                                                         Move(Sq.D5, Sq.E4, MoveType.QUIET),
+                                                         Move(Sq.D5, Sq.D4, MoveType.CAPTURE)]))
