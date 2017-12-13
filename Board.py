@@ -284,79 +284,60 @@ class Board:
 
         return moves
 
+    def _slider_move_gen(self, piece):
+        """
+        TODO check for pin
+        Returns a list of all possible legal moves for the given slider piece
+        :param piece: a slider piece (bishop, rook, or queen)
+        :return: a list of all possible legal moves for the given slider piece
+        """
+        moves = []
+
+        for sq in self.piece_sq[piece]:
+            # TODO make Direction iterable to make this for loop simpler?
+            for direction in CN.ATTACK[piece]:
+                ATTACK_DIR = CN.ATTACK[piece][direction][sq]
+                capture_or_block = ATTACK_DIR & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+                # TODO implement BitBoard.__eq__() and compare by BitBoards?
+                if capture_or_block.num == 0:
+                    for index in ATTACK_DIR.indices():
+                        moves.append(Move(sq, index, MoveType.QUIET))
+                else:
+                    min_diff = 64
+                    min_sq = -1
+                    # Get the closest piece in the way of movement
+                    for index in capture_or_block.indices():
+                        if min_diff > abs(sq - index):
+                            min_diff = abs(sq - index)
+                            min_sq = index
+                    # Add all moves before that piece
+                    for index in ATTACK_DIR.indices():
+                        if min_diff > abs(sq - index):
+                            moves.append(Move(sq, index, MoveType.QUIET))
+                    capture = ATTACK_DIR & self.color_bb[Color.switch(self.turn)]
+                    # If enemy piece, add CAPTURE move
+                    if capture[min_sq] == 1:
+                        moves.append(Move(sq, min_sq, MoveType.CAPTURE))
+
+        return moves
+
     def _bishop_move_gen(self):
         """
         TODO check for pin
         Returns a list of all possible legal bishop moves
         :return: a list of all possible legal bishop moves
         """
-        moves = []
         piece = Piece.WB if self.turn == Color.WHITE else Piece.BB
+        return self._slider_move_gen(piece)
 
-        for bishop_sq in self.piece_sq[piece]:
-            # TODO make Direction iterable to make this for loop simpler?
-            for direction in CN.ATTACK[piece]:
-                ATTACK_DIR = CN.ATTACK[piece][direction][bishop_sq]
-                capture_or_block = ATTACK_DIR & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
-                # TODO implement BitBoard.__eq__() and compare by BitBoards?
-                if capture_or_block.num == 0:
-                    for index in ATTACK_DIR.indices():
-                        moves.append(Move(bishop_sq, index, MoveType.QUIET))
-                else:
-                    min_diff = 64
-                    min_sq = -1
-                    # Get the closest piece in the way of movement
-                    for index in capture_or_block.indices():
-                        if min_diff > abs(bishop_sq - index):
-                            min_diff = abs(bishop_sq - index)
-                            min_sq = index
-                    # Add all moves before that piece
-                    for index in ATTACK_DIR.indices():
-                        if min_diff > abs(bishop_sq - index):
-                            moves.append(Move(bishop_sq, index, MoveType.QUIET))
-                    capture = ATTACK_DIR & self.color_bb[Color.switch(self.turn)]
-                    # If enemy piece, add CAPTURE move
-                    if capture[min_sq] == 1:
-                        moves.append(Move(bishop_sq, min_sq, MoveType.CAPTURE))
-
-        return moves
-
-    def _rook_move_gen(self, piece=None):
+    def _rook_move_gen(self):
         """
         TODO check for pin
         Returns a list of all possible legal rook moves
         :return: a list of all possible legal rook moves
         """
-        moves = []
         piece = Piece.WR if self.turn == Color.WHITE else Piece.BR
-
-        for rook_sq in self.piece_sq[piece]:
-            # TODO make Direction iterable to make this for loop simpler?
-            for direction in CN.ATTACK[piece]:
-                ATTACK_DIR = CN.ATTACK[piece][direction][rook_sq]
-                capture_or_block = ATTACK_DIR & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
-                # TODO implement BitBoard.__eq__() and compare by BitBoards?
-                if capture_or_block.num == 0:
-                    for index in ATTACK_DIR.indices():
-                        moves.append(Move(rook_sq, index, MoveType.QUIET))
-                else:
-                    min_diff = 64
-                    min_sq = -1
-                    # Get the closest piece in the way of movement
-                    for index in capture_or_block.indices():
-                        if min_diff > abs(rook_sq - index):
-                            min_diff = abs(rook_sq - index)
-                            min_sq = index
-                    # Add all moves before that piece
-                    for index in ATTACK_DIR.indices():
-                        if min_diff > abs(rook_sq - index):
-                            moves.append(Move(rook_sq, index, MoveType.QUIET))
-                    capture = ATTACK_DIR & self.color_bb[Color.switch(self.turn)]
-                    # If enemy piece, add CAPTURE move
-                    if capture[min_sq] == 1:
-                        moves.append(Move(rook_sq, min_sq, MoveType.CAPTURE))
-
-        return moves
+        return self._slider_move_gen(piece)
 
     def _queen_move_gen(self):
         """
@@ -364,36 +345,8 @@ class Board:
         Returns a list of all possible legal queen moves
         :return: a list of all possible legal queen moves
         """
-        moves = []
         piece = Piece.WQ if self.turn == Color.WHITE else Piece.BQ
-
-        for queen_sq in self.piece_sq[piece]:
-            # TODO make Direction iterable to make this for loop simpler?
-            for direction in CN.ATTACK[piece]:
-                ATTACK_DIR = CN.ATTACK[piece][direction][queen_sq]
-                capture_or_block = ATTACK_DIR & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
-                # TODO implement BitBoard.__eq__() and compare by BitBoards?
-                if capture_or_block.num == 0:
-                    for index in ATTACK_DIR.indices():
-                        moves.append(Move(queen_sq, index, MoveType.QUIET))
-                else:
-                    min_diff = 64
-                    min_sq = -1
-                    # Get the closest piece in the way of movement
-                    for index in capture_or_block.indices():
-                        if min_diff > abs(queen_sq - index):
-                            min_diff = abs(queen_sq - index)
-                            min_sq = index
-                    # Add all moves before that piece
-                    for index in ATTACK_DIR.indices():
-                        if min_diff > abs(queen_sq - index):
-                            moves.append(Move(queen_sq, index, MoveType.QUIET))
-                    capture = ATTACK_DIR & self.color_bb[Color.switch(self.turn)]
-                    # If enemy piece, add CAPTURE move
-                    if capture[min_sq] == 1:
-                        moves.append(Move(queen_sq, min_sq, MoveType.CAPTURE))
-
-        return moves
+        return self._slider_move_gen(piece)
 
     def _king_move_gen(self):
         """
