@@ -377,10 +377,55 @@ class TestBoardClass(unittest.TestCase):
 
     def test_pawn_move_gen(self):
         """
-        TODO write tests
         Tests the pawn_move_gen() function of the Board class
         """
-        pass
+        # test on starting position
+        board = Board()
+        pawn_moves = board._pawn_move_gen()
+        self.assertEqual(len(pawn_moves), 16)
+        self.assertListEqual(sorted(pawn_moves), sorted([Move(Sq.A2, Sq.A3, MoveType.QUIET),
+                                                         Move(Sq.A2, Sq.A4, MoveType.DOUBLE),
+                                                         Move(Sq.B2, Sq.B3, MoveType.QUIET),
+                                                         Move(Sq.B2, Sq.B4, MoveType.DOUBLE),
+                                                         Move(Sq.C2, Sq.C3, MoveType.QUIET),
+                                                         Move(Sq.C2, Sq.C4, MoveType.DOUBLE),
+                                                         Move(Sq.D2, Sq.D3, MoveType.QUIET),
+                                                         Move(Sq.D2, Sq.D4, MoveType.DOUBLE),
+                                                         Move(Sq.E2, Sq.E3, MoveType.QUIET),
+                                                         Move(Sq.E2, Sq.E4, MoveType.DOUBLE),
+                                                         Move(Sq.F2, Sq.F3, MoveType.QUIET),
+                                                         Move(Sq.F2, Sq.F4, MoveType.DOUBLE),
+                                                         Move(Sq.G2, Sq.G3, MoveType.QUIET),
+                                                         Move(Sq.G2, Sq.G4, MoveType.DOUBLE),
+                                                         Move(Sq.H2, Sq.H3, MoveType.QUIET),
+                                                         Move(Sq.H2, Sq.H4, MoveType.DOUBLE)]))
+
+        # test for capture
+        board = Board('7k/8/8/3p4/4P3/8/8/K7 w - - 0 1')
+        pawn_moves = board._pawn_move_gen()
+        self.assertEqual(len(pawn_moves), 2)
+        self.assertListEqual(sorted(pawn_moves), sorted([Move(Sq.E4, Sq.E5, MoveType.QUIET),
+                                                         Move(Sq.E4, Sq.D5, MoveType.CAPTURE)]))
+
+        # test for promotions
+        board = Board('k6K/8/8/8/8/8/7p/6N1 b - - 0 1')
+        pawn_moves = board._pawn_move_gen()
+        self.assertEqual(len(pawn_moves), 8)
+        self.assertListEqual(sorted(pawn_moves), sorted([Move(Sq.H2, Sq.H1, MoveType.N_PROMO),
+                                                         Move(Sq.H2, Sq.H1, MoveType.B_PROMO),
+                                                         Move(Sq.H2, Sq.H1, MoveType.R_PROMO),
+                                                         Move(Sq.H2, Sq.H1, MoveType.Q_PROMO),
+                                                         Move(Sq.H2, Sq.G1, MoveType.N_PROMO_CAPTURE),
+                                                         Move(Sq.H2, Sq.G1, MoveType.B_PROMO_CAPTURE),
+                                                         Move(Sq.H2, Sq.G1, MoveType.R_PROMO_CAPTURE),
+                                                         Move(Sq.H2, Sq.G1, MoveType.Q_PROMO_CAPTURE)]))
+
+        # test for en passant capture
+        board = Board('k7/8/8/8/8/3pP3/8/7K b e3 - 0 1')
+        pawn_moves = board._pawn_move_gen()
+        self.assertEqual(len(pawn_moves), 2)
+        self.assertListEqual(sorted(pawn_moves), sorted([Move(Sq.D4, Sq.D3, MoveType.QUIET),
+                                                         Move(Sq.D4, Sq.E3, MoveType.EP_CAPTURE)]))
 
     def test_knight_move_gen(self):
         """
