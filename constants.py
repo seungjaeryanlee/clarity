@@ -101,8 +101,24 @@ _ATTACK_B = {
 }
 
 _ATTACK_R_U = [BitBoard(0)] * 64
+_ATTACK_R_U[Sq.H1] = BitBoard(int('00000001'
+                                  '00000001'
+                                  '00000001'
+                                  '00000001'
+                                  '00000001'
+                                  '00000001'
+                                  '00000001'
+                                  '00000000', 2))
 _ATTACK_R_D = [BitBoard(0)] * 64
 _ATTACK_R_L = [BitBoard(0)] * 64
+_ATTACK_R_L[Sq.H1] = BitBoard(int('00000000'
+                                  '00000000'
+                                  '00000000'
+                                  '00000000'
+                                  '00000000'
+                                  '00000000'
+                                  '00000000'
+                                  '11111110', 2))
 _ATTACK_R_R = [BitBoard(0)] * 64
 
 _ATTACK_R = {
