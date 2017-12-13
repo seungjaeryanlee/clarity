@@ -4,7 +4,7 @@ This file defines the Board class.
 """
 from BitBoard import BitBoard
 from Color import Color
-import constants as CN
+import constants as const
 from Move import Move
 from MoveType import MoveType
 from Piece import Piece
@@ -267,18 +267,18 @@ class Board:
 
         for pawn_sq in self.piece_sq[piece]:
             # quiet moves
-            quiet = CN.MOVE_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+            quiet = const.MOVE_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
             for index in quiet.indices():
                 moves.append(Move(pawn_sq, index, MoveType.QUIET))
 
             # double pawn push moves
             # TODO create constant DOUBLE
-            double = CN.DOUBLE_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+            double = const.DOUBLE_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
             for index in double.indices():
                 moves.append(Move(pawn_sq, index, MoveType.DOUBLE))
 
             # attack moves
-            capture = CN.ATTACK[piece][pawn_sq] & self.color_bb[Color.switch(self.turn)]
+            capture = const.ATTACK[piece][pawn_sq] & self.color_bb[Color.switch(self.turn)]
             for index in capture.indices():
                 moves.append(Move(pawn_sq, index, MoveType.CAPTURE))
 
@@ -298,11 +298,11 @@ class Board:
         piece = Piece.WN if self.turn == Color.WHITE else Piece.BN
 
         for knight_sq in self.piece_sq[piece]:
-            capture = CN.ATTACK[piece][knight_sq] & self.color_bb[Color.switch(self.turn)]
+            capture = const.ATTACK[piece][knight_sq] & self.color_bb[Color.switch(self.turn)]
             for index in capture.indices():
                 moves.append(Move(knight_sq, index, MoveType.CAPTURE))
-            noncapture = CN.ATTACK[piece][knight_sq] & ~(self.color_bb[self.turn]
-                                                         | self.color_bb[Color.switch(self.turn)])
+            noncapture = const.ATTACK[piece][knight_sq] & ~(self.color_bb[self.turn]
+                                                            | self.color_bb[Color.switch(self.turn)])
             for index in noncapture.indices():
                 moves.append(Move(knight_sq, index, MoveType.QUIET))
 
@@ -318,7 +318,7 @@ class Board:
         moves = []
 
         for sq in self.piece_sq[piece]:
-            for direction, ATTACK_DIR in CN.ATTACK[piece].items():
+            for direction, ATTACK_DIR in const.ATTACK[piece].items():
                 capture_or_block = ATTACK_DIR[sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
                 # TODO implement BitBoard.__eq__() and compare by BitBoards?
                 if capture_or_block.num == 0:
@@ -381,10 +381,10 @@ class Board:
 
         # note that this should only once since there can only be one king
         for king_sq in self.piece_sq[piece]:
-            capture = CN.ATTACK[piece][king_sq] & self.color_bb[Color.switch(self.turn)]
+            capture = const.ATTACK[piece][king_sq] & self.color_bb[Color.switch(self.turn)]
             for index in capture.indices():
                 moves.append(Move(king_sq, index, MoveType.CAPTURE))
-            noncapture = CN.ATTACK[piece][king_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+            noncapture = const.ATTACK[piece][king_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
             for index in noncapture.indices():
                 moves.append(Move(king_sq, index, MoveType.QUIET))
 
