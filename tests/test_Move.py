@@ -72,6 +72,16 @@ class TestMoveClass(unittest.TestCase):
         self.assertEqual(move1, move3)
         self.assertEqual(move1, move2)
 
+    def test_str(self):
+        """
+        Tests the str() function of the Move class.
+        """
+        move = Move(Sq.E2, Sq.E4, MoveType.DOUBLE)
+        self.assertEqual(str(move), 'Sq.E2 Sq.E4 MoveType.DOUBLE')
+
+        move = Move(Sq.D2, Sq.D3, MoveType.QUIET)
+        self.assertEqual(str(move), 'Sq.D2 Sq.D3 MoveType.QUIET')
+
     def test_init_sq(self):
         """
         Tests the init_sq() function of the Move class.

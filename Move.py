@@ -39,6 +39,12 @@ class Move:
         """
         return self.num < other.num
 
+    def __str__(self):
+        """
+        Overrides default function to a string with initial square (Sq), destination square (Sq)and move type (MoveType)
+        """
+        return str(Sq(self.init_sq())) + ' ' + str(Sq(self.dest_sq())) + ' ' + str(self.move_type())
+
     def init_sq(self):
         """
         Returns the bit index of the initial square
