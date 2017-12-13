@@ -187,6 +187,62 @@ DOUBLE_P = {
     Piece.BP: _DOUBLE_BP,
 }
 
+# quiet promotion bitboards
+_PROMO_WP = [BitBoard(0)] * 64
+# only white pawns on row 7 can be promoted quietly
+_PROMO_WP[Sq.A7] = BitBoard(int('8000000000000000', 16))
+_PROMO_WP[Sq.B7] = BitBoard(int('4000000000000000', 16))
+_PROMO_WP[Sq.C7] = BitBoard(int('2000000000000000', 16))
+_PROMO_WP[Sq.D7] = BitBoard(int('1000000000000000', 16))
+_PROMO_WP[Sq.E7] = BitBoard(int('800000000000000', 16))
+_PROMO_WP[Sq.F7] = BitBoard(int('400000000000000', 16))
+_PROMO_WP[Sq.G7] = BitBoard(int('200000000000000', 16))
+_PROMO_WP[Sq.H7] = BitBoard(int('100000000000000', 16))
+
+_PROMO_BP = [BitBoard(0)] * 64
+# only black pawns on row 2 can be promoted quietly
+_PROMO_BP[Sq.A2] = BitBoard(int('80', 16))
+_PROMO_BP[Sq.B2] = BitBoard(int('40', 16))
+_PROMO_BP[Sq.C2] = BitBoard(int('20', 16))
+_PROMO_BP[Sq.D2] = BitBoard(int('10', 16))
+_PROMO_BP[Sq.E2] = BitBoard(int('8', 16))
+_PROMO_BP[Sq.F2] = BitBoard(int('4', 16))
+_PROMO_BP[Sq.G2] = BitBoard(int('2', 16))
+_PROMO_BP[Sq.H2] = BitBoard(int('1', 16))
+
+PROMO_P = {
+    Piece.WP: _PROMO_WP,
+    Piece.BP: _PROMO_BP,
+}
+
+# capture promotion bitboards
+_PROMO_CAPTURE_WP = [BitBoard(0)] * 64
+# only white pawns on row 7 can be promoted with a capture
+_PROMO_CAPTURE_WP[Sq.A7] = BitBoard(int('4000000000000000', 16))
+_PROMO_CAPTURE_WP[Sq.B7] = BitBoard(int('A000000000000000', 16))
+_PROMO_CAPTURE_WP[Sq.C7] = BitBoard(int('5000000000000000', 16))
+_PROMO_CAPTURE_WP[Sq.D7] = BitBoard(int('2800000000000000', 16))
+_PROMO_CAPTURE_WP[Sq.E7] = BitBoard(int('1400000000000000', 16))
+_PROMO_CAPTURE_WP[Sq.F7] = BitBoard(int('A00000000000000', 16))
+_PROMO_CAPTURE_WP[Sq.G7] = BitBoard(int('500000000000000', 16))
+_PROMO_CAPTURE_WP[Sq.H7] = BitBoard(int('200000000000000', 16))
+
+_PROMO_CAPTURE_BP = [BitBoard(0)] * 64
+# only black pawns on row 2 can be promoted with a capture
+_PROMO_CAPTURE_BP[Sq.A2] = BitBoard(int('40', 16))
+_PROMO_CAPTURE_BP[Sq.B2] = BitBoard(int('A0', 16))
+_PROMO_CAPTURE_BP[Sq.C2] = BitBoard(int('50', 16))
+_PROMO_CAPTURE_BP[Sq.D2] = BitBoard(int('28', 16))
+_PROMO_CAPTURE_BP[Sq.E2] = BitBoard(int('14', 16))
+_PROMO_CAPTURE_BP[Sq.F2] = BitBoard(int('A', 16))
+_PROMO_CAPTURE_BP[Sq.G2] = BitBoard(int('5', 16))
+_PROMO_CAPTURE_BP[Sq.H2] = BitBoard(int('2', 16))
+
+PROMO_CAPTURE_P = {
+    Piece.WP: _PROMO_CAPTURE_WP,
+    Piece.BP: _PROMO_CAPTURE_BP,
+}
+
 # Attack bitboards
 # TODO fill data
 _ATTACK_WP = [
