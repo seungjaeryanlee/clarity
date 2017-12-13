@@ -490,7 +490,81 @@ _ATTACK_R_U = [
     BitBoard(0),  # Sq.A8
 ]
 
-_ATTACK_R_D = [BitBoard(0)] * 64
+_ATTACK_R_D = [
+    # nowhere to go down if the rook is on row 1
+    BitBoard(0),  # Sq.H1
+    BitBoard(0),  # Sq.G1
+    BitBoard(0),  # Sq.F1
+    BitBoard(0),  # Sq.E1
+    BitBoard(0),  # Sq.D1
+    BitBoard(0),  # Sq.C1
+    BitBoard(0),  # Sq.B1
+    BitBoard(0),  # Sq.A1
+
+    BitBoard(int('1', 16)),  # Sq.H2
+    BitBoard(int('2', 16)),  # Sq.G2
+    BitBoard(int('4', 16)),  # Sq.F2
+    BitBoard(int('8', 16)),  # Sq.E2
+    BitBoard(int('10', 16)),  # Sq.D2
+    BitBoard(int('20', 16)),  # Sq.C2
+    BitBoard(int('40', 16)),  # Sq.B2
+    BitBoard(int('80', 16)),  # Sq.A2
+
+    BitBoard(int('101', 16)),  # Sq.H3
+    BitBoard(int('202', 16)),  # Sq.G3
+    BitBoard(int('404', 16)),  # Sq.F3
+    BitBoard(int('808', 16)),  # Sq.E3
+    BitBoard(int('1010', 16)),  # Sq.D3
+    BitBoard(int('2020', 16)),  # Sq.C3
+    BitBoard(int('4040', 16)),  # Sq.B3
+    BitBoard(int('8080', 16)),  # Sq.A3
+
+    BitBoard(int('10101', 16)),  # Sq.H4
+    BitBoard(int('20202', 16)),  # Sq.G4
+    BitBoard(int('40404', 16)),  # Sq.F4
+    BitBoard(int('80808', 16)),  # Sq.E4
+    BitBoard(int('101010', 16)),  # Sq.D4
+    BitBoard(int('202020', 16)),  # Sq.C4
+    BitBoard(int('404040', 16)),  # Sq.B4
+    BitBoard(int('808080', 16)),  # Sq.A4
+
+    BitBoard(int('1010101', 16)),  # Sq.H5
+    BitBoard(int('2020202', 16)),  # Sq.G5
+    BitBoard(int('4040404', 16)),  # Sq.F5
+    BitBoard(int('8080808', 16)),  # Sq.E5
+    BitBoard(int('10101010', 16)),  # Sq.D5
+    BitBoard(int('20202020', 16)),  # Sq.C5
+    BitBoard(int('40404040', 16)),  # Sq.B5
+    BitBoard(int('80808080', 16)),  # Sq.A5
+
+    BitBoard(int('101010101', 16)),  # Sq.H6
+    BitBoard(int('202020202', 16)),  # Sq.G6
+    BitBoard(int('404040404', 16)),  # Sq.F6
+    BitBoard(int('808080808', 16)),  # Sq.E6
+    BitBoard(int('1010101010', 16)),  # Sq.D6
+    BitBoard(int('2020202020', 16)),  # Sq.C6
+    BitBoard(int('4040404040', 16)),  # Sq.B6
+    BitBoard(int('8080808080', 16)),  # Sq.A6
+
+    BitBoard(int('10101010101', 16)),  # Sq.H7
+    BitBoard(int('20202020202', 16)),  # Sq.G7
+    BitBoard(int('40404040404', 16)),  # Sq.F7
+    BitBoard(int('80808080808', 16)),  # Sq.E7
+    BitBoard(int('101010101010', 16)),  # Sq.D7
+    BitBoard(int('202020202020', 16)),  # Sq.C7
+    BitBoard(int('404040404040', 16)),  # Sq.B7
+    BitBoard(int('808080808080', 16)),  # Sq.A7
+
+    BitBoard(int('1010101010101', 16)),  # Sq.H8
+    BitBoard(int('2020202020202', 16)),  # Sq.G8
+    BitBoard(int('4040404040404', 16)),  # Sq.F8
+    BitBoard(int('8080808080808', 16)),  # Sq.E8
+    BitBoard(int('10101010101010', 16)),  # Sq.D8
+    BitBoard(int('20202020202020', 16)),  # Sq.C8
+    BitBoard(int('40404040404040', 16)),  # Sq.B8
+    BitBoard(int('80808080808080', 16)),  # Sq.A8
+]
+
 _ATTACK_R_L = [BitBoard(0)] * 64
 _ATTACK_R_L[Sq.H1] = BitBoard(int('00000000'
                                   '00000000'
