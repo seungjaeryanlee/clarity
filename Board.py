@@ -256,6 +256,26 @@ class Board:
         moves.extend(self._king_move_gen())
         return moves
 
+    def find_checks(self):
+        """
+        TODO implement
+        Returns list of pieces putting the king on check currently. Returns an empty list if the king is not in check.
+        :return: a list of pieces putting the king on check currently or an empty list if the king is not in check.
+        """
+        # TODO detect pawn checks
+        # _pawn_find_checks()
+        # TODO detect knight checks
+        # _knight_find_checks()
+        # TODO try creating _slider_find_checks()
+        # TODO can also find pinned pieces similarly
+        # TODO detect bishop checks
+        # _bishop_find_checks()
+        # TODO detect rook checks
+        # _rook_find_checks()
+        # TODO detect queen checks
+        # _queen_find_checks()
+        pass
+
     def _pawn_move_gen(self):
         """
         TODO implement promotion
