@@ -301,8 +301,7 @@ class Board:
             capture = const.ATTACK[piece][knight_sq] & self.color_bb[Color.switch(self.turn)]
             for index in capture.indices():
                 moves.append(Move(knight_sq, index, MoveType.CAPTURE))
-            noncapture = const.ATTACK[piece][knight_sq] & ~(self.color_bb[self.turn]
-                                                            | self.color_bb[Color.switch(self.turn)])
+            noncapture = const.ATTACK[piece][knight_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
             for index in noncapture.indices():
                 moves.append(Move(knight_sq, index, MoveType.QUIET))
 

@@ -3,7 +3,6 @@ This file defines the constants used in Clarity.
 """
 from BitBoard import BitBoard
 from Direction import Direction
-from MoveType import MoveType
 from Piece import Piece
 from Sq import Sq
 

@@ -19,7 +19,8 @@ class Direction(Enum):
     L = 7
     UL = 8
 
+
 # only runs when this module is called directly
 if __name__ == '__main__':
-    for dir in Direction:
-        print(dir)
+    for direction in Direction:
+        print(direction)
