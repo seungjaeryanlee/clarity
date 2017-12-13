@@ -370,16 +370,16 @@ class Board:
 
     def _queen_move_gen(self):
         """
-        TODO implement
+        TODO check for pin
         Returns a list of all possible legal queen moves
         :return: a list of all possible legal queen moves
         """
+        moves = []
+        piece = Piece.WQ if self.turn == Color.WHITE else Piece.BQ
+        moves = self._bishop_move_gen(self.piece_sq[piece])
+        moves.extend(self._rook_move_gen(self.piece_sq[piece]))
 
-        # PSEUDOCODE
-        # _bishop_move_gen()
-        # _rook_move_gen()
-
-        return []
+        return moves
 
     def _king_move_gen(self):
         """
