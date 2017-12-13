@@ -301,6 +301,9 @@ class Board:
                 moves.append(Move(pawn_sq, index, MoveType.Q_PROMO_CAPTURE))
 
             # TODO check for en passant?
+            if self.ep_square != -1:
+                if const.ATTACK[piece][pawn_sq][self.ep_square]:
+                    moves.append(Move(pawn_sq, self.ep_square, MoveType.EP_CAPTURE))
 
         return moves
 
