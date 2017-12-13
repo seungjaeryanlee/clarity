@@ -1,4 +1,5 @@
-r"""
+#!/usr/bin/env python3
+"""
 This file defines the constants used in Clarity.
 """
 from BitBoard import BitBoard
