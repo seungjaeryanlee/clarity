@@ -284,8 +284,6 @@ class Board:
 
             # TODO check for en passant?
 
-        for move in moves:
-            print(move)
         return moves
 
     def _knight_move_gen(self):
