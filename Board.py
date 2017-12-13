@@ -4,7 +4,6 @@ This file defines the Board class.
 """
 from BitBoard import BitBoard
 from Color import Color
-from Direction import Direction
 import constants as CN
 from Move import Move
 from MoveType import MoveType
@@ -125,7 +124,6 @@ class Board:
                     empty_count = 0
             if i % 8 == 0 and i != 0:
                 fen_str += '/'
-
 
         fen_str += ' ' + ('w' if self.turn == Color.WHITE else 'b')
         fen_str += ' ' + ('K' if self.wk_castling else '')
@@ -295,8 +293,8 @@ class Board:
         piece = Piece.WB if self.turn == Color.WHITE else Piece.BB
         for bishop_sq in self.piece_sq[piece]:
             # TODO make Direction iterable to make this for loop simpler?
-            for dir in CN.ATTACK[piece]:
-                ATTACK_DIR = CN.ATTACK[piece][dir][bishop_sq]
+            for direction in CN.ATTACK[piece]:
+                ATTACK_DIR = CN.ATTACK[piece][direction][bishop_sq]
                 capture_or_block = ATTACK_DIR & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
                 # TODO implement BitBoard.__eq__() and compare by BitBoards?
                 if capture_or_block.num == 0:
