@@ -423,13 +423,13 @@ class TestBoardClass(unittest.TestCase):
         Tests the bishop_move_gen() function of the Board class
         """
         board = Board()
-        knight_moves = board._bishop_move_gen()
-        self.assertEqual(len(knight_moves), 0)
+        bishop_moves = board._bishop_move_gen()
+        self.assertEqual(len(bishop_moves), 0)
 
         board = Board('K6k/8/8/8/8/6p1/8/7B w - - 0 1')
-        knight_moves = board._bishop_move_gen()
-        self.assertEqual(len(knight_moves), 6)
-        self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.H1, Sq.G2, MoveType.QUIET),
+        bishop_moves = board._bishop_move_gen()
+        self.assertEqual(len(bishop_moves), 6)
+        self.assertListEqual(sorted(bishop_moves), sorted([Move(Sq.H1, Sq.G2, MoveType.QUIET),
                                                            Move(Sq.H1, Sq.F3, MoveType.QUIET),
                                                            Move(Sq.H1, Sq.E4, MoveType.QUIET),
                                                            Move(Sq.H1, Sq.D5, MoveType.QUIET),
@@ -437,9 +437,9 @@ class TestBoardClass(unittest.TestCase):
                                                            Move(Sq.H1, Sq.B7, MoveType.QUIET)]))
 
         board = Board('k6K/8/2N5/8/8/5b2/8/7b b - - 0 1')
-        knight_moves = board._bishop_move_gen()
-        self.assertEqual(len(knight_moves), 9)
-        self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.H1, Sq.G2, MoveType.QUIET),
+        bishop_moves = board._bishop_move_gen()
+        self.assertEqual(len(bishop_moves), 9)
+        self.assertListEqual(sorted(bishop_moves), sorted([Move(Sq.H1, Sq.G2, MoveType.QUIET),
                                                            Move(Sq.F3, Sq.G2, MoveType.QUIET),
                                                            Move(Sq.F3, Sq.E2, MoveType.QUIET),
                                                            Move(Sq.F3, Sq.D1, MoveType.QUIET),
@@ -455,49 +455,49 @@ class TestBoardClass(unittest.TestCase):
         Tests the rook_move_gen() function of the Board class
         """
         board = Board()
-        knight_moves = board._rook_move_gen()
-        self.assertEqual(len(knight_moves), 0)
+        rook_moves = board._rook_move_gen()
+        self.assertEqual(len(rook_moves), 0)
 
         board = Board('K5k1/8/8/8/8/8/8/7R w - - 0 1')
-        knight_moves = board._rook_move_gen()
-        self.assertEqual(len(knight_moves), 14)
-        self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H3, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H4, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H5, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H6, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H7, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H8, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.G1, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.F1, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.E1, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.D1, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.C1, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.B1, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.A1, MoveType.QUIET)]))
+        rook_moves = board._rook_move_gen()
+        self.assertEqual(len(rook_moves), 14)
+        self.assertListEqual(sorted(rook_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H3, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H4, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H5, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H6, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H7, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H8, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.G1, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.F1, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.E1, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.D1, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.C1, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.B1, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.A1, MoveType.QUIET)]))
 
         board = Board('k6K/8/8/8/8/8/8/2N2r1r b - - 0 1')
-        knight_moves = board._rook_move_gen()
-        self.assertEqual(len(knight_moves), 19)
-        self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H3, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H4, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H5, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H6, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H7, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.H8, MoveType.QUIET),
-                                                           Move(Sq.H1, Sq.G1, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.F2, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.F3, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.F4, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.F5, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.F6, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.F7, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.F8, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.G1, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.E1, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.D1, MoveType.QUIET),
-                                                           Move(Sq.F1, Sq.C1, MoveType.CAPTURE)]))
+        rook_moves = board._rook_move_gen()
+        self.assertEqual(len(rook_moves), 19)
+        self.assertListEqual(sorted(rook_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H3, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H4, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H5, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H6, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H7, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.H8, MoveType.QUIET),
+                                                         Move(Sq.H1, Sq.G1, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.F2, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.F3, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.F4, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.F5, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.F6, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.F7, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.F8, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.G1, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.E1, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.D1, MoveType.QUIET),
+                                                         Move(Sq.F1, Sq.C1, MoveType.CAPTURE)]))
 
     def test_queen_move_gen(self):
         """
