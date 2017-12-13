@@ -508,8 +508,9 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(queen_moves), 0)
 
         board = Board('K5k1/8/8/8/8/8/8/6rQ w - - 0 1')
+        print('\n' + str(board))
         queen_moves = board._queen_move_gen()
-        self.assertEqual(len(queen_moves), 8)
+        self.assertEqual(len(queen_moves), 14)
         self.assertListEqual(sorted(queen_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
                                                           Move(Sq.H1, Sq.H3, MoveType.QUIET),
                                                           Move(Sq.H1, Sq.H4, MoveType.QUIET),
@@ -517,6 +518,12 @@ class TestBoardClass(unittest.TestCase):
                                                           Move(Sq.H1, Sq.H6, MoveType.QUIET),
                                                           Move(Sq.H1, Sq.H7, MoveType.QUIET),
                                                           Move(Sq.H1, Sq.H8, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.G2, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.F3, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.E4, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.D5, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.C6, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.B7, MoveType.QUIET),
                                                           Move(Sq.H1, Sq.G1, MoveType.CAPTURE)]))
 
         board = Board('k3K2N/8/8/8/3p4/5b2/8/4R1qq b - - 0 1')
