@@ -258,36 +258,35 @@ class Board:
 
     def _pawn_move_gen(self):
         """
-        TODO implement
+        TODO implement promotion
         Returns a list of all possible legal pawn moves
         :return: a list of all possible legal pawn moves
         """
-        # PSEUDOCODE
-        #
-        # moves = []
-        # piece = Piece.WP if self.turn == Color.WHITE else Piece.BP
-        #
-        # for pawn_sq in self.piece_sq[piece]:
-        #     # quiet moves
-        #     quiet = CN.MOVE_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
-        #     for index in quiet.indices():
-        #         moves.append(Move(pawn_sq, index, MoveType.QUIET))
-        #
-        #     # double pawn push moves
-        #     # TODO create constant DOUBLE
-        #     double = CN.DOUBLE[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
-        #     for index in double.indices():
-        #         moves.append(Move(pawn_sq, index, MoveType.DOUBLE))
-        #
-        #     # attack moves
-        #     capture = CN.ATTACK[piece][pawn_sq] & self.color_bb[Color.switch(self.turn)]
-        #     for index in capture.indices():
-        #         moves.append(Move(pawn_sq, index, MoveType.CAPTURE))
-        #
-        #     # TODO check for en passant?
-        #
-        # return moves
-        return []
+        moves = []
+        piece = Piece.WP if self.turn == Color.WHITE else Piece.BP
+
+        for pawn_sq in self.piece_sq[piece]:
+            # quiet moves
+            quiet = CN.MOVE_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+            for index in quiet.indices():
+                moves.append(Move(pawn_sq, index, MoveType.QUIET))
+
+            # double pawn push moves
+            # TODO create constant DOUBLE
+            double = CN.DOUBLE_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+            for index in double.indices():
+                moves.append(Move(pawn_sq, index, MoveType.DOUBLE))
+
+            # attack moves
+            capture = CN.ATTACK[piece][pawn_sq] & self.color_bb[Color.switch(self.turn)]
+            for index in capture.indices():
+                moves.append(Move(pawn_sq, index, MoveType.CAPTURE))
+
+            # TODO check for en passant?
+
+        for move in moves:
+            print(move)
+        return moves
 
     def _knight_move_gen(self):
         """
