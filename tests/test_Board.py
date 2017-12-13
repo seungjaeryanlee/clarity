@@ -501,10 +501,48 @@ class TestBoardClass(unittest.TestCase):
 
     def test_queen_move_gen(self):
         """
-        TODO write tests
         Tests the queen_move_gen() function of the Board class
         """
-        pass
+        board = Board()
+        queen_moves = board._queen_move_gen()
+        self.assertEqual(len(queen_moves), 0)
+
+        board = Board('K5k1/8/8/8/8/8/8/6rQ w - - 0 1')
+        queen_moves = board._queen_move_gen()
+        self.assertEqual(len(queen_moves), 8)
+        self.assertListEqual(sorted(queen_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H3, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H4, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H5, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H6, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H7, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H8, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.G1, MoveType.CAPTURE)]))
+
+        board = Board('k3K2N/8/8/8/3p4/5b2/8/4R1qq b - - 0 1')
+        print('\n' + str(board))
+        queen_moves = board._queen_move_gen()
+        self.assertEqual(len(queen_moves), 20)
+        self.assertListEqual(sorted(queen_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H3, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H4, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H5, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H6, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H7, MoveType.QUIET),
+                                                          Move(Sq.H1, Sq.H8, MoveType.CAPTURE),
+                                                          Move(Sq.H1, Sq.G2, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.G2, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.G3, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.G4, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.G5, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.G6, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.G7, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.G8, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.F1, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.E1, MoveType.CAPTURE),
+                                                          Move(Sq.G1, Sq.F2, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.E3, MoveType.QUIET),
+                                                          Move(Sq.G1, Sq.H2, MoveType.QUIET)]))
 
     def test_king_move_gen(self):
         """
