@@ -294,13 +294,11 @@ class Board:
         moves = []
 
         for sq in self.piece_sq[piece]:
-            # TODO make Direction iterable to make this for loop simpler?
-            for direction in CN.ATTACK[piece]:
-                ATTACK_DIR = CN.ATTACK[piece][direction][sq]
-                capture_or_block = ATTACK_DIR & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+            for direction, ATTACK_DIR in CN.ATTACK[piece].items():
+                capture_or_block = ATTACK_DIR[sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
                 # TODO implement BitBoard.__eq__() and compare by BitBoards?
                 if capture_or_block.num == 0:
-                    for index in ATTACK_DIR.indices():
+                    for index in ATTACK_DIR[sq].indices():
                         moves.append(Move(sq, index, MoveType.QUIET))
                 else:
                     min_diff = 64
@@ -311,10 +309,10 @@ class Board:
                             min_diff = abs(sq - index)
                             min_sq = index
                     # Add all moves before that piece
-                    for index in ATTACK_DIR.indices():
+                    for index in ATTACK_DIR[sq].indices():
                         if min_diff > abs(sq - index):
                             moves.append(Move(sq, index, MoveType.QUIET))
-                    capture = ATTACK_DIR & self.color_bb[Color.switch(self.turn)]
+                    capture = ATTACK_DIR[sq] & self.color_bb[Color.switch(self.turn)]
                     # If enemy piece, add CAPTURE move
                     if capture[min_sq] == 1:
                         moves.append(Move(sq, min_sq, MoveType.CAPTURE))
