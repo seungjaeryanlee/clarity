@@ -269,14 +269,13 @@ class Board:
         #
         # for pawn_sq in self.piece_sq[piece]:
         #     # quiet moves
-        #     # TODO change format of MOVE_WP and MOVE_BP
-        #     quiet = CN.MOVE_WP[pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+        #     quiet = CN.MOVE_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
         #     for index in quiet.indices():
         #         moves.append(Move(pawn_sq, index, MoveType.QUIET))
         #
         #     # double pawn push moves
         #     # TODO create constant DOUBLE
-        #     double = CN.DOUBLE[pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+        #     double = CN.DOUBLE[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
         #     for index in double.indices():
         #         moves.append(Move(pawn_sq, index, MoveType.DOUBLE))
         #

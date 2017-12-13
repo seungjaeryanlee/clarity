@@ -9,20 +9,18 @@ from Sq import Sq
 
 
 # Move bitboards for pawns
-_MOVE_WP_QUIET = [BitBoard(0)] * 64
-_MOVE_WP_DOUBLE = [BitBoard(0)] * 64
+_MOVE_WP = [BitBoard(0)] * 64
+_MOVE_BP = [BitBoard(0)] * 64
+_DOUBLE_WP = [BitBoard(0)] * 64
+_DOUBLE_BP = [BitBoard(0)] * 64
 
-MOVE_WP = {
-    MoveType.QUIET: _MOVE_WP_QUIET,
-    MoveType.DOUBLE: _MOVE_WP_DOUBLE,
+MOVE_P = {
+    Piece.WP: _MOVE_WP,
+    Piece.BP: _MOVE_BP,
 }
-
-_MOVE_BP_QUIET = [BitBoard(0)] * 64
-_MOVE_BP_DOUBLE = [BitBoard(0)] * 64
-
-MOVE_BP = {
-    MoveType.QUIET: _MOVE_BP_QUIET,
-    MoveType.DOUBLE: _MOVE_BP_DOUBLE,
+DOUBLE_P = {
+    Piece.WP: _DOUBLE_WP,
+    Piece.BP: _DOUBLE_BP,
 }
 
 # Attack bitboards
