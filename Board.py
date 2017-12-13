@@ -284,13 +284,20 @@ class Board:
 
         return moves
 
-    def _bishop_move_gen(self):
+    def _bishop_move_gen(self, bishop_sq_list=None):
         """
-        Returns a list of all possible legal bishop moves
+        TODO check for pin
+        Returns a list of all possible legal bishop moves for rooks in the squares of the given bishop_sq_list.
+        If bishop_sq_list is not specified, uses all bishops on the given board with the correct color.
+        :param bishop_sq_list: (if specified) list of squares with bishops to generate moves for
         :return: a list of all possible legal bishop moves
         """
         moves = []
         piece = Piece.WB if self.turn == Color.WHITE else Piece.BB
+        # use default value if not specified
+        if bishop_sq_list is None:
+            bishop_sq_list = self.piece_sq[piece]
+
         for bishop_sq in self.piece_sq[piece]:
             # TODO make Direction iterable to make this for loop simpler?
             for direction in CN.ATTACK[piece]:
@@ -319,15 +326,21 @@ class Board:
 
         return moves
 
-    def _rook_move_gen(self):
+    def _rook_move_gen(self, rook_sq_list=None):
         """
         TODO check for pin
-        Returns a list of all possible legal rook moves
+        Returns a list of all possible legal rook moves for rooks in the squares of the given rook_sq_list.
+        If rook_sq_list is not specified, uses all rooks on the given board with the correct color.
+        :param rook_sq_list: (if specified) list of squares with rooks to generate moves for
         :return: a list of all possible legal rook moves
         """
         moves = []
         piece = Piece.WR if self.turn == Color.WHITE else Piece.BR
-        for rook_sq in self.piece_sq[piece]:
+        # use default value if not specified
+        if rook_sq_list is None:
+            rook_sq_list = self.piece_sq[piece]
+
+        for rook_sq in rook_sq_list:
             # TODO make Direction iterable to make this for loop simpler?
             for direction in CN.ATTACK[piece]:
                 ATTACK_DIR = CN.ATTACK[piece][direction][rook_sq]
