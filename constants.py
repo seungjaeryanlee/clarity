@@ -421,23 +421,79 @@ _ATTACK_B_UL = [
     BitBoard(0),  # Sq.A8
 ]
 
-_ATTACK_B_UR = [BitBoard(0)] * 64
-_ATTACK_B_UR[Sq.F3] = BitBoard(int('00000000'
-                                   '00000000'
-                                   '00000000'
-                                   '00000001'
-                                   '00000010'
-                                   '00000000'
-                                   '00000000'
-                                   '00000000', 2))
-_ATTACK_B_UR[Sq.G1] = BitBoard(int('00000000'
-                                   '00000000'
-                                   '00000000'
-                                   '00000000'
-                                   '00000000'
-                                   '00000000'
-                                   '00000001'
-                                   '00000000', 2))
+_ATTACK_B_UR = [
+    BitBoard(0),  # Sq.H1
+    BitBoard(int('0100', 16)),  # Sq.G1
+    BitBoard(int('010200', 16)),  # Sq.F1
+    BitBoard(int('01020400', 16)),  # Sq.E1
+    BitBoard(int('0102040800', 16)),  # Sq.D1
+    BitBoard(int('010204081000', 16)),  # Sq.C1
+    BitBoard(int('01020408102000', 16)),  # Sq.B1
+    BitBoard(int('0102040810204000', 16)),  # Sq.A1
+
+    BitBoard(0),  # Sq.H2
+    BitBoard(int('010000', 16)),  # Sq.G2
+    BitBoard(int('01020000', 16)),  # Sq.F2
+    BitBoard(int('0102040000', 16)),  # Sq.E2
+    BitBoard(int('010204080000', 16)),  # Sq.D2
+    BitBoard(int('01020408100000', 16)),  # Sq.C2
+    BitBoard(int('0102040810200000', 16)),  # Sq.B2
+    BitBoard(int('0204081020400000', 16)),  # Sq.A2
+
+    BitBoard(0),  # Sq.H3
+    BitBoard(int('01000000', 16)),  # Sq.G3
+    BitBoard(int('0102000000', 16)),  # Sq.F3
+    BitBoard(int('010204000000', 16)),  # Sq.E3
+    BitBoard(int('01020408000000', 16)),  # Sq.D3
+    BitBoard(int('0102040810000000', 16)),  # Sq.C3
+    BitBoard(int('0204081020000000', 16)),  # Sq.B3
+    BitBoard(int('0408102040000000', 16)),  # Sq.A3
+
+    BitBoard(0),  # Sq.H4
+    BitBoard(int('0100000000', 16)),  # Sq.G4
+    BitBoard(int('010200000000', 16)),  # Sq.F4
+    BitBoard(int('01020400000000', 16)),  # Sq.E4
+    BitBoard(int('0102040800000000', 16)),  # Sq.D4
+    BitBoard(int('0204081000000000', 16)),  # Sq.C4
+    BitBoard(int('0408102000000000', 16)),  # Sq.B4
+    BitBoard(int('0810204000000000', 16)),  # Sq.A4
+
+    BitBoard(0),  # Sq.H5
+    BitBoard(int('010000000000', 16)),  # Sq.G5
+    BitBoard(int('01020000000000', 16)),  # Sq.F5
+    BitBoard(int('0102040000000000', 16)),  # Sq.E5
+    BitBoard(int('0204080000000000', 16)),  # Sq.D5
+    BitBoard(int('0408100000000000', 16)),  # Sq.C5
+    BitBoard(int('0810200000000000', 16)),  # Sq.B5
+    BitBoard(int('1020400000000000', 16)),  # Sq.A5
+
+    BitBoard(0),  # Sq.H6
+    BitBoard(int('01000000000000', 16)),  # Sq.G6
+    BitBoard(int('0102000000000000', 16)),  # Sq.F6
+    BitBoard(int('0204000000000000', 16)),  # Sq.E6
+    BitBoard(int('0408000000000000', 16)),  # Sq.D6
+    BitBoard(int('0810000000000000', 16)),  # Sq.C6
+    BitBoard(int('1020000000000000', 16)),  # Sq.B6
+    BitBoard(int('2040000000000000', 16)),  # Sq.A6
+
+    BitBoard(0),  # Sq.H7
+    BitBoard(int('0100000000000000', 16)),  # Sq.G7
+    BitBoard(int('0200000000000000', 16)),  # Sq.F7
+    BitBoard(int('0400000000000000', 16)),  # Sq.E7
+    BitBoard(int('0800000000000000', 16)),  # Sq.D7
+    BitBoard(int('1000000000000000', 16)),  # Sq.C7
+    BitBoard(int('2000000000000000', 16)),  # Sq.B7
+    BitBoard(int('4000000000000000', 16)),  # Sq.A7
+
+    BitBoard(0),  # Sq.H8
+    BitBoard(0),  # Sq.G8
+    BitBoard(0),  # Sq.F8
+    BitBoard(0),  # Sq.E8
+    BitBoard(0),  # Sq.D8
+    BitBoard(0),  # Sq.C8
+    BitBoard(0),  # Sq.B8
+    BitBoard(0),  # Sq.A8
+]
 
 _ATTACK_B_DL = [
     BitBoard(0),  # Sq.H1
