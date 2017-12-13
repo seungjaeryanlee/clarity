@@ -4,6 +4,7 @@ This file defines the Board class.
 """
 from BitBoard import BitBoard
 from Color import Color
+from Direction import Direction
 import constants as CN
 from Move import Move
 from MoveType import MoveType
@@ -287,17 +288,18 @@ class Board:
 
     def _bishop_move_gen(self):
         """
-        TODO implement
         Returns a list of all possible legal bishop moves
         :return: a list of all possible legal bishop moves
         """
         moves = []
         piece = Piece.WB if self.turn == Color.WHITE else Piece.BB
         for bishop_sq in self.piece_sq[piece]:
-             # TODO make Direction iterable
-            for _, ATTACK_DIR in CN.ATTACK[piece]:
+            # TODO make Direction iterable to make this for loop simpler?
+            for dir in CN.ATTACK[piece]:
+                ATTACK_DIR = CN.ATTACK[piece][dir][bishop_sq]
                 capture_or_block = ATTACK_DIR & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
-                if capture_or_block == 0:
+                # TODO implement BitBoard.__eq__() and compare by BitBoards?
+                if capture_or_block.num == 0:
                     for index in ATTACK_DIR.indices():
                         moves.append(Move(bishop_sq, index, MoveType.QUIET))
                 else:
@@ -310,7 +312,7 @@ class Board:
                             min_sq = index
                     # Add all moves before that piece
                     for index in ATTACK_DIR.indices():
-                        if min_diff < abs(bishop_sq - index):
+                        if min_diff > abs(bishop_sq - index):
                             moves.append(Move(bishop_sq, index, MoveType.QUIET))
                     capture = ATTACK_DIR & self.color_bb[Color.switch(self.turn)]
                     # If enemy piece, add CAPTURE move
