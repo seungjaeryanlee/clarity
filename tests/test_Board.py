@@ -458,8 +458,7 @@ class TestBoardClass(unittest.TestCase):
         knight_moves = board._rook_move_gen()
         self.assertEqual(len(knight_moves), 0)
 
-        board = Board('K6k/8/8/8/8/8/8/7R w - - 0 1')
-        print(board)
+        board = Board('K5k1/8/8/8/8/8/8/7R w - - 0 1')
         knight_moves = board._rook_move_gen()
         self.assertEqual(len(knight_moves), 14)
         self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
@@ -478,7 +477,6 @@ class TestBoardClass(unittest.TestCase):
                                                            Move(Sq.H1, Sq.A1, MoveType.QUIET)]))
 
         board = Board('k6K/8/8/8/8/8/8/2N2r1r b - - 0 1')
-        print(board)
         knight_moves = board._rook_move_gen()
         self.assertEqual(len(knight_moves), 19)
         self.assertListEqual(sorted(knight_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
