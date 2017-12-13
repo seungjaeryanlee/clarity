@@ -521,16 +521,15 @@ class TestBoardClass(unittest.TestCase):
                                                          Move(Sq.H1, Sq.B1, MoveType.QUIET),
                                                          Move(Sq.H1, Sq.A1, MoveType.QUIET)]))
 
-        board = Board('k6K/8/8/8/8/8/8/2N2r1r b - - 0 1')
+        board = Board('K6k/8/8/8/8/8/8/2N2r1r b - - 0 1')
         rook_moves = board._rook_move_gen()
-        self.assertEqual(len(rook_moves), 19)
+        self.assertEqual(len(rook_moves), 18)
         self.assertListEqual(sorted(rook_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
                                                          Move(Sq.H1, Sq.H3, MoveType.QUIET),
                                                          Move(Sq.H1, Sq.H4, MoveType.QUIET),
                                                          Move(Sq.H1, Sq.H5, MoveType.QUIET),
                                                          Move(Sq.H1, Sq.H6, MoveType.QUIET),
                                                          Move(Sq.H1, Sq.H7, MoveType.QUIET),
-                                                         Move(Sq.H1, Sq.H8, MoveType.QUIET),
                                                          Move(Sq.H1, Sq.G1, MoveType.QUIET),
                                                          Move(Sq.F1, Sq.F2, MoveType.QUIET),
                                                          Move(Sq.F1, Sq.F3, MoveType.QUIET),
