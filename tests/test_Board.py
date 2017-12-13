@@ -421,7 +421,7 @@ class TestBoardClass(unittest.TestCase):
                                                          Move(Sq.H2, Sq.G1, MoveType.Q_PROMO_CAPTURE)]))
 
         # test for en passant capture
-        board = Board('k7/8/8/8/8/3pP3/8/7K b e3 - 0 1')
+        board = Board('k7/8/8/8/3pP3/8/8/7K b e3 - 0 1')
         pawn_moves = board._pawn_move_gen()
         self.assertEqual(len(pawn_moves), 2)
         self.assertListEqual(sorted(pawn_moves), sorted([Move(Sq.D4, Sq.D3, MoveType.QUIET),
