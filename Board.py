@@ -321,30 +321,39 @@ class Board:
 
     def _rook_move_gen(self):
         """
-        TODO implement
+        TODO check for pin
         Returns a list of all possible legal rook moves
         :return: a list of all possible legal rook moves
         """
+        moves = []
+        piece = Piece.WR if self.turn == Color.WHITE else Piece.BR
+        for rook_sq in self.piece_sq[piece]:
+            # TODO make Direction iterable to make this for loop simpler?
+            for direction in CN.ATTACK[piece]:
+                ATTACK_DIR = CN.ATTACK[piece][direction][rook_sq]
+                capture_or_block = ATTACK_DIR & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+                # TODO implement BitBoard.__eq__() and compare by BitBoards?
+                if capture_or_block.num == 0:
+                    for index in ATTACK_DIR.indices():
+                        moves.append(Move(rook_sq, index, MoveType.QUIET))
+                else:
+                    min_diff = 64
+                    min_sq = -1
+                    # Get the closest piece in the way of movement
+                    for index in capture_or_block.indices():
+                        if min_diff > abs(rook_sq - index):
+                            min_diff = abs(rook_sq - index)
+                            min_sq = index
+                    # Add all moves before that piece
+                    for index in ATTACK_DIR.indices():
+                        if min_diff > abs(rook_sq - index):
+                            moves.append(Move(rook_sq, index, MoveType.QUIET))
+                    capture = ATTACK_DIR & self.color_bb[Color.switch(self.turn)]
+                    # If enemy piece, add CAPTURE move
+                    if capture[min_sq] == 1:
+                        moves.append(Move(rook_sq, min_sq, MoveType.CAPTURE))
 
-        # PSEUDOCODE
-        # moves = []
-        #
-        # for rook_sq in self.piece_sq[Piece.WR]: (or Piece.BR)
-        #     get ATTACK_BB (4 directions)
-        #     for ATTACK_BB_DIR in ATTACK_BB:
-        #         capture_or_block = ATTACK_BB_DIR & self.color_bb[Color.BLACK]
-        #         if capture_or_block == 0:
-        #             add all moves in ATTACK_BB_DIR
-        #         else
-        #             get the first one (least difference)
-        #             add all moves before that
-        #             capture = ATTACK_BB_DIR & self.color_bb[Color.BLACK]
-        #             if capture[bit] == 1:
-        #                 add move
-        #
-        # return moves
-
-        return []
+        return moves
 
     def _queen_move_gen(self):
         """
