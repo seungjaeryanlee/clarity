@@ -284,19 +284,14 @@ class Board:
 
         return moves
 
-    def _bishop_move_gen(self, bishop_sq_list=None):
+    def _bishop_move_gen(self):
         """
         TODO check for pin
-        Returns a list of all possible legal bishop moves for rooks in the squares of the given bishop_sq_list.
-        If bishop_sq_list is not specified, uses all bishops on the given board with the correct color.
-        :param bishop_sq_list: (if specified) list of squares with bishops to generate moves for
+        Returns a list of all possible legal bishop moves
         :return: a list of all possible legal bishop moves
         """
         moves = []
         piece = Piece.WB if self.turn == Color.WHITE else Piece.BB
-        # use default value if not specified
-        if bishop_sq_list is None:
-            bishop_sq_list = self.piece_sq[piece]
 
         for bishop_sq in self.piece_sq[piece]:
             # TODO make Direction iterable to make this for loop simpler?
@@ -326,21 +321,16 @@ class Board:
 
         return moves
 
-    def _rook_move_gen(self, rook_sq_list=None):
+    def _rook_move_gen(self, piece=None):
         """
         TODO check for pin
-        Returns a list of all possible legal rook moves for rooks in the squares of the given rook_sq_list.
-        If rook_sq_list is not specified, uses all rooks on the given board with the correct color.
-        :param rook_sq_list: (if specified) list of squares with rooks to generate moves for
+        Returns a list of all possible legal rook moves
         :return: a list of all possible legal rook moves
         """
         moves = []
         piece = Piece.WR if self.turn == Color.WHITE else Piece.BR
-        # use default value if not specified
-        if rook_sq_list is None:
-            rook_sq_list = self.piece_sq[piece]
 
-        for rook_sq in rook_sq_list:
+        for rook_sq in self.piece_sq[piece]:
             # TODO make Direction iterable to make this for loop simpler?
             for direction in CN.ATTACK[piece]:
                 ATTACK_DIR = CN.ATTACK[piece][direction][rook_sq]
@@ -376,8 +366,32 @@ class Board:
         """
         moves = []
         piece = Piece.WQ if self.turn == Color.WHITE else Piece.BQ
-        moves = self._bishop_move_gen(self.piece_sq[piece])
-        moves.extend(self._rook_move_gen(self.piece_sq[piece]))
+
+        for queen_sq in self.piece_sq[piece]:
+            # TODO make Direction iterable to make this for loop simpler?
+            for direction in CN.ATTACK[piece]:
+                ATTACK_DIR = CN.ATTACK[piece][direction][queen_sq]
+                capture_or_block = ATTACK_DIR & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+                # TODO implement BitBoard.__eq__() and compare by BitBoards?
+                if capture_or_block.num == 0:
+                    for index in ATTACK_DIR.indices():
+                        moves.append(Move(queen_sq, index, MoveType.QUIET))
+                else:
+                    min_diff = 64
+                    min_sq = -1
+                    # Get the closest piece in the way of movement
+                    for index in capture_or_block.indices():
+                        if min_diff > abs(queen_sq - index):
+                            min_diff = abs(queen_sq - index)
+                            min_sq = index
+                    # Add all moves before that piece
+                    for index in ATTACK_DIR.indices():
+                        if min_diff > abs(queen_sq - index):
+                            moves.append(Move(queen_sq, index, MoveType.QUIET))
+                    capture = ATTACK_DIR & self.color_bb[Color.switch(self.turn)]
+                    # If enemy piece, add CAPTURE move
+                    if capture[min_sq] == 1:
+                        moves.append(Move(queen_sq, min_sq, MoveType.CAPTURE))
 
         return moves
 

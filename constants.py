@@ -168,6 +168,17 @@ _ATTACK_R = {
     Direction.R: _ATTACK_R_R,
 }
 
+_ATTACK_Q = {
+    Direction.UL: _ATTACK_B_UL,
+    Direction.UR: _ATTACK_B_UR,
+    Direction.DL: _ATTACK_B_DL,
+    Direction.DR: _ATTACK_B_DR,
+    Direction.U: _ATTACK_R_U,
+    Direction.D: _ATTACK_R_D,
+    Direction.L: _ATTACK_R_L,
+    Direction.R: _ATTACK_R_R,
+}
+
 _ATTACK_K = [BitBoard(0)] * 64
 
 ATTACK = {
@@ -175,12 +186,12 @@ ATTACK = {
     Piece.WN: _ATTACK_N,
     Piece.WB: _ATTACK_B,
     Piece.WR: _ATTACK_R,
-    # Piece.WQ should not be needed since we can use N and R
+    Piece.WQ: _ATTACK_Q,
     Piece.WK: _ATTACK_K,
     Piece.BP: _ATTACK_BP,
     Piece.BN: _ATTACK_N,
     Piece.BB: _ATTACK_B,
     Piece.BR: _ATTACK_R,
-    # Piece.BQ should not be needed since we can use N and R
+    Piece.BQ: _ATTACK_Q,
     Piece.BK: _ATTACK_K,
 }
