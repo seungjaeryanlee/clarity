@@ -8,27 +8,155 @@ from Sq import Sq
 
 
 # Move bitboards for pawns
-_MOVE_WP = [BitBoard(0)] * 64
-_MOVE_WP[Sq.A2] = BitBoard(8388608)
-_MOVE_WP[Sq.B2] = BitBoard(4194304)
-_MOVE_WP[Sq.C2] = BitBoard(2097152)
-_MOVE_WP[Sq.D2] = BitBoard(1048576)
-_MOVE_WP[Sq.E2] = BitBoard(524288)
-_MOVE_WP[Sq.F2] = BitBoard(262144)
-_MOVE_WP[Sq.G2] = BitBoard(131072)
-_MOVE_WP[Sq.H2] = BitBoard(65536)
+_MOVE_WP = [
+    # no pawn can exist on row 1
+    BitBoard(0),  # Sq.H1
+    BitBoard(0),  # Sq.G1
+    BitBoard(0),  # Sq.F1
+    BitBoard(0),  # Sq.E1
+    BitBoard(0),  # Sq.D1
+    BitBoard(0),  # Sq.C1
+    BitBoard(0),  # Sq.B1
+    BitBoard(0),  # Sq.A1
 
-_MOVE_BP = [BitBoard(0)] * 64
-_MOVE_BP[Sq.A7] = BitBoard(int('80000000000000', 16))
-_MOVE_BP[Sq.B7] = BitBoard(int('40000000000000', 16))
-_MOVE_BP[Sq.C7] = BitBoard(int('20000000000000', 16))
-_MOVE_BP[Sq.D7] = BitBoard(int('10000000000000', 16))
-_MOVE_BP[Sq.E7] = BitBoard(int('8000000000000', 16))
-_MOVE_BP[Sq.F7] = BitBoard(int('4000000000000', 16))
-_MOVE_BP[Sq.G7] = BitBoard(int('2000000000000', 16))
-_MOVE_BP[Sq.H7] = BitBoard(int('1000000000000', 16))
+    BitBoard(int('10000', 16)),  # Sq.H2
+    BitBoard(int('20000', 16)),  # Sq.G2
+    BitBoard(int('40000', 16)),  # Sq.F2
+    BitBoard(int('80000', 16)),  # Sq.E2
+    BitBoard(int('100000', 16)),  # Sq.D2
+    BitBoard(int('200000', 16)),  # Sq.C2
+    BitBoard(int('400000', 16)),  # Sq.B2
+    BitBoard(int('800000', 16)),  # Sq.A2
+    BitBoard(int('1000000', 16)),  # Sq.H3
+    BitBoard(int('2000000', 16)),  # Sq.G3
+    BitBoard(int('4000000', 16)),  # Sq.F3
+    BitBoard(int('8000000', 16)),  # Sq.E3
+    BitBoard(int('10000000', 16)),  # Sq.D3
+    BitBoard(int('20000000', 16)),  # Sq.C3
+    BitBoard(int('40000000', 16)),  # Sq.B3
+    BitBoard(int('80000000', 16)),  # Sq.A3
+    BitBoard(int('100000000', 16)),  # Sq.H4
+    BitBoard(int('200000000', 16)),  # Sq.G4
+    BitBoard(int('400000000', 16)),  # Sq.F4
+    BitBoard(int('800000000', 16)),  # Sq.E4
+    BitBoard(int('1000000000', 16)),  # Sq.D4
+    BitBoard(int('2000000000', 16)),  # Sq.C4
+    BitBoard(int('4000000000', 16)),  # Sq.B4
+    BitBoard(int('8000000000', 16)),  # Sq.A4
+    BitBoard(int('10000000000', 16)),  # Sq.H5
+    BitBoard(int('20000000000', 16)),  # Sq.G5
+    BitBoard(int('40000000000', 16)),  # Sq.F5
+    BitBoard(int('80000000000', 16)),  # Sq.E5
+    BitBoard(int('100000000000', 16)),  # Sq.D5
+    BitBoard(int('200000000000', 16)),  # Sq.C5
+    BitBoard(int('400000000000', 16)),  # Sq.B5
+    BitBoard(int('800000000000', 16)),  # Sq.A5
+    BitBoard(int('1000000000000', 16)),  # Sq.H6
+    BitBoard(int('2000000000000', 16)),  # Sq.G6
+    BitBoard(int('4000000000000', 16)),  # Sq.F6
+    BitBoard(int('8000000000000', 16)),  # Sq.E6
+    BitBoard(int('10000000000000', 16)),  # Sq.D6
+    BitBoard(int('20000000000000', 16)),  # Sq.C6
+    BitBoard(int('40000000000000', 16)),  # Sq.B6
+    BitBoard(int('80000000000000', 16)),  # Sq.A6
 
+    # white pawns on row 7 can only make promotion moves
+    BitBoard(0),  # Sq.H7
+    BitBoard(0),  # Sq.G7
+    BitBoard(0),  # Sq.F7
+    BitBoard(0),  # Sq.E7
+    BitBoard(0),  # Sq.D7
+    BitBoard(0),  # Sq.C7
+    BitBoard(0),  # Sq.B7
+    BitBoard(0),  # Sq.A7
+
+    # no pawn can exist on row 8
+    BitBoard(0),  # Sq.H8
+    BitBoard(0),  # Sq.G8
+    BitBoard(0),  # Sq.F8
+    BitBoard(0),  # Sq.E8
+    BitBoard(0),  # Sq.D8
+    BitBoard(0),  # Sq.C8
+    BitBoard(0),  # Sq.B8
+    BitBoard(0),  # Sq.A8
+]
+
+_MOVE_BP = [
+    # no pawn can exist on row 1
+    BitBoard(0),  # Sq.H1
+    BitBoard(0),  # Sq.G1
+    BitBoard(0),  # Sq.F1
+    BitBoard(0),  # Sq.E1
+    BitBoard(0),  # Sq.D1
+    BitBoard(0),  # Sq.C1
+    BitBoard(0),  # Sq.B1
+    BitBoard(0),  # Sq.A1
+
+    # black pawns on row 2 can only make promotion moves
+    BitBoard(0),  # Sq.H2
+    BitBoard(0),  # Sq.G2
+    BitBoard(0),  # Sq.F2
+    BitBoard(0),  # Sq.E2
+    BitBoard(0),  # Sq.D2
+    BitBoard(0),  # Sq.C2
+    BitBoard(0),  # Sq.B2
+    BitBoard(0),  # Sq.A2
+
+    BitBoard(int('100', 16)),  # Sq.H3
+    BitBoard(int('200', 16)),  # Sq.G3
+    BitBoard(int('400', 16)),  # Sq.F3
+    BitBoard(int('800', 16)),  # Sq.E3
+    BitBoard(int('1000', 16)),  # Sq.D3
+    BitBoard(int('2000', 16)),  # Sq.C3
+    BitBoard(int('4000', 16)),  # Sq.B3
+    BitBoard(int('8000', 16)),  # Sq.A3
+    BitBoard(int('10000', 16)),  # Sq.H4
+    BitBoard(int('20000', 16)),  # Sq.G4
+    BitBoard(int('40000', 16)),  # Sq.F4
+    BitBoard(int('80000', 16)),  # Sq.E4
+    BitBoard(int('100000', 16)),  # Sq.D4
+    BitBoard(int('200000', 16)),  # Sq.C4
+    BitBoard(int('400000', 16)),  # Sq.B4
+    BitBoard(int('800000', 16)),  # Sq.A4
+    BitBoard(int('1000000', 16)),  # Sq.H5
+    BitBoard(int('2000000', 16)),  # Sq.G5
+    BitBoard(int('4000000', 16)),  # Sq.F5
+    BitBoard(int('8000000', 16)),  # Sq.E5
+    BitBoard(int('10000000', 16)),  # Sq.D5
+    BitBoard(int('20000000', 16)),  # Sq.C5
+    BitBoard(int('40000000', 16)),  # Sq.B5
+    BitBoard(int('80000000', 16)),  # Sq.A5
+    BitBoard(int('100000000', 16)),  # Sq.H6
+    BitBoard(int('200000000', 16)),  # Sq.G6
+    BitBoard(int('400000000', 16)),  # Sq.F6
+    BitBoard(int('800000000', 16)),  # Sq.E6
+    BitBoard(int('1000000000', 16)),  # Sq.D6
+    BitBoard(int('2000000000', 16)),  # Sq.C6
+    BitBoard(int('4000000000', 16)),  # Sq.B6
+    BitBoard(int('8000000000', 16)),  # Sq.A6
+    BitBoard(int('10000000000', 16)),  # Sq.H7
+    BitBoard(int('20000000000', 16)),  # Sq.G7
+    BitBoard(int('40000000000', 16)),  # Sq.F7
+    BitBoard(int('80000000000', 16)),  # Sq.E7
+    BitBoard(int('100000000000', 16)),  # Sq.D7
+    BitBoard(int('200000000000', 16)),  # Sq.C7
+    BitBoard(int('400000000000', 16)),  # Sq.B7
+    BitBoard(int('800000000000', 16)),  # Sq.A7
+
+    # no pawn can exist on row 8
+    BitBoard(0),  # Sq.H8
+    BitBoard(0),  # Sq.G8
+    BitBoard(0),  # Sq.F8
+    BitBoard(0),  # Sq.E8
+    BitBoard(0),  # Sq.D8
+    BitBoard(0),  # Sq.C8
+    BitBoard(0),  # Sq.B8
+    BitBoard(0),  # Sq.A8
+]
+
+# double pawn push bitboards
 _DOUBLE_WP = [BitBoard(0)] * 64
+# only white pawns on row 2 can do double pawn push
 _DOUBLE_WP[Sq.A2] = BitBoard(int('80000000', 16))
 _DOUBLE_WP[Sq.B2] = BitBoard(int('40000000', 16))
 _DOUBLE_WP[Sq.C2] = BitBoard(int('20000000', 16))
@@ -39,14 +167,15 @@ _DOUBLE_WP[Sq.G2] = BitBoard(int('2000000', 16))
 _DOUBLE_WP[Sq.H2] = BitBoard(int('1000000', 16))
 
 _DOUBLE_BP = [BitBoard(0)] * 64
-_DOUBLE_BP[Sq.A7] = BitBoard(int('800000000000', 16))
-_DOUBLE_BP[Sq.B7] = BitBoard(int('400000000000', 16))
-_DOUBLE_BP[Sq.C7] = BitBoard(int('200000000000', 16))
-_DOUBLE_BP[Sq.D7] = BitBoard(int('100000000000', 16))
-_DOUBLE_BP[Sq.E7] = BitBoard(int('80000000000', 16))
-_DOUBLE_BP[Sq.F7] = BitBoard(int('40000000000', 16))
-_DOUBLE_BP[Sq.G7] = BitBoard(int('20000000000', 16))
-_DOUBLE_BP[Sq.H7] = BitBoard(int('10000000000', 16))
+# only black pawns on row 7 can do double pawn push
+_DOUBLE_BP[Sq.A7] = BitBoard(int('8000000000', 16))
+_DOUBLE_BP[Sq.B7] = BitBoard(int('4000000000', 16))
+_DOUBLE_BP[Sq.C7] = BitBoard(int('2000000000', 16))
+_DOUBLE_BP[Sq.D7] = BitBoard(int('1000000000', 16))
+_DOUBLE_BP[Sq.E7] = BitBoard(int('800000000', 16))
+_DOUBLE_BP[Sq.F7] = BitBoard(int('400000000', 16))
+_DOUBLE_BP[Sq.G7] = BitBoard(int('200000000', 16))
+_DOUBLE_BP[Sq.H7] = BitBoard(int('100000000', 16))
 
 MOVE_P = {
     Piece.WP: _MOVE_WP,
