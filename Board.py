@@ -258,23 +258,17 @@ class Board:
 
     def find_checks(self):
         """
-        TODO implement
         Returns list of squares of pieces putting the king on check. Returns an empty list if the king is not in check.
         :return: a list squares of pieces putting the king on check or an empty list if the king is not in check.
         """
-        # TODO detect pawn checks
-        # _pawn_find_checks()
-        # TODO detect knight checks
-        # _knight_find_checks()
-        # TODO try creating _slider_find_checks()
+        checks = self._find_pawn_checks()
+        checks.extend(self._find_knight_checks())
         # TODO can also find pinned pieces similarly
-        # TODO detect bishop checks
-        # _bishop_find_checks()
-        # TODO detect rook checks
-        # _rook_find_checks()
-        # TODO detect queen checks
-        # _queen_find_checks()
-        pass
+        checks.extend(self._find_bishop_checks())
+        checks.extend(self._find_rook_checks())
+        checks.extend(self._find_queen_checks())
+
+        return checks
 
     def _find_pawn_checks(self):
         """
