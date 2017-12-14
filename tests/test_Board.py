@@ -433,6 +433,33 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(knight_sqs), 2)
         self.assertListEqual(sorted(knight_sqs), sorted([Sq.D1, Sq.F1]))
 
+    def test_find_bishop_checks(self):
+        """
+        Tests the _find_bishop_checks() function of the Board class
+        """
+        # normal
+        board = Board('7k/8/8/8/6b1/7K/8/8 w - - 0 1')
+        bishop_sqs = board._find_bishop_checks()
+        self.assertEqual(len(bishop_sqs), 1)
+        self.assertListEqual(sorted(bishop_sqs), sorted([Sq.G4]))
+
+        # no check
+        board = Board('6bb/8/8/8/8/7K/8/3k4 w - - 0 1')
+        bishop_sqs = board._find_bishop_checks()
+        self.assertEqual(len(bishop_sqs), 0)
+
+        # no check (covered)
+        board = Board('8/8/8/5b2/6N1/7K/8/3k4 w - - 0 1')
+        bishop_sqs = board._find_bishop_checks()
+        self.assertEqual(len(bishop_sqs), 0)
+
+        # double check
+        # TODO check if multiple pieces of same piece type putting king on check is possible
+        board = Board('7K/8/8/8/8/4k3/3B4/6B1 b - - 0 1')
+        bishop_sqs = board._find_bishop_checks()
+        self.assertEqual(len(bishop_sqs), 2)
+        self.assertListEqual(sorted(bishop_sqs), sorted([Sq.D2, Sq.G1]))
+
     def test_pawn_move_gen(self):
         """
         Tests the pawn_move_gen() function of the Board class
