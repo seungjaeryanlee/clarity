@@ -382,7 +382,7 @@ class TestBoardClass(unittest.TestCase):
         """
         pass
 
-    def test_find_pawn_check(self):
+    def test_find_pawn_checks(self):
         """
         TODO write tests
         Tests the _find_pawn_checks() function of the Board class
@@ -411,7 +411,7 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(pawn_sqs), 1)
         self.assertListEqual(sorted(pawn_sqs), sorted([Sq.D2]))
 
-    def test_find_knight_check(self):
+    def test_find_knight_checks(self):
         """
         Tests the _find_knight_checks() function of the Board class
         """
