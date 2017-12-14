@@ -372,6 +372,14 @@ _ATTACK_BP = [
     BitBoard(int('5000000000', 16)),  # Sq.C6
     BitBoard(int('A000000000', 16)),  # Sq.B6
     BitBoard(int('4000000000', 16)),  # Sq.A6
+    BitBoard(int('20000000000', 16)),  # Sq.H7
+    BitBoard(int('50000000000', 16)),  # Sq.G7
+    BitBoard(int('A0000000000', 16)),  # Sq.F7
+    BitBoard(int('140000000000', 16)),  # Sq.E7
+    BitBoard(int('280000000000', 16)),  # Sq.D7
+    BitBoard(int('500000000000', 16)),  # Sq.C7
+    BitBoard(int('A00000000000', 16)),  # Sq.B7
+    BitBoard(int('400000000000', 16)),  # Sq.A7
 
     # no pawn can exist on row 8
     BitBoard(0),  # Sq.H8
