@@ -290,7 +290,7 @@ class Board:
 
         # TODO ATTACK[pawn] does not have bitboards for 1st row (white) and 8th row (black) to use
         pawns = const.ATTACK[pawn][king_sq] & self.bitboards[enemy_pawn]
-        if pawns == BitBoard(0):
+        if pawns != BitBoard(0):
             for pawn_sq in pawns.indices():
                 checks.append(pawn_sq)
 
