@@ -375,6 +375,41 @@ class TestBoardClass(unittest.TestCase):
         moves = board.move_gen()
         self.assertEqual(len(moves), 1)
 
+    def test_find_checks(self):
+        """
+        TODO write tests
+        Tests the find_checks() function of the Board class
+        """
+        pass
+
+    def test_find_pawn_check(self):
+        """
+        TODO write tests
+        Tests the _find_pawn_checks() function of the Board class
+        """
+        # normal
+        board = Board('7k/8/8/8/6p1/7K/8/8 w - - 0 1')
+        pawn_sqs = board._find_pawn_checks()
+        self.assertEqual(len(pawn_sqs), 1)
+        self.assertListEqual(sorted(pawn_sqs), sorted([Sq.G4]))
+
+        # no check
+        board = Board('7k/8/8/8/p6p/7K/8/8 w - - 0 1')
+        pawn_sqs = board._find_pawn_checks()
+        self.assertEqual(len(pawn_sqs), 0)
+
+        # double check
+        board = Board('7K/8/8/8/8/4k3/3P1P2/8 b - - 0 1')
+        pawn_sqs = board._find_pawn_checks()
+        self.assertEqual(len(pawn_sqs), 2)
+        self.assertListEqual(sorted(pawn_sqs), sorted([Sq.D2, Sq.F2]))
+
+        # pawn on 2nd/7th row (promotion)
+        board = Board('7k/8/8/8/8/8/3p4/4K3 w - - 0 1')
+        pawn_sqs = board._find_pawn_checks()
+        self.assertEqual(len(pawn_sqs), 1)
+        self.assertListEqual(sorted(pawn_sqs), sorted([Sq.D2]))
+
     def test_pawn_move_gen(self):
         """
         Tests the pawn_move_gen() function of the Board class
