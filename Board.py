@@ -290,8 +290,7 @@ class Board:
 
         # TODO ATTACK[pawn] does not have bitboards for 1st row (white) and 8th row (black) to use
         pawns = const.ATTACK[pawn][king_sq] & self.bitboards[enemy_pawn]
-        # TODO implement BitBoard.__eq__()
-        if pawns.num != 0:
+        if pawns == BitBoard(0):
             for pawn_sq in pawns.indices():
                 checks.append(pawn_sq)
 
@@ -379,8 +378,7 @@ class Board:
         for sq in self.piece_sq[piece]:
             for direction, ATTACK_DIR in const.ATTACK[piece].items():
                 capture_or_block = ATTACK_DIR[sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
-                # TODO implement BitBoard.__eq__() and compare by BitBoards?
-                if capture_or_block.num == 0:
+                if capture_or_block == BitBoard(0):
                     for index in ATTACK_DIR[sq].indices():
                         moves.append(Move(sq, index, MoveType.QUIET))
                 else:
