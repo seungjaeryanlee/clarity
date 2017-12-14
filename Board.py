@@ -316,32 +316,60 @@ class Board:
 
         return checks
 
+    def _find_slider_checks(self, slider, enemy_slider):
+        """
+        Returns list of squares of the given slider piece putting the king on check.
+        :return: a list of squares of the given slider piece putting the king on check.
+        """
+        checks = []
+
+        piece = Piece.WK if self.turn == Color.WHITE else Piece.BK
+        king_sq = self.piece_sq[piece][0]
+
+        # note that const.ATTACK[slider] and const.ATTACK[enemy_slider] uses same bitboards
+        for direction, ATTACK_DIR in const.ATTACK[slider].items():
+            sliders = ATTACK_DIR[king_sq] & self.bitboards[enemy_slider]
+            possible_blocks = ATTACK_DIR[king_sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+            for slider_sq in sliders.indices():
+                is_blocked = False
+                for possible_block in possible_blocks.indices():
+                    if abs(king_sq - possible_block) < abs(king_sq - slider_sq):
+                        is_blocked = True
+                        break
+                if not is_blocked:
+                    checks.append(slider_sq)
+
+        return checks
+
     def _find_bishop_checks(self):
         """
         Returns list of squares of bishops putting the king on check.
         :return: a list of squares of bishops putting the king on check.
         """
-        checks = []
-
-        piece = Piece.WK if self.turn == Color.WHITE else Piece.BK
         bishop = Piece.WB if self.turn == Color.WHITE else Piece.BB
         enemy_bishop = Piece.BB if self.turn == Color.WHITE else Piece.WB
-        king_sq = self.piece_sq[piece][0]
 
-        # note that const.ATTACK[bishop] and const.ATTACK[enemy_bishop] uses same bitboards
-        for direction, ATTACK_DIR in const.ATTACK[bishop].items():
-            bishops = ATTACK_DIR[king_sq] & self.bitboards[enemy_bishop]
-            possible_blocks = ATTACK_DIR[king_sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
-            for bishop_sq in bishops.indices():
-                is_blocked = False
-                for possible_block in possible_blocks.indices():
-                    if abs(king_sq - possible_block) < abs(king_sq - bishop_sq):
-                        is_blocked = True
-                        break
-                if not is_blocked:
-                    checks.append(bishop_sq)
+        return self._find_slider_checks(bishop, enemy_bishop)
 
-        return checks
+    def _find_rook_checks(self):
+        """
+        Returns list of squares of rooks putting the king on check.
+        :return: a list of squares of rooks putting the king on check.
+        """
+        rook = Piece.WR if self.turn == Color.WHITE else Piece.BR
+        enemy_rook = Piece.BR if self.turn == Color.WHITE else Piece.WR
+
+        return self._find_slider_checks(rook, enemy_rook)
+
+    def _find_queen_checks(self):
+        """
+        Returns list of squares of queens putting the king on check.
+        :return: a list of squares of queens putting the king on check.
+        """
+        queen = Piece.WQ if self.turn == Color.WHITE else Piece.BQ
+        enemy_queen = Piece.BQ if self.turn == Color.WHITE else Piece.WQ
+
+        return self._find_slider_checks(queen, enemy_queen)
 
     def _pawn_move_gen(self):
         """
