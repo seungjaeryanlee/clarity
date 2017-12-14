@@ -247,7 +247,21 @@ class Board:
         Returns a list of all possible legal moves
         :return: a list of all possible legal moves
         """
-        # TODO find if king is checked and for pinned pieces
+        # PSEUDOCODE
+        # is_check = False
+        # is_double_check = False
+        #
+        # if is_double_check:
+        #     return _king_move_gen()
+        # elif is_check:
+        #     1. king moves away
+        #     2. capture piece attacking king
+        #     3. block slider piece attacking king
+        # else:
+        #     1. exclude pinned piece
+        #     2. generate moves
+        #     2-1. make sure king does not move into check
+
         moves = self._pawn_move_gen()
         moves.extend(self._knight_move_gen())
         moves.extend(self._bishop_move_gen())
