@@ -259,8 +259,8 @@ class Board:
     def find_checks(self):
         """
         TODO implement
-        Returns list of pieces putting the king on check currently. Returns an empty list if the king is not in check.
-        :return: a list of pieces putting the king on check currently or an empty list if the king is not in check.
+        Returns list of squares of pieces putting the king on check. Returns an empty list if the king is not in check.
+        :return: a list squares of pieces putting the king on check or an empty list if the king is not in check.
         """
         # TODO detect pawn checks
         # _pawn_find_checks()
