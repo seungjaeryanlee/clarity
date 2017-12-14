@@ -296,6 +296,26 @@ class Board:
 
         return checks
 
+    def _find_knight_checks(self):
+        """
+        Returns list of squares of knights putting the king on check.
+        :return: a list of squares of knights putting the king on check.
+        """
+        checks = []
+
+        piece = Piece.WK if self.turn == Color.WHITE else Piece.BK
+        knight = Piece.WN if self.turn == Color.WHITE else Piece.BN
+        enemy_knight = Piece.BN if self.turn == Color.WHITE else Piece.WN
+        king_sq = self.piece_sq[piece][0]
+
+        # note that const.ATTACK[knight] and const.ATTACK[enemy_knight] uses same bitboards
+        knights = const.ATTACK[knight][king_sq] & self.bitboards[enemy_knight]
+        if knights != BitBoard(0):
+            for knight_sq in knights.indices():
+                checks.append(knight_sq)
+
+        return checks
+
     def _pawn_move_gen(self):
         """
         TODO implement promotion

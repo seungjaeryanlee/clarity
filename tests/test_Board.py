@@ -399,6 +399,7 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(pawn_sqs), 0)
 
         # double check
+        # TODO check if multiple pieces of same piece type putting king on check is possible
         board = Board('7K/8/8/8/8/4k3/3P1P2/8 b - - 0 1')
         pawn_sqs = board._find_pawn_checks()
         self.assertEqual(len(pawn_sqs), 2)
@@ -409,6 +410,28 @@ class TestBoardClass(unittest.TestCase):
         pawn_sqs = board._find_pawn_checks()
         self.assertEqual(len(pawn_sqs), 1)
         self.assertListEqual(sorted(pawn_sqs), sorted([Sq.D2]))
+
+    def test_find_knight_check(self):
+        """
+        Tests the _find_knight_checks() function of the Board class
+        """
+        # normal
+        board = Board('7k/8/8/8/5n2/7K/8/8 w - - 0 1')
+        knight_sqs = board._find_knight_checks()
+        self.assertEqual(len(knight_sqs), 1)
+        self.assertListEqual(sorted(knight_sqs), sorted([Sq.F4]))
+
+        # no check
+        board = Board('nn6/8/8/8/8/7K/8/3k4 w - - 0 1')
+        knight_sqs = board._find_knight_checks()
+        self.assertEqual(len(knight_sqs), 0)
+
+        # double check
+        # TODO check if multiple pieces of same piece type putting king on check is possible
+        board = Board('7K/8/8/8/8/4k3/8/3N1N2 b - - 0 1')
+        knight_sqs = board._find_knight_checks()
+        self.assertEqual(len(knight_sqs), 2)
+        self.assertListEqual(sorted(knight_sqs), sorted([Sq.D1, Sq.F1]))
 
     def test_pawn_move_gen(self):
         """
