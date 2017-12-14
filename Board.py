@@ -247,28 +247,33 @@ class Board:
         Returns a list of all possible legal moves
         :return: a list of all possible legal moves
         """
-        # PSEUDOCODE
-        # is_check = False
-        # is_double_check = False
-        #
-        # if is_double_check:
-        #     return _king_move_gen()
-        # elif is_check:
-        #     1. king moves away
-        #     2. capture piece attacking king
-        #     3. block slider piece attacking king
-        # else:
-        #     1. exclude pinned piece
-        #     2. generate moves
-        #     2-1. make sure king does not move into check
-
-        moves = self._pawn_move_gen()
-        moves.extend(self._knight_move_gen())
-        moves.extend(self._bishop_move_gen())
-        moves.extend(self._rook_move_gen())
-        moves.extend(self._queen_move_gen())
-        moves.extend(self._king_move_gen())
-        return moves
+        checks = self.find_checks()
+        if len(checks) == 2:
+            # king must move out of danger
+            # TODO make sure king is not moving into another place attacked
+            # TODO create a bitboard for which blocks are 'dangerous' (consider king as nonexistent during this)
+            return self._king_move_gen()
+        elif len(checks) == 1:
+            # move king out of danger
+            # TODO make sure king is not moving into another place attacked
+            # TODO create a bitboard for which blocks are 'dangerous' (consider king as nonexistent during this)
+            moves = self._king_move_gen()
+            # capture piece attacking king
+            # TODO very similar to find_checks(): we want to find if any (not pinned) piece can attack checks[0]
+            # 3. block slider piece attacking king
+            # TODO similar to above, but check for all spaces in between the slider and the king, and also
+            # TODO pawn needs to move quiet or via double pawn push, not by capture.
+            return moves
+        else:
+            # TODO exclude pinned pieces
+            # generate moves
+            moves = self._pawn_move_gen()
+            moves.extend(self._knight_move_gen())
+            moves.extend(self._bishop_move_gen())
+            moves.extend(self._rook_move_gen())
+            moves.extend(self._queen_move_gen())
+            moves.extend(self._king_move_gen())
+            return moves
 
     def find_checks(self):
         """
