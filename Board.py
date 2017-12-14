@@ -276,6 +276,27 @@ class Board:
         # _queen_find_checks()
         pass
 
+    def _find_pawn_checks(self):
+        """
+        Returns list of squares of pawns putting the king on check.
+        :return: a list of squares of pawns putting the king on check.
+        """
+        checks = []
+
+        piece = Piece.WK if self.turn == Color.WHITE else Piece.BK
+        pawn = Piece.WP if self.turn == Color.WHITE else Piece.BP
+        enemy_pawn = Piece.BP if self.turn == Color.WHITE else Piece.WP
+        king_sq = self.piece_sq[piece][0]
+
+        # TODO ATTACK[pawn] does not have bitboards for 1st row (white) and 8th row (black) to use
+        pawns = const.ATTACK[pawn][king_sq] & self.bitboards[enemy_pawn]
+        # TODO implement BitBoard.__eq__()
+        if pawns.num != 0:
+            for pawn_sq in pawns.indices():
+                checks.append(pawn_sq)
+
+        return checks
+
     def _pawn_move_gen(self):
         """
         TODO implement promotion
