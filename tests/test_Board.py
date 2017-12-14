@@ -377,10 +377,24 @@ class TestBoardClass(unittest.TestCase):
 
     def test_find_checks(self):
         """
-        TODO write tests
         Tests the find_checks() function of the Board class
         """
-        pass
+        # no checks
+        board = Board()
+        check_sqs = board.find_checks()
+        self.assertEqual(len(check_sqs), 0)
+
+        # single check
+        board = Board('4K2k/8/5B2/8/8/8/8/1n6 b - - 0 1')
+        check_sqs = board.find_checks()
+        self.assertEqual(len(check_sqs), 1)
+        self.assertListEqual(sorted(check_sqs), sorted([Sq.F6]))
+
+        # multiple checks
+        board = Board('7k/8/8/8/7r/8/5n2/7K w - - 0 1')
+        check_sqs = board.find_checks()
+        self.assertEqual(len(check_sqs), 2)
+        self.assertListEqual(sorted(check_sqs), sorted([Sq.H4, Sq.F2]))
 
     def test_find_pawn_checks(self):
         """
