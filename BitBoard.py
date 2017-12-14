@@ -61,6 +61,14 @@ class BitBoard:
         """
         return BitBoard(~self.num)
 
+    def __eq__(self, other):
+        """
+        TODO considering allowing other to be either Int or BitBoard type
+        Returns True if self and other have the same number, False otherwise.
+        :return: True if self and other have the same number, False otherwise.
+        """
+        return self.num == other.num
+
     def indices(self):
         """
         Returns the indices of bits with value 1
