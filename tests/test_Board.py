@@ -828,7 +828,6 @@ class TestBoardClass(unittest.TestCase):
 
     def test_get_safe_bb(self):
         """
-        TODO add more tests
         Tests the _get_safe_bb() function of the Board class
         """
         # just king
@@ -856,4 +855,18 @@ class TestBoardClass(unittest.TestCase):
         board = Board('k7/8/8/8/8/8/8/4K2R b - - 0 1')
         safe_bb = board._get_safe_bb()
         self.assertEqual(sorted((~safe_bb).indices()), sorted([Sq.H2, Sq.H3, Sq.H4, Sq.H5, Sq.H6, Sq.H7, Sq.H8, Sq.G1,
-                                                               Sq.F1, Sq.F2, Sq.E2, Sq.D2, Sq.D1]))
+                                                               Sq.F1, Sq.F2, Sq.E1, Sq.E2, Sq.D2, Sq.D1]))
+
+        # king and queen
+        board = Board('k7/8/8/8/8/8/8/4KQ2 b - - 0 1')
+        safe_bb = board._get_safe_bb()
+        self.assertEqual(sorted((~safe_bb).indices()), sorted([Sq.F2, Sq.F3, Sq.F4, Sq.F5, Sq.F6, Sq.F7, Sq.F8,
+                                                               Sq.E2, Sq.D3, Sq.C4, Sq.B5, Sq.A6,
+                                                               Sq.G1, Sq.H1, Sq.G2, Sq.H3, Sq.D1, Sq.D2, Sq.F1, Sq.E1]))
+
+        # starting position
+        board = Board()
+        safe_bb = board._get_safe_bb()
+        self.assertEqual(sorted((~safe_bb).indices()), sorted([Sq.B8, Sq.C8, Sq.D8, Sq.E8, Sq.F8, Sq.G8,
+                                                               Sq.A7, Sq.B7, Sq.C7, Sq.D7, Sq.E7, Sq.F7, Sq.G7, Sq.H7,
+                                                               Sq.A6, Sq.B6, Sq.C6, Sq.D6, Sq.E6, Sq.F6, Sq.G6, Sq.H6]))

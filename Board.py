@@ -594,7 +594,6 @@ class Board:
 
     def _get_safe_bb(self):
         """
-        TODO untested
         Returns the BitBoard of safe squares
         :return: the BitBoard of safe squares
         """
