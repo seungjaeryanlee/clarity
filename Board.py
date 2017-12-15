@@ -392,7 +392,6 @@ class Board:
 
     def find_pinned(self):
         """
-        TODO untested
         Returns list of squares of pinned pieces.
         :return: a list squares of pinned pieces.
         """
@@ -592,7 +591,6 @@ class Board:
 
     def _castling_move_gen(self):
         """
-        TODO implement
         Returns a list of all possible legal castling moves
         :return: a list of all possible legal castling moves
         """
