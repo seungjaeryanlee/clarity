@@ -241,6 +241,60 @@ class Board:
 
         return captured_piece
 
+    def get_safe_bb(self):
+        """
+        TODO untested
+        Returns the BitBoard of safe squares
+        :return: the BitBoard of safe squares
+        """
+        danger_bb = BitBoard(0)
+        if self.turn == Color.WHITE:
+            king = Piece.WK
+            enemy_pieces = {Piece.BP, Piece.BN, Piece.BK}
+            enemy_sliders = {Piece.BB, Piece.BR, Piece.BQ}
+        else:
+            king = Piece.BK
+            enemy_pieces = {Piece.WP, Piece.WN, Piece.WK}
+            enemy_sliders = {Piece.WB, Piece.WR, Piece.WQ}
+        king_sq = self.piece_sq[king]
+
+        for enemy_piece in enemy_pieces:
+            for sq in self.piece_sq[enemy_piece]:
+                danger_bb = danger_bb | const.ATTACK[enemy_piece][sq]
+
+        # exclude king when checking for slider blocks
+        block_bb = (self.color_bb[Color.WHITE] | self.color_bb[Color.Color.BLACK]) & ~self.bitboards[king]
+
+        for enemy_slider in enemy_sliders:
+            for direction, ATTACK_DIR in const.ATTACK[enemy_slider].items():
+                for sq in self.piece_sq[enemy_slider]:
+                    # check if there is anything blocking the slider
+                    blocks = ATTACK_DIR[sq] & block_bb
+                    # if nothing is blocking it, add all squares
+                    if blocks == BitBoard(0):
+                        danger_bb = danger_bb | ATTACK_DIR[sq]
+                    else:
+                        # get the closest block
+                        min_diff = 64
+                        closest_block_sq = -1
+                        for block_sq in blocks.indices():
+                            diff = abs(block_sq - king_sq)
+                            if min_diff > diff:
+                                min_diff = diff
+                                closest_block_sq = block_sq
+
+                        # add all squares before the block square
+                        for index in ATTACK_DIR[sq].indices():
+                            diff = abs(index - king_sq)
+                            if min_diff > diff:
+                                danger_bb[index] = 1
+
+                        # add block square if block is not king's color
+                        if self.color_bb[Color.switch(self.turn)][closest_block_sq] == 1:
+                            danger_bb[closest_block_sq] = 1
+
+        return ~danger_bb
+
     def move_gen(self):
         """
         TODO implement
