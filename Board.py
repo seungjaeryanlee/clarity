@@ -490,10 +490,10 @@ class Board:
                         # if the piece is closer to the king then it is to the slider piece, it is a block
                         if abs(king_sq - possible_block_sq) < abs(slider_sq - king_sq):
                             blocks.append(possible_block_sq)
-                        # if there are many pieces between the king and the slider, nothing is pinned
-                        # if the piece between is not the king's piece, nothing is pinned
-                        if len(blocks) == 1 and self.color_bb[self.turn][blocks[0]] == 1:
-                            pinned_sqs.append(blocks[0])
+                    # if there are many pieces between the king and the slider, nothing is pinned
+                    # if the piece between is not the king's piece, nothing is pinned
+                    if len(blocks) == 1 and self.color_bb[self.turn][blocks[0]] == 1:
+                        pinned_sqs.append(blocks[0])
 
         return pinned_sqs
 
