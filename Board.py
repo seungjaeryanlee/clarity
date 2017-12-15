@@ -607,14 +607,14 @@ class Board:
             king = Piece.BK
             enemy_pieces = {Piece.WP, Piece.WN, Piece.WK}
             enemy_sliders = {Piece.WB, Piece.WR, Piece.WQ}
-        king_sq = self.piece_sq[king]
+        king_sq = self.piece_sq[king][0]
 
         for enemy_piece in enemy_pieces:
             for sq in self.piece_sq[enemy_piece]:
                 danger_bb = danger_bb | const.ATTACK[enemy_piece][sq]
 
         # exclude king when checking for slider blocks
-        block_bb = (self.color_bb[Color.WHITE] | self.color_bb[Color.Color.BLACK]) & ~self.bitboards[king]
+        block_bb = (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK]) & ~self.bitboards[king]
 
         for enemy_slider in enemy_sliders:
             for direction, ATTACK_DIR in const.ATTACK[enemy_slider].items():
