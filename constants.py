@@ -246,7 +246,7 @@ PROMO_CAPTURE_P = {
 # Attack bitboards
 _ATTACK_WP = [
 
-    # no pawn can exist on row 1, BUT these BitBoards are used in Board._find_pawn_check() to detect for black pawns
+    # no pawn can exist on row 1, BUT these BitBoards are used in Board._get_attacking_sqs() to detect for black pawns
     # putting the white king on check
     BitBoard(int('200', 16)),  # Sq.H1
     BitBoard(int('500', 16)),  # Sq.G1
@@ -381,7 +381,7 @@ _ATTACK_BP = [
     BitBoard(int('A00000000000', 16)),  # Sq.B7
     BitBoard(int('400000000000', 16)),  # Sq.A7
 
-    # no pawn can exist on row 8, BUT these BitBoards are used in Board._find_pawn_check() to detect for white pawns
+    # no pawn can exist on row 8, BUT these BitBoards are used in Board._get_attacking_sqs() to detect for white pawns
     # putting the black king on check
     BitBoard(int('2000000000000', 16)),  # Sq.H8
     BitBoard(int('5000000000000', 16)),  # Sq.G8

@@ -375,22 +375,22 @@ class TestBoardClass(unittest.TestCase):
         moves = board.move_gen()
         self.assertEqual(len(moves), 1)
 
-    def test_find_checks(self):
+    def test_get_attacking_sqs(self):
         """
-        Tests the find_checks() function of the Board class
+        Tests the get_attacking_sqs() function of the Board class
         """
         # no checks
         board = Board()
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        check_sqs = board.find_checks(king_sq)
+        check_sqs = board.get_attacking_sqs(king_sq)
         self.assertEqual(len(check_sqs), 0)
 
         # single check
         board = Board('4K2k/8/5B2/8/8/8/8/1n6 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        check_sqs = board.find_checks(king_sq)
+        check_sqs = board.get_attacking_sqs(king_sq)
         self.assertEqual(len(check_sqs), 1)
         self.assertListEqual(sorted(check_sqs), sorted([Sq.F6]))
 
@@ -398,20 +398,20 @@ class TestBoardClass(unittest.TestCase):
         board = Board('7k/8/8/8/7r/8/5n2/7K w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        check_sqs = board.find_checks(king_sq)
+        check_sqs = board.get_attacking_sqs(king_sq)
         self.assertEqual(len(check_sqs), 2)
         self.assertListEqual(sorted(check_sqs), sorted([Sq.H4, Sq.F2]))
 
-    def test_find_pawn_checks(self):
+    def test_get_attacking_pawn_sqs(self):
         """
         TODO write tests
-        Tests the _find_pawn_checks() function of the Board class
+        Tests the _get_attacking_pawn_sqs() function of the Board class
         """
         # normal
         board = Board('7k/8/8/8/6p1/7K/8/8 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        pawn_sqs = board._find_pawn_checks(king_sq)
+        pawn_sqs = board._get_attacking_pawn_sqs(king_sq)
         self.assertEqual(len(pawn_sqs), 1)
         self.assertListEqual(sorted(pawn_sqs), sorted([Sq.G4]))
 
@@ -419,7 +419,7 @@ class TestBoardClass(unittest.TestCase):
         board = Board('7k/8/8/8/p6p/7K/8/8 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        pawn_sqs = board._find_pawn_checks(king_sq)
+        pawn_sqs = board._get_attacking_pawn_sqs(king_sq)
         self.assertEqual(len(pawn_sqs), 0)
 
         # double check
@@ -427,7 +427,7 @@ class TestBoardClass(unittest.TestCase):
         board = Board('7K/8/8/8/8/4k3/3P1P2/8 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        pawn_sqs = board._find_pawn_checks(king_sq)
+        pawn_sqs = board._get_attacking_pawn_sqs(king_sq)
         self.assertEqual(len(pawn_sqs), 2)
         self.assertListEqual(sorted(pawn_sqs), sorted([Sq.D2, Sq.F2]))
 
@@ -435,19 +435,19 @@ class TestBoardClass(unittest.TestCase):
         board = Board('7k/8/8/8/8/8/3p4/4K3 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        pawn_sqs = board._find_pawn_checks(king_sq)
+        pawn_sqs = board._get_attacking_pawn_sqs(king_sq)
         self.assertEqual(len(pawn_sqs), 1)
         self.assertListEqual(sorted(pawn_sqs), sorted([Sq.D2]))
 
-    def test_find_knight_checks(self):
+    def test_get_attacking_knight_sqs(self):
         """
-        Tests the _find_knight_checks() function of the Board class
+        Tests the _get_attacking_knight_sqs() function of the Board class
         """
         # normal
         board = Board('7k/8/8/8/5n2/7K/8/8 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        knight_sqs = board._find_knight_checks(king_sq)
+        knight_sqs = board._get_attacking_knight_sqs(king_sq)
         self.assertEqual(len(knight_sqs), 1)
         self.assertListEqual(sorted(knight_sqs), sorted([Sq.F4]))
 
@@ -455,7 +455,7 @@ class TestBoardClass(unittest.TestCase):
         board = Board('nn6/8/8/8/8/7K/8/3k4 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        knight_sqs = board._find_knight_checks(king_sq)
+        knight_sqs = board._get_attacking_knight_sqs(king_sq)
         self.assertEqual(len(knight_sqs), 0)
 
         # double check
@@ -463,19 +463,19 @@ class TestBoardClass(unittest.TestCase):
         board = Board('7K/8/8/8/8/4k3/8/3N1N2 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        knight_sqs = board._find_knight_checks(king_sq)
+        knight_sqs = board._get_attacking_knight_sqs(king_sq)
         self.assertEqual(len(knight_sqs), 2)
         self.assertListEqual(sorted(knight_sqs), sorted([Sq.D1, Sq.F1]))
 
-    def test_find_bishop_checks(self):
+    def test_get_attacking_bishop_sqs(self):
         """
-        Tests the _find_bishop_checks() function of the Board class
+        Tests the _get_attacking_bishop_sqs() function of the Board class
         """
         # normal
         board = Board('7k/8/8/8/6b1/7K/8/8 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        bishop_sqs = board._find_bishop_checks(king_sq)
+        bishop_sqs = board._get_attacking_bishop_sqs(king_sq)
         self.assertEqual(len(bishop_sqs), 1)
         self.assertListEqual(sorted(bishop_sqs), sorted([Sq.G4]))
 
@@ -483,14 +483,14 @@ class TestBoardClass(unittest.TestCase):
         board = Board('6bb/8/8/8/8/7K/8/3k4 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        bishop_sqs = board._find_bishop_checks(king_sq)
+        bishop_sqs = board._get_attacking_bishop_sqs(king_sq)
         self.assertEqual(len(bishop_sqs), 0)
 
         # no check (covered)
         board = Board('8/8/8/5b2/6N1/7K/8/3k4 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        bishop_sqs = board._find_bishop_checks(king_sq)
+        bishop_sqs = board._get_attacking_bishop_sqs(king_sq)
         self.assertEqual(len(bishop_sqs), 0)
 
         # double check
@@ -498,19 +498,19 @@ class TestBoardClass(unittest.TestCase):
         board = Board('7K/8/8/8/8/4k3/3B4/6B1 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        bishop_sqs = board._find_bishop_checks(king_sq)
+        bishop_sqs = board._get_attacking_bishop_sqs(king_sq)
         self.assertEqual(len(bishop_sqs), 2)
         self.assertListEqual(sorted(bishop_sqs), sorted([Sq.D2, Sq.G1]))
 
-    def test_find_rook_checks(self):
+    def test_get_attacking_rook_sqs(self):
         """
-        Tests the _find_rook_checks() function of the Board class
+        Tests the _get_attacking_rook_sqs() function of the Board class
         """
         # normal
         board = Board('7k/8/8/7r/8/7K/8/8 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        rook_sqs = board._find_rook_checks(king_sq)
+        rook_sqs = board._get_attacking_rook_sqs(king_sq)
         self.assertEqual(len(rook_sqs), 1)
         self.assertListEqual(sorted(rook_sqs), sorted([Sq.H5]))
 
@@ -518,14 +518,14 @@ class TestBoardClass(unittest.TestCase):
         board = Board('6r1/8/8/8/8/7K/8/3k4 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        rook_sqs = board._find_rook_checks(king_sq)
+        rook_sqs = board._get_attacking_rook_sqs(king_sq)
         self.assertEqual(len(rook_sqs), 0)
 
         # no check (covered)
         board = Board('8/8/8/5b2/6N1/5rnK/8/3k4 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        rook_sqs = board._find_rook_checks(king_sq)
+        rook_sqs = board._get_attacking_rook_sqs(king_sq)
         self.assertEqual(len(rook_sqs), 0)
 
         # double check
@@ -533,19 +533,19 @@ class TestBoardClass(unittest.TestCase):
         board = Board('7K/8/8/4R3/8/2R1k3/3B4/6B1 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        rook_sqs = board._find_rook_checks(king_sq)
+        rook_sqs = board._get_attacking_rook_sqs(king_sq)
         self.assertEqual(len(rook_sqs), 2)
         self.assertListEqual(sorted(rook_sqs), sorted([Sq.E5, Sq.C3]))
 
-    def test_find_queen_checks(self):
+    def test_get_attacking_queen_sqs(self):
         """
-        Tests the _find_queen_checks() function of the Board class
+        Tests the _get_attacking_queen_sqs() function of the Board class
         """
         # normal
         board = Board('7k/8/7q/8/8/7K/8/8 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        queen_sqs = board._find_queen_checks(king_sq)
+        queen_sqs = board._get_attacking_queen_sqs(king_sq)
         self.assertEqual(len(queen_sqs), 1)
         self.assertListEqual(sorted(queen_sqs), sorted([Sq.H6]))
 
@@ -553,14 +553,14 @@ class TestBoardClass(unittest.TestCase):
         board = Board('5q1Q/8/8/8/8/7K/8/3k4 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        queen_sqs = board._find_queen_checks(king_sq)
+        queen_sqs = board._get_attacking_queen_sqs(king_sq)
         self.assertEqual(len(queen_sqs), 0)
 
         # no check (covered)
         board = Board('8/8/8/5b2/q2N3K/8/8/3k4 w - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        queen_sqs = board._find_queen_checks(king_sq)
+        queen_sqs = board._get_attacking_queen_sqs(king_sq)
         self.assertEqual(len(queen_sqs), 0)
 
         # triple check
@@ -568,7 +568,7 @@ class TestBoardClass(unittest.TestCase):
         board = Board('7K/8/6Q1/5n2/8/3Q2k1/7Q/6b1 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
-        queen_sqs = board._find_queen_checks(king_sq)
+        queen_sqs = board._get_attacking_queen_sqs(king_sq)
         self.assertEqual(len(queen_sqs), 3)
         self.assertListEqual(sorted(queen_sqs), sorted([Sq.H2, Sq.D3, Sq.G6]))
 
