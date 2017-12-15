@@ -1152,7 +1152,7 @@ _ATTACK_K = [
     BitBoard(int('2838000000000000', 16)),  # Sq.D8
     BitBoard(int('5070000000000000', 16)),  # Sq.C8
     BitBoard(int('A0E0000000000000', 16)),  # Sq.B8
-    BitBoard(int('2060000000000000', 16)),  # Sq.A8
+    BitBoard(int('40C0000000000000', 16)),  # Sq.A8
 ]
 
 ATTACK = {
