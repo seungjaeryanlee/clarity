@@ -597,9 +597,42 @@ class Board:
         :return: a list of all possible legal castling moves
         """
         moves = []
+        king = Piece.WK if self.turn == Color.WHITE else Piece.BK
+        king_sq = self.piece_sq[king][0]
+        pieces_bb = self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK]
+
         # is king on check?
-        # will king be on check while moving?
-        # will king be on check after move?
+        # TODO this is probably checked multiple times in a single Board.move_gen(). maybe save this value?
+        checks = self.get_attacking_sqs(king_sq)
+        if len(checks) != 0:
+            return []
+
+        if self.turn == Color.WHITE:
+            if self.wk_castling:
+                # is there a piece between?
+                if pieces_bb[Sq.F1] == 0 and pieces_bb[Sq.G1] == 0:
+                    # will king be on check while moving or after move?
+                    if len(self.get_attacking_sqs(Sq.F1)) == 0 and len(self.get_attacking_sqs(Sq.G1)) == 0:
+                        moves.append(Move(Sq.E1, Sq.G1, MoveType.K_CASTLE))
+            if self.wq_castling:
+                # is there a piece between?
+                if pieces_bb[Sq.D1] == 0 and pieces_bb[Sq.C1] == 0:
+                    # will king be on check while moving or after move?
+                    if len(self.get_attacking_sqs(Sq.D1)) == 0 and len(self.get_attacking_sqs(Sq.C1)) == 0:
+                        moves.append(Move(Sq.E1, Sq.C1, MoveType.Q_CASTLE))
+        else:
+            if self.bk_castling:
+                # is there a piece between?
+                if pieces_bb[Sq.F8] == 0 and pieces_bb[Sq.G8] == 0:
+                    # will king be on check while moving or after move?
+                    if len(self.get_attacking_sqs(Sq.F8)) == 0 and len(self.get_attacking_sqs(Sq.G8)) == 0:
+                        moves.append(Move(Sq.E8, Sq.G8, MoveType.K_CASTLE))
+            if self.bq_castling:
+                # is there a piece between?
+                if pieces_bb[Sq.D8] == 0 and pieces_bb[Sq.C8] == 0:
+                    # will king be on check while moving or after move?
+                    if len(self.get_attacking_sqs(Sq.D8)) == 0 and len(self.get_attacking_sqs(Sq.C8)) == 0:
+                        moves.append(Move(Sq.E8, Sq.C8, MoveType.Q_CASTLE))
 
         return moves
 
