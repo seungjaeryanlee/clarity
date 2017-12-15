@@ -571,10 +571,10 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(pinned_sqs), 0)
 
         # one pinned, piece in trajectory but further than king
-        board = Board('q6k/8/8/8/6P1/5K2/8/7B w - - 0 1')
+        board = Board('q6k/8/8/8/4P3/5K2/8/7B w - - 0 1')
         pinned_sqs = board.find_pinned()
         self.assertEqual(len(pinned_sqs), 1)
-        self.assertEqual(sorted(pinned_sqs), sorted([Sq.G4]))
+        self.assertEqual(sorted(pinned_sqs), sorted([Sq.E4]))
 
         # multiple pinned pieces
         board = Board('1q1k4/2R5/8/rN2K3/8/8/8/8 w - - 0 1')
