@@ -244,18 +244,18 @@ PROMO_CAPTURE_P = {
 }
 
 # Attack bitboards
-# TODO fill data
 _ATTACK_WP = [
 
-    # no pawn can exist on row 1
-    BitBoard(0),  # Sq.H1
-    BitBoard(0),  # Sq.G1
-    BitBoard(0),  # Sq.F1
-    BitBoard(0),  # Sq.E1
-    BitBoard(0),  # Sq.D1
-    BitBoard(0),  # Sq.C1
-    BitBoard(0),  # Sq.B1
-    BitBoard(0),  # Sq.A1
+    # no pawn can exist on row 1, BUT these BitBoards are used in Board._find_pawn_check() to detect for black pawns
+    # putting the white king on check
+    BitBoard(int('200', 16)),  # Sq.H1
+    BitBoard(int('500', 16)),  # Sq.G1
+    BitBoard(int('A00', 16)),  # Sq.F1
+    BitBoard(int('1400', 16)),  # Sq.E1
+    BitBoard(int('2800', 16)),  # Sq.D1
+    BitBoard(int('5000', 16)),  # Sq.C1
+    BitBoard(int('A000', 16)),  # Sq.B1
+    BitBoard(int('4000', 16)),  # Sq.A1
 
     BitBoard(int('20000', 16)),  # Sq.H2
     BitBoard(int('50000', 16)),  # Sq.G2
@@ -381,15 +381,16 @@ _ATTACK_BP = [
     BitBoard(int('A00000000000', 16)),  # Sq.B7
     BitBoard(int('400000000000', 16)),  # Sq.A7
 
-    # no pawn can exist on row 8
-    BitBoard(0),  # Sq.H8
-    BitBoard(0),  # Sq.G8
-    BitBoard(0),  # Sq.F8
-    BitBoard(0),  # Sq.E8
-    BitBoard(0),  # Sq.D8
-    BitBoard(0),  # Sq.C8
-    BitBoard(0),  # Sq.B8
-    BitBoard(0),  # Sq.A8
+    # no pawn can exist on row 8, BUT these BitBoards are used in Board._find_pawn_check() to detect for white pawns
+    # putting the black king on check
+    BitBoard(int('2000000000000', 16)),  # Sq.H8
+    BitBoard(int('5000000000000', 16)),  # Sq.G8
+    BitBoard(int('A000000000000', 16)),  # Sq.F8
+    BitBoard(int('14000000000000', 16)),  # Sq.E8
+    BitBoard(int('28000000000000', 16)),  # Sq.D8
+    BitBoard(int('50000000000000', 16)),  # Sq.C8
+    BitBoard(int('A0000000000000', 16)),  # Sq.B8
+    BitBoard(int('40000000000000', 16)),  # Sq.A8
 ]
 
 _ATTACK_N = [

@@ -355,7 +355,6 @@ class Board:
         enemy_pawn = Piece.BP if self.turn == Color.WHITE else Piece.WP
         king_sq = self.piece_sq[piece][0]
 
-        # TODO ATTACK[pawn] does not have bitboards for 1st row (white) and 8th row (black) to use
         pawns = const.ATTACK[pawn][king_sq] & self.bitboards[enemy_pawn]
         if pawns != BitBoard(0):
             for pawn_sq in pawns.indices():
