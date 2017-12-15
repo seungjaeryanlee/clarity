@@ -269,6 +269,7 @@ class Board:
             moves.extend(self._rook_move_gen())
             moves.extend(self._queen_move_gen())
             moves.extend(self._king_move_gen())
+            moves.extend(self._castling_move_gen())
             return moves
 
     def find_checks(self):
@@ -589,6 +590,19 @@ class Board:
                 & safe_bb
             for index in noncapture.indices():
                 moves.append(Move(king_sq, index, MoveType.QUIET))
+
+        return moves
+
+    def _castling_move_gen(self):
+        """
+        TODO implement
+        Returns a list of all possible legal castling moves
+        :return: a list of all possible legal castling moves
+        """
+        moves = []
+        # is king on check?
+        # will king be on check while moving?
+        # will king be on check after move?
 
         return moves
 
