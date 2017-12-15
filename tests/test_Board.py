@@ -808,21 +808,22 @@ class TestBoardClass(unittest.TestCase):
         king_moves = board._king_move_gen()
         self.assertEqual(len(king_moves), 0)
 
+        # 3 pseudolegal moves, 2 legal moves
         board = Board('k7/8/8/8/8/6p1/8/6nK w - - 0 1')
         king_moves = board._king_move_gen()
-        self.assertEqual(len(king_moves), 3)
-        self.assertListEqual(sorted(king_moves), sorted([Move(Sq.H1, Sq.H2, MoveType.QUIET),
-                                                         Move(Sq.H1, Sq.G2, MoveType.QUIET),
+        self.assertEqual(len(king_moves), 2)
+        self.assertListEqual(sorted(king_moves), sorted([Move(Sq.H1, Sq.G2, MoveType.QUIET),
                                                          Move(Sq.H1, Sq.G1, MoveType.CAPTURE)]))
 
+        # 7 pseudolegal moves, 5 legal moves
         board = Board('8/8/8/3kb3/3N4/8/8/6nK b - - 0 1')
+        print()
+        print(board)
         king_moves = board._king_move_gen()
-        self.assertEqual(len(king_moves), 7)
+        self.assertEqual(len(king_moves), 5)
         self.assertListEqual(sorted(king_moves), sorted([Move(Sq.D5, Sq.C4, MoveType.QUIET),
                                                          Move(Sq.D5, Sq.C5, MoveType.QUIET),
-                                                         Move(Sq.D5, Sq.C6, MoveType.QUIET),
                                                          Move(Sq.D5, Sq.D6, MoveType.QUIET),
-                                                         Move(Sq.D5, Sq.E6, MoveType.QUIET),
                                                          Move(Sq.D5, Sq.E4, MoveType.QUIET),
                                                          Move(Sq.D5, Sq.D4, MoveType.CAPTURE)]))
 
