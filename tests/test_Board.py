@@ -831,7 +831,29 @@ class TestBoardClass(unittest.TestCase):
         TODO add more tests
         Tests the _get_safe_bb() function of the Board class
         """
-
+        # just king
         board = Board('k7/8/8/8/8/8/8/7K w - - 0 1')
         safe_bb = board._get_safe_bb()
         self.assertEqual(sorted((~safe_bb).indices()), sorted([Sq.B7, Sq.B8, Sq.A7]))
+
+        # king and pawn
+        board = Board('k7/7p/8/8/8/8/8/7K w - - 0 1')
+        safe_bb = board._get_safe_bb()
+        self.assertEqual(sorted((~safe_bb).indices()), sorted([Sq.B7, Sq.B8, Sq.A7, Sq.G6]))
+
+        # king and knight
+        board = Board('k5n1/8/8/8/8/8/8/7K w - - 0 1')
+        safe_bb = board._get_safe_bb()
+        self.assertEqual(sorted((~safe_bb).indices()), sorted([Sq.B7, Sq.B8, Sq.A7, Sq.E7, Sq.F6, Sq.H6]))
+
+        # king and bishop
+        board = Board('k4b2/8/8/8/8/8/8/7K w - - 0 1')
+        safe_bb = board._get_safe_bb()
+        self.assertEqual(sorted((~safe_bb).indices()), sorted([Sq.B7, Sq.B8, Sq.A7, Sq.E7, Sq.D6, Sq.C5, Sq.B4, Sq.A3,
+                                                               Sq.G7, Sq.H6]))
+
+        # king and rook
+        board = Board('k7/8/8/8/8/8/8/4K2R b - - 0 1')
+        safe_bb = board._get_safe_bb()
+        self.assertEqual(sorted((~safe_bb).indices()), sorted([Sq.H2, Sq.H3, Sq.H4, Sq.H5, Sq.H6, Sq.H7, Sq.H8, Sq.G1,
+                                                               Sq.F1, Sq.F2, Sq.E2, Sq.D2, Sq.D1]))
