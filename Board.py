@@ -456,7 +456,9 @@ class Board:
             # double pawn push moves
             double = const.DOUBLE_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
             for index in double.indices():
-                moves.append(Move(pawn_sq, index, MoveType.DOUBLE))
+                # the middle square should also be empty
+                if (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])[(pawn_sq + index)/2] == 0:
+                    moves.append(Move(pawn_sq, index, MoveType.DOUBLE))
 
             # attack moves
             capture = const.ATTACK[piece][pawn_sq] & self.color_bb[Color.switch(self.turn)]
