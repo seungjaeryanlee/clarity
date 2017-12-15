@@ -450,6 +450,53 @@ class Board:
 
         return self._find_slider_checks(queen, enemy_queen)
 
+    def find_pinned(self):
+        """
+        TODO untested
+        Returns list of squares of pinned pieces.
+        :return: a list squares of pinned pieces.
+        """
+
+        # Find the king. Use the directional attack bitboards of each slider on the KING'S SQUARE and AND(&) it with
+        # the bitboard of enemy sliders to find the sliders that could be pinning a piece. Then, check if the
+        # trajectory is blocked by a single allied piece.
+        #
+        # To find all blocking pieces, AND(&) the directional attack bitboards with the bitboard of all the pieces on
+        # board. Then, to check if this piece is actually between the king and the enemy slider, compare the blocking
+        # piece and the enemy slider piece for their distance to the king square. (Not the slider piece since the
+        # directional attack bitboard was used on the KING'S SQUARE) If the distance is smaller for the blocking piece,
+        # the piece is between the enemy slider piece and the king.
+        #
+        # If there is only one allied piece, add the square of that piece to the list of pinned piece squares. If there
+        # is zero or multiple allied piece, or if there is an enemy piece between the king and the enemy slider,
+        # do nothing.
+
+        pinned_sqs = []
+        king_sq = self.piece_sq[Piece.WK if self.turn == Color.WHITE else Piece.BK][0]
+        enemy_sliders = {Piece.BB, Piece.BR, Piece.BQ} if self.turn == Color.WHITE else {Piece.WB, Piece.WR, Piece.WQ}
+
+        for enemy_slider in enemy_sliders:
+            # const.ATTACK[slider] and const.ATTACK[enemy_slider] uses same bitboards, so using either is fine
+            for _, ATTACK_DIR in const.ATTACK[enemy_slider].items():
+                # get bitboard of slider pieces with king on their trajectory
+                sliders = ATTACK_DIR[king_sq] & self.bitboards[enemy_slider]
+                # get other pieces on that trajectory
+                possible_blocks = ATTACK_DIR[king_sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+
+                for slider_sq in sliders.indices():
+                    # find all blocking pieces between the slider and the king
+                    blocks = []
+                    for possible_block_sq in possible_blocks.indices():
+                        # if the piece is closer to the king then it is to the slider piece, it is a block
+                        if abs(king_sq - possible_block_sq) < abs(slider_sq - king_sq):
+                            blocks.append(possible_block_sq)
+                        # if there are many pieces between the king and the slider, nothing is pinned
+                        # if the piece between is not the king's piece, nothing is pinned
+                        if len(blocks) == 1 and self.color_bb[self.turn][blocks[0]] == 1:
+                            pinned_sqs.append(blocks[0])
+
+        return pinned_sqs
+
     def _pawn_move_gen(self):
         """
         Returns a list of all possible legal pawn moves
