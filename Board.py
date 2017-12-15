@@ -247,7 +247,9 @@ class Board:
         Returns a list of all possible legal moves
         :return: a list of all possible legal moves
         """
-        checks = self.find_checks()
+        king = Piece.WK if self.turn == Color.WHITE else Piece.BK
+        king_sq = self.piece_sq[king][0]
+        checks = self.find_checks(king_sq)
         if len(checks) == 2:
             # king must move out of danger
             return self._king_move_gen()
@@ -272,60 +274,56 @@ class Board:
             moves.extend(self._castling_move_gen())
             return moves
 
-    def find_checks(self):
+    def find_checks(self, sq):
         """
         Returns list of squares of pieces putting the king on check. Returns an empty list if the king is not in check.
         :return: a list squares of pieces putting the king on check or an empty list if the king is not in check.
         """
-        checks = self._find_pawn_checks()
-        checks.extend(self._find_knight_checks())
+        checks = self._find_pawn_checks(sq)
+        checks.extend(self._find_knight_checks(sq))
         # TODO can also find pinned pieces similarly
-        checks.extend(self._find_bishop_checks())
-        checks.extend(self._find_rook_checks())
-        checks.extend(self._find_queen_checks())
+        checks.extend(self._find_bishop_checks(sq))
+        checks.extend(self._find_rook_checks(sq))
+        checks.extend(self._find_queen_checks(sq))
 
         return checks
 
-    def _find_pawn_checks(self):
+    def _find_pawn_checks(self, sq):
         """
         Returns list of squares of pawns putting the king on check.
         :return: a list of squares of pawns putting the king on check.
         """
         checks = []
 
-        piece = Piece.WK if self.turn == Color.WHITE else Piece.BK
         pawn = Piece.WP if self.turn == Color.WHITE else Piece.BP
         enemy_pawn = Piece.BP if self.turn == Color.WHITE else Piece.WP
-        king_sq = self.piece_sq[piece][0]
 
-        pawns = const.ATTACK[pawn][king_sq] & self.bitboards[enemy_pawn]
+        pawns = const.ATTACK[pawn][sq] & self.bitboards[enemy_pawn]
         if pawns != BitBoard(0):
             for pawn_sq in pawns.indices():
                 checks.append(pawn_sq)
 
         return checks
 
-    def _find_knight_checks(self):
+    def _find_knight_checks(self, sq):
         """
         Returns list of squares of knights putting the king on check.
         :return: a list of squares of knights putting the king on check.
         """
         checks = []
 
-        piece = Piece.WK if self.turn == Color.WHITE else Piece.BK
         knight = Piece.WN if self.turn == Color.WHITE else Piece.BN
         enemy_knight = Piece.BN if self.turn == Color.WHITE else Piece.WN
-        king_sq = self.piece_sq[piece][0]
 
         # note that const.ATTACK[knight] and const.ATTACK[enemy_knight] uses same bitboards
-        knights = const.ATTACK[knight][king_sq] & self.bitboards[enemy_knight]
+        knights = const.ATTACK[knight][sq] & self.bitboards[enemy_knight]
         if knights != BitBoard(0):
             for knight_sq in knights.indices():
                 checks.append(knight_sq)
 
         return checks
 
-    def _find_slider_checks(self, slider, enemy_slider):
+    def _find_slider_checks(self, sq, slider, enemy_slider):
         """
         Returns list of squares of the given slider piece putting the king on check.
         :return: a list of squares of the given slider piece putting the king on check.
@@ -341,21 +339,20 @@ class Board:
         # it to the list of checks.
 
         check_sqs = []
-        king_sq = self.piece_sq[Piece.WK if self.turn == Color.WHITE else Piece.BK][0]
 
         # note that const.ATTACK[slider] and const.ATTACK[enemy_slider] uses same bitboards
         for _, ATTACK_DIR in const.ATTACK[slider].items():
             # get bitboard of slider pieces with king on their trajectory
-            sliders = ATTACK_DIR[king_sq] & self.bitboards[enemy_slider]
+            sliders = ATTACK_DIR[sq] & self.bitboards[enemy_slider]
             # get other pieces on that trajectory
-            possible_blocks = ATTACK_DIR[king_sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+            possible_blocks = ATTACK_DIR[sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
 
             # search for a blocking piece between the slider and the king
             for slider_sq in sliders.indices():
                 is_blocked = False
                 for possible_block_sq in possible_blocks.indices():
                     # if the piece is closer to the king then it is to the slider piece, it is a block
-                    if abs(king_sq - possible_block_sq) < abs(slider_sq - king_sq):
+                    if abs(sq - possible_block_sq) < abs(slider_sq - sq):
                         is_blocked = True
                         break
                 if not is_blocked:
@@ -363,7 +360,7 @@ class Board:
 
         return check_sqs
 
-    def _find_bishop_checks(self):
+    def _find_bishop_checks(self, sq):
         """
         Returns list of squares of bishops putting the king on check.
         :return: a list of squares of bishops putting the king on check.
@@ -371,9 +368,9 @@ class Board:
         bishop = Piece.WB if self.turn == Color.WHITE else Piece.BB
         enemy_bishop = Piece.BB if self.turn == Color.WHITE else Piece.WB
 
-        return self._find_slider_checks(bishop, enemy_bishop)
+        return self._find_slider_checks(sq, bishop, enemy_bishop)
 
-    def _find_rook_checks(self):
+    def _find_rook_checks(self, sq):
         """
         Returns list of squares of rooks putting the king on check.
         :return: a list of squares of rooks putting the king on check.
@@ -381,9 +378,9 @@ class Board:
         rook = Piece.WR if self.turn == Color.WHITE else Piece.BR
         enemy_rook = Piece.BR if self.turn == Color.WHITE else Piece.WR
 
-        return self._find_slider_checks(rook, enemy_rook)
+        return self._find_slider_checks(sq, rook, enemy_rook)
 
-    def _find_queen_checks(self):
+    def _find_queen_checks(self, sq):
         """
         Returns list of squares of queens putting the king on check.
         :return: a list of squares of queens putting the king on check.
@@ -391,7 +388,7 @@ class Board:
         queen = Piece.WQ if self.turn == Color.WHITE else Piece.BQ
         enemy_queen = Piece.BQ if self.turn == Color.WHITE else Piece.WQ
 
-        return self._find_slider_checks(queen, enemy_queen)
+        return self._find_slider_checks(sq, queen, enemy_queen)
 
     def find_pinned(self):
         """
