@@ -827,6 +827,54 @@ class TestBoardClass(unittest.TestCase):
                                                          Move(Sq.D5, Sq.E4, MoveType.QUIET),
                                                          Move(Sq.D5, Sq.D4, MoveType.CAPTURE)]))
 
+    def test_castling_move_gen(self):
+        """
+        Tests the castling_move_gen() function of the Board class
+        """
+        # all castling possible
+        board = Board('k7/8/8/8/8/8/8/R3K2R w KQkq - 0 1')
+        moves = board._castling_move_gen()
+        self.assertEqual(len(moves), 2)
+        self.assertListEqual(sorted(moves), sorted([Move(Sq.E1, Sq.C1, MoveType.Q_CASTLE),
+                                                    Move(Sq.E1, Sq.B1, MoveType.K_CASTLE)]))
+        board = Board('r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1')
+        moves = board._castling_move_gen()
+        self.assertEqual(len(moves), 2)
+        self.assertListEqual(sorted(moves), sorted([Move(Sq.E8, Sq.C8, MoveType.Q_CASTLE),
+                                                    Move(Sq.E8, Sq.B8, MoveType.K_CASTLE)]))
+
+        # one castling blocked by allied piece
+        board = Board('k7/8/8/8/8/8/8/R2BK2R w KQkq - 0 1')
+        moves = board._castling_move_gen()
+        self.assertEqual(len(moves), 1)
+        self.assertListEqual(sorted(moves), sorted([Move(Sq.E8, Sq.B8, MoveType.K_CASTLE)]))
+
+        # one castling blocked by "rook moving"
+        board = Board('k7/8/8/8/8/8/8/R3K2R w Qkq - 0 1')
+        moves = board._castling_move_gen()
+        self.assertEqual(len(moves), 1)
+        self.assertListEqual(sorted(moves), sorted([Move(Sq.E8, Sq.B8, MoveType.Q_CASTLE)]))
+
+        # both castling blocked by "king moving"
+        board = Board('k7/8/8/8/8/8/8/R3K2R w kq - 0 1')
+        moves = board._castling_move_gen()
+        self.assertEqual(len(moves), 0)
+
+        # castling not allowed due to king on check
+        board = Board('k7/8/8/8/8/4r3/8/R3K2R w KQkq - 0 1')
+        moves = board._castling_move_gen()
+        self.assertEqual(len(moves), 0)
+
+        # one castling not allowed due to check while castling
+        board = Board('k7/8/8/8/8/3r4/8/R3K2R w KQkq - 0 1')
+        moves = board._castling_move_gen()
+        self.assertEqual(len(moves), 0)
+
+        # one castling not allowed due to check after castling
+        board = Board('k7/8/8/8/8/2r5/8/R3K2R w KQkq - 0 1')
+        moves = board._castling_move_gen()
+        self.assertEqual(len(moves), 0)
+
     def test_get_safe_bb(self):
         """
         Tests the _get_safe_bb() function of the Board class
