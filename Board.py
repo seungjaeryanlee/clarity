@@ -617,26 +617,26 @@ class Board:
         block_bb = (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK]) & ~self.bitboards[king]
 
         for enemy_slider in enemy_sliders:
-            for direction, ATTACK_DIR in const.ATTACK[enemy_slider].items():
-                for sq in self.piece_sq[enemy_slider]:
+            for _, ATTACK_DIR in const.ATTACK[enemy_slider].items():
+                for slider_sq in self.piece_sq[enemy_slider]:
                     # check if there is anything blocking the slider
-                    blocks = ATTACK_DIR[sq] & block_bb
+                    blocks = ATTACK_DIR[slider_sq] & block_bb
                     # if nothing is blocking it, add all squares
                     if blocks == BitBoard(0):
-                        danger_bb = danger_bb | ATTACK_DIR[sq]
+                        danger_bb = danger_bb | ATTACK_DIR[slider_sq]
                     else:
                         # get the closest block
                         min_diff = 64
                         closest_block_sq = -1
                         for block_sq in blocks.indices():
-                            diff = abs(block_sq - king_sq)
+                            diff = abs(block_sq - slider_sq)
                             if min_diff > diff:
                                 min_diff = diff
                                 closest_block_sq = block_sq
 
                         # add all squares before the block square
-                        for index in ATTACK_DIR[sq].indices():
-                            diff = abs(index - king_sq)
+                        for index in ATTACK_DIR[slider_sq].indices():
+                            diff = abs(index - slider_sq)
                             if min_diff > diff:
                                 danger_bb[index] = 1
 
