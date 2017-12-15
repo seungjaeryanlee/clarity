@@ -825,3 +825,13 @@ class TestBoardClass(unittest.TestCase):
                                                          Move(Sq.D5, Sq.E6, MoveType.QUIET),
                                                          Move(Sq.D5, Sq.E4, MoveType.QUIET),
                                                          Move(Sq.D5, Sq.D4, MoveType.CAPTURE)]))
+
+    def test_get_safe_bb(self):
+        """
+        TODO add more tests
+        Tests the _get_safe_bb() function of the Board class
+        """
+
+        board = Board('k7/8/8/8/8/8/8/7K w - - 0 1')
+        safe_bb = board._get_safe_bb()
+        self.assertEqual(sorted((~safe_bb).indices()), sorted([Sq.B7, Sq.B8, Sq.A7]))
