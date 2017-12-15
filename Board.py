@@ -608,7 +608,6 @@ class Board:
             king = Piece.BK
             enemy_pieces = {Piece.WP, Piece.WN, Piece.WK}
             enemy_sliders = {Piece.WB, Piece.WR, Piece.WQ}
-        king_sq = self.piece_sq[king][0]
 
         for enemy_piece in enemy_pieces:
             for sq in self.piece_sq[enemy_piece]:
@@ -646,7 +645,6 @@ class Board:
                             danger_bb[closest_block_sq] = 1
 
         return ~danger_bb
-
 
 
 # only runs when this module is called directly
