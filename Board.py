@@ -574,19 +574,21 @@ class Board:
 
     def _king_move_gen(self):
         """
-        TODO make sure king is not going in check
         Returns a list of all possible legal king moves
         :return: a list of all possible legal king moves
         """
         moves = []
         piece = Piece.WK if self.turn == Color.WHITE else Piece.BK
 
+        safe_bb = self._get_safe_bb()
+
         # note that this should only once since there can only be one king
         for king_sq in self.piece_sq[piece]:
-            capture = const.ATTACK[piece][king_sq] & self.color_bb[Color.switch(self.turn)]
+            capture = const.ATTACK[piece][king_sq] & self.color_bb[Color.switch(self.turn)] & safe_bb
             for index in capture.indices():
                 moves.append(Move(king_sq, index, MoveType.CAPTURE))
-            noncapture = const.ATTACK[piece][king_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+            noncapture = const.ATTACK[piece][king_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])\
+                & safe_bb
             for index in noncapture.indices():
                 moves.append(Move(king_sq, index, MoveType.QUIET))
 
