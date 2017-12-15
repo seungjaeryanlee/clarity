@@ -250,13 +250,9 @@ class Board:
         checks = self.find_checks()
         if len(checks) == 2:
             # king must move out of danger
-            # TODO make sure king is not moving into another place attacked
-            # TODO create a bitboard for which blocks are 'dangerous' (consider king as nonexistent during this)
             return self._king_move_gen()
         elif len(checks) == 1:
             # move king out of danger
-            # TODO make sure king is not moving into another place attacked
-            # TODO create a bitboard for which blocks are 'dangerous' (consider king as nonexistent during this)
             moves = self._king_move_gen()
             # capture piece attacking king
             # TODO very similar to find_checks(): we want to find if any (not pinned) piece can attack checks[0]
