@@ -448,6 +448,7 @@ class Board:
                     if len(blocks) == 1 and self.color_bb[self.turn][blocks[0]] == 1:
                         pinned.append((blocks[0], slider_sq))
 
+        # TODO use Board._pinned_move_gen() and return (pinned_sqs, pinned_moves) tuple
         return pinned
 
     def _pinned_move_gen(self, pinned_sq, slider_sq, slider_direction):
