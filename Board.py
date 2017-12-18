@@ -449,6 +449,27 @@ class Board:
 
         return pinned
 
+    def _pinned_move_gen(self, pinned_sq, slider_sq, slider_direction):
+        """
+        TODO implement
+        Returns a move possible for a piece on the given pinned_sq square using given slider_sq and slider_type.
+        If there is no move possible, return None.
+        :param pinned_sq: the square the pinned piece is on
+        :param slider_sq: the square the pinning slider is on
+        :param slider_direction: the direction of the pinning slider
+        :return: a move possible for a piece on the given pinned_sq square.
+        """
+
+        # The only move the pinned piece can make is capturing the slider piece pinning it. 1. If the pinned piece is
+        # a pawn, it can only capture a bishop on its attacking square. 2. Otherwise, check if the piece on the pinned
+        # square is a slider that can slide the correct direction. Note that pinned knights can never move.
+
+        # 1. Find piece type of pinned piece
+        # 2. If knight, return None
+        # 3. If pawn, check for both ATTACK bitboard and PROMO-ATTACK bitboard
+        # 4. If slider, check if the slider can move the given direction
+        pass
+
     def _pawn_move_gen(self):
         """
         Returns a list of all possible legal pawn moves
