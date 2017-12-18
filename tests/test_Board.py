@@ -5,6 +5,7 @@ This file defines unit tests for the Board class.
 import unittest
 from Board import Board
 from Color import Color
+from Direction import Direction
 from Move import Move
 from MoveType import MoveType
 from Piece import Piece
@@ -625,6 +626,17 @@ class TestBoardClass(unittest.TestCase):
         pinned = board.find_pinned()
         self.assertEqual(len(pinned), 2)
         self.assertEqual(sorted(pinned), sorted([(Sq.C7, Sq.B8), (Sq.B5, Sq.A5)]))
+
+    def test_pinned_move_gen(self):
+        """
+        TODO add more tests
+        Tests the _pinned_move_gen() function of the Board class
+        """
+        # rook pinned by rook
+        board = Board('k6K/8/8/n7/8/r7/8/R7 b - - 0 1')
+        moves = board._pinned_move_gen(Sq.A3, Sq.A1, Direction.U)
+        self.assertEqual(len(moves), 1)
+        self.assertEqual(sorted(moves), [Move(Sq.A3, Sq.A1, MoveType.CAPTURE)])
 
     def test_pawn_move_gen(self):
         """
