@@ -250,20 +250,33 @@ class Board:
         king = Piece.WK if self.turn == Color.WHITE else Piece.BK
         king_sq = self.piece_sq[king][0]
         checks = self.get_attacking_sqs(king_sq)
+
         if len(checks) == 2:
             # king must move out of danger
             return self._king_move_gen()
         elif len(checks) == 1:
+            pinned = self.find_pinned()
+            pinned_sqs = [pinned_tuple[0] for pinned_tuple in pinned]
+
             # move king out of danger
             moves = self._king_move_gen()
             # capture piece attacking king
-            # TODO very similar to get_attacking_sqs(): we want to find if any (not pinned) piece can attack checks[0]
+            attacking_sqs = self.get_attacking_sqs(checks[0])
+            if len(attacking_sqs) > 0:
+                for attacking_sq in attacking_sqs:
+                    # check if the attacking_sq is pinned
+                    if attacking_sqs in pinned_sqs:
+                        # TODO check type of capture (CAPTURE, EP_CAPTURE, X_PROMO_CAPTURE)
+                        moves.append(Move(attacking_sq, checks[0], MoveType.CAPTURE))
             # 3. block slider piece attacking king
             # TODO similar to above, but check for all spaces in between the slider and the king, and also
             # TODO pawn needs to move quiet or via double pawn push, not by capture.
             return moves
         else:
             # TODO exclude pinned pieces
+            pinned = self.find_pinned()
+            pinned_sqs = [pinned_tuple[0] for pinned_tuple in pinned]
+
             # generate moves
             moves = self._pawn_move_gen()
             moves.extend(self._knight_move_gen())
