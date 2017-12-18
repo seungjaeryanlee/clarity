@@ -4,6 +4,7 @@ This file defines the Board class.
 """
 from BitBoard import BitBoard
 from Color import Color
+from Direction import Direction
 import constants as const
 from Move import Move
 from MoveType import MoveType
@@ -451,13 +452,13 @@ class Board:
 
     def _pinned_move_gen(self, pinned_sq, slider_sq, slider_direction):
         """
-        TODO implement
-        Returns a move possible for a piece on the given pinned_sq square using given slider_sq and slider_type.
-        If there is no move possible, return None.
+        TODO untested
+        Returns a list of moves possible for a piece on the given pinned_sq square using given slider_sq and
+        slider_type. If there is no move possible, returns an empty list.
         :param pinned_sq: the square the pinned piece is on
         :param slider_sq: the square the pinning slider is on
         :param slider_direction: the direction of the pinning slider
-        :return: a move possible for a piece on the given pinned_sq square.
+        :return: a list of moves possible for a piece on the given pinned_sq square.
         """
 
         # The only move the pinned piece can make is capturing the slider piece pinning it. 1. If the pinned piece is
@@ -465,10 +466,35 @@ class Board:
         # square is a slider that can slide the correct direction. Note that pinned knights can never move.
 
         # 1. Find piece type of pinned piece
+        pinned_type = -1
+        for piece in Piece:
+            if self.bitboards[piece][pinned_sq] == 1:
+                pinned_type = piece
         # 2. If knight, return None
+        if pinned_type in {Piece.WN, Piece.BN}:
+            return []
         # 3. If pawn, check for both ATTACK bitboard and PROMO-ATTACK bitboard
+        elif pinned_type in {Piece.WP, Piece.BP}:
+            if const.PROMO_CAPTURE_P[pinned_type][pinned_sq][slider_sq] == 1:
+                return [Move(pinned_sq, slider_sq, MoveType.N_PROMO_CAPTURE),
+                        Move(pinned_sq, slider_sq, MoveType.B_PROMO_CAPTURE),
+                        Move(pinned_sq, slider_sq, MoveType.R_PROMO_CAPTURE),
+                        Move(pinned_sq, slider_sq, MoveType.Q_PROMO_CAPTURE)]
+            if const.ATTACK[pinned_type][pinned_sq][slider_sq] == 1:
+                return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
         # 4. If slider, check if the slider can move the given direction
-        pass
+        else:
+            if pinned_type in {Piece.WB, Piece.BB} and slider_direction in {Direction.DL, Direction.DR,
+                                                                            Direction.UL, Direction.UR}:
+                return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
+            elif pinned_type in {Piece.WR, Piece.BR} and slider_direction in {Direction.D, Direction.L,
+                                                                              Direction.U, Direction.R}:
+                return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
+            # queen can always capture the pinning slider
+            else:
+                return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
+
+        return []
 
     def _pawn_move_gen(self):
         """
