@@ -449,7 +449,7 @@ class Board:
                         pinned_sqs.append(blocks[0])
                         pinned_moves.extend(self._pinned_move_gen(blocks[0], slider_sq, slider_dir))
 
-        return (pinned_sqs, pinned_moves)
+        return pinned_sqs, pinned_moves
 
     def _pinned_move_gen(self, pinned_sq, slider_sq, slider_dir):
         """
