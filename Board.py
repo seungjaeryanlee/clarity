@@ -189,11 +189,11 @@ class Board:
     @staticmethod
     def _get_sqs_between(sq1, sq2):
         """
-        Returns a list of squares between squares sq1 and sq2. Assumes that the squares must be on the same line.
-        Excludes sq1 and sq2.
+        Returns a BitBoard with bit index 1 for squares between squares sq1 and sq2. Assumes that the squares must be
+        on the same line. Excludes sq1 and sq2.
         :param sq1: one end of the line segment
         :param sq2: other end of the line segment
-        :return: a list of squares between squares sq1 and sq2, not including sq1 and sq2.
+        :return: a BitBoard with bit index 1 for squares between squares sq1 and sq2, not including sq1 and sq2.
         """
         difference = sq1 - sq2
 
@@ -207,9 +207,15 @@ class Board:
             step = 1
 
         if sq1 < sq2:
-            return range(sq1 + step, sq2, step)
+            indices = range(sq1 + step, sq2, step)
         else:
-            return range(sq2 + step, sq1, step)
+            indices = range(sq2 + step, sq1, step)
+
+        bb = BitBoard(0)
+        for index in indices:
+            bb[index] = 1
+
+        return bb
 
     def make_move(self, move):
         """
@@ -310,14 +316,7 @@ class Board:
             check_piece = self._get_piece_on_sq(checks[0])
             if check_piece in {Piece.WB, Piece.BB, Piece.WR, Piece.BR, Piece.WQ, Piece.BQ}:
                 # (2) find squares between slider and king
-                between_sqs = self._get_sqs_between(checks[0], king_sq)
-
-                # create bitboard of target squares
-                # TODO make Board._get_sqs_between() return a BitBoard
-                target_bb = BitBoard(0)
-                for between_sq in between_sqs:
-                    target_bb[between_sq] = 1
-
+                target_bb = self._get_sqs_between(checks[0], king_sq)
                 # (3) iterate through all non-king pieces to get possible moves
                 moves.extend(self.get_target_noncapture_moves(target_bb, pinned_sqs))
 
