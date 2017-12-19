@@ -287,40 +287,43 @@ class Board:
 
             return moves
 
-    def get_attacking_sqs(self, sq):
+    def get_attacking_sqs(self, target_sq):
         """
-        Returns list of squares of pieces putting the king on check. Returns an empty list if the king is not in check.
-        :return: a list squares of pieces putting the king on check or an empty list if the king is not in check.
+        Returns a list of squares of pieces that can attack the target square (target_sq).
+        :param target_sq: the target square to attack
+        :return: a list of squares of pieces that can attack the target square (target_sq).
         """
-        checks = self._get_attacking_pawn_sqs(sq)
-        checks.extend(self._get_attacking_knight_sqs(sq))
-        checks.extend(self._get_attacking_bishop_sqs(sq))
-        checks.extend(self._get_attacking_rook_sqs(sq))
-        checks.extend(self._get_attacking_queen_sqs(sq))
+        checks = self._get_attacking_pawn_sqs(target_sq)
+        checks.extend(self._get_attacking_knight_sqs(target_sq))
+        checks.extend(self._get_attacking_bishop_sqs(target_sq))
+        checks.extend(self._get_attacking_rook_sqs(target_sq))
+        checks.extend(self._get_attacking_queen_sqs(target_sq))
 
         return checks
 
-    def _get_attacking_pawn_sqs(self, sq):
+    def _get_attacking_pawn_sqs(self, target_sq):
         """
-        Returns list of squares of pawns putting the king on check.
-        :return: a list of squares of pawns putting the king on check.
+        Returns a list of squares of pawns that can attack the target square (target_sq).
+        :param target_sq: the target square to attack
+        :return: a list of squares of pawns that can attack the target square (target_sq).
         """
         checks = []
 
         pawn = Piece.WP if self.turn == Color.WHITE else Piece.BP
         enemy_pawn = Piece.BP if self.turn == Color.WHITE else Piece.WP
 
-        pawns = const.ATTACK[pawn][sq] & self.bitboards[enemy_pawn]
+        pawns = const.ATTACK[pawn][target_sq] & self.bitboards[enemy_pawn]
         if pawns != BitBoard(0):
             for pawn_sq in pawns.indices():
                 checks.append(pawn_sq)
 
         return checks
 
-    def _get_attacking_knight_sqs(self, sq):
+    def _get_attacking_knight_sqs(self, target_sq):
         """
-        Returns list of squares of knights putting the king on check.
-        :return: a list of squares of knights putting the king on check.
+        Returns a list of squares of knights that can attack the target square (target_sq).
+        :param target_sq: the target square to attack
+        :return: a list of squares of knights that can attack the target square (target_sq).
         """
         checks = []
 
@@ -328,17 +331,18 @@ class Board:
         enemy_knight = Piece.BN if self.turn == Color.WHITE else Piece.WN
 
         # note that const.ATTACK[knight] and const.ATTACK[enemy_knight] uses same bitboards
-        knights = const.ATTACK[knight][sq] & self.bitboards[enemy_knight]
+        knights = const.ATTACK[knight][target_sq] & self.bitboards[enemy_knight]
         if knights != BitBoard(0):
             for knight_sq in knights.indices():
                 checks.append(knight_sq)
 
         return checks
 
-    def _get_attacking_slider_sqs(self, sq, slider, enemy_slider):
+    def _get_attacking_slider_sqs(self, target_sq, slider, enemy_slider):
         """
-        Returns list of squares of the given slider piece putting the king on check.
-        :return: a list of squares of the given slider piece putting the king on check.
+        Returns a list of squares of sliders that can attack the target square (target_sq).
+        :param target_sq: the target square to attack
+        :return: a list of squares of sliders that can attack the target square (target_sq).
         """
 
         # Find the king. Use the directional attack bitboards of each slider on the KING'S SQUARE and AND(&) it with
@@ -355,16 +359,16 @@ class Board:
         # note that const.ATTACK[slider] and const.ATTACK[enemy_slider] uses same bitboards
         for _, ATTACK_DIR in const.ATTACK[slider].items():
             # get bitboard of slider pieces with king on their trajectory
-            sliders = ATTACK_DIR[sq] & self.bitboards[enemy_slider]
+            sliders = ATTACK_DIR[target_sq] & self.bitboards[enemy_slider]
             # get other pieces on that trajectory
-            possible_blocks = ATTACK_DIR[sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
+            possible_blocks = ATTACK_DIR[target_sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
 
             # search for a blocking piece between the slider and the king
             for slider_sq in sliders.indices():
                 is_blocked = False
                 for possible_block_sq in possible_blocks.indices():
                     # if the piece is closer to the king then it is to the slider piece, it is a block
-                    if abs(sq - possible_block_sq) < abs(slider_sq - sq):
+                    if abs(target_sq - possible_block_sq) < abs(slider_sq - target_sq):
                         is_blocked = True
                         break
                 if not is_blocked:
@@ -372,35 +376,38 @@ class Board:
 
         return check_sqs
 
-    def _get_attacking_bishop_sqs(self, sq):
+    def _get_attacking_bishop_sqs(self, target_sq):
         """
-        Returns list of squares of bishops putting the king on check.
-        :return: a list of squares of bishops putting the king on check.
+        Returns a list of squares of bishops that can attack the target square (target_sq).
+        :param target_sq: the target square to attack
+        :return: a list of squares of bishops that can attack the target square (target_sq).
         """
         bishop = Piece.WB if self.turn == Color.WHITE else Piece.BB
         enemy_bishop = Piece.BB if self.turn == Color.WHITE else Piece.WB
 
-        return self._get_attacking_slider_sqs(sq, bishop, enemy_bishop)
+        return self._get_attacking_slider_sqs(target_sq, bishop, enemy_bishop)
 
-    def _get_attacking_rook_sqs(self, sq):
+    def _get_attacking_rook_sqs(self, target_sq):
         """
-        Returns list of squares of rooks putting the king on check.
-        :return: a list of squares of rooks putting the king on check.
+        Returns a list of squares of rooks that can attack the target square (target_sq).
+        :param target_sq: the target square to attack
+        :return: a list of squares of rooks that can attack the target square (target_sq).
         """
         rook = Piece.WR if self.turn == Color.WHITE else Piece.BR
         enemy_rook = Piece.BR if self.turn == Color.WHITE else Piece.WR
 
-        return self._get_attacking_slider_sqs(sq, rook, enemy_rook)
+        return self._get_attacking_slider_sqs(target_sq, rook, enemy_rook)
 
-    def _get_attacking_queen_sqs(self, sq):
+    def _get_attacking_queen_sqs(self, target_sq):
         """
-        Returns list of squares of queens putting the king on check.
-        :return: a list of squares of queens putting the king on check.
+        Returns a list of squares of queens that can attack the target square (target_sq).
+        :param target_sq: the target square to attack
+        :return: a list of squares of queens that can attack the target square (target_sq).
         """
         queen = Piece.WQ if self.turn == Color.WHITE else Piece.BQ
         enemy_queen = Piece.BQ if self.turn == Color.WHITE else Piece.WQ
 
-        return self._get_attacking_slider_sqs(sq, queen, enemy_queen)
+        return self._get_attacking_slider_sqs(target_sq, queen, enemy_queen)
 
     def find_pinned(self):
         """
