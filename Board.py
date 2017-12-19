@@ -4,7 +4,6 @@ This file defines the Board class.
 """
 from BitBoard import BitBoard
 from Color import Color
-from Direction import Direction
 import constants as const
 from Move import Move
 from MoveType import MoveType
@@ -451,13 +450,13 @@ class Board:
         # TODO use Board._pinned_move_gen() and return (pinned_sqs, pinned_moves) tuple
         return pinned
 
-    def _pinned_move_gen(self, pinned_sq, slider_sq, slider_direction):
+    def _pinned_move_gen(self, pinned_sq, slider_sq, slider_type):
         """
         Returns a list of moves possible for a piece on the given pinned_sq square using given slider_sq and
         slider_type. If there is no move possible, returns an empty list.
         :param pinned_sq: the square the pinned piece is on
         :param slider_sq: the square the pinning slider is on
-        :param slider_direction: the direction of the pinning slider
+        :param slider_type: the Piece type of the slider
         :return: a list of moves possible for a piece on the given pinned_sq square.
         """
 
@@ -484,11 +483,9 @@ class Board:
                 return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
         # 4. If slider, check if the slider can move the given direction
         else:
-            if pinned_type in {Piece.WB, Piece.BB} and slider_direction in {Direction.DL, Direction.DR,
-                                                                            Direction.UL, Direction.UR}:
+            if pinned_type in {Piece.WB, Piece.BB} and slider_type in {Piece.WB, Piece.BB, Piece.WQ, Piece.BQ}:
                 return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
-            elif pinned_type in {Piece.WR, Piece.BR} and slider_direction in {Direction.D, Direction.L,
-                                                                              Direction.U, Direction.R}:
+            elif pinned_type in {Piece.WR, Piece.BR} and slider_type in {Piece.WR, Piece.BR, Piece.WQ, Piece.BQ}:
                 return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
             # queen can always capture the pinning slider
             elif pinned_type in {Piece.WQ, Piece.BQ}:
