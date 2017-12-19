@@ -297,6 +297,7 @@ class Board:
 
             # capture piece attacking king
             pinned_sqs, pinned_moves = self.find_pinned()
+            # TODO BUG: Board.get_attacking_sqs() should check what color the piece on the given sq is
             attacking_sqs = self.get_attacking_sqs(checks[0])
             if len(attacking_sqs) > 0:
                 for attacking_sq in attacking_sqs:
