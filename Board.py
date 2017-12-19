@@ -305,10 +305,14 @@ class Board:
                         moves.append(Move(attacking_sq, checks[0], MoveType.CAPTURE))
 
             # block slider piece attacking king
-            # TODO 1. find squares between slider and king
-            # TODO 2. iterate through all non-king pieces & check move bitboards (MOVE_P, DOUBLE_P, PROMO_P, ATTACK)
-            # TODO    (ignore pinned pieces)
-            # TODO 3. if bb[sq] == 1, then add move
+            # (1) check if the piece putting king on check is a slider
+            check_piece = self._get_piece_on_sq(checks[0])
+            if check_piece in {Piece.WB, Piece.BB, Piece.WR, Piece.BR, Piece.WQ, Piece.BQ}:
+                # (2) find squares between slider and king
+                between_sqs = self._get_sqs_between(checks[0], king_sq)
+                # TODO (3) iterate through all non-king pieces & check bitboards (MOVE_P, DOUBLE_P, PROMO_P, ATTACK)
+                # TODO     (ignore pinned pieces)
+                # TODO (4) if bb[sq] == 1, then add move
             return moves
         else:
             pinned_sqs, pinned_moves = self.find_pinned()
