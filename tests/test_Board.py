@@ -707,7 +707,6 @@ class TestBoardClass(unittest.TestCase):
 
     def test_pawn_move_gen(self):
         """
-        TODO add tests with pinned_sqs parameter
         Tests the pawn_move_gen() function of the Board class
         """
         # test on starting position
@@ -758,9 +757,14 @@ class TestBoardClass(unittest.TestCase):
         self.assertListEqual(sorted(pawn_moves), sorted([Move(Sq.D4, Sq.D3, MoveType.QUIET),
                                                          Move(Sq.D4, Sq.E3, MoveType.EP_CAPTURE)]))
 
+        # test for optional parameter pinned_sqs
+        board = Board('k7/8/2q5/8/4P3/8/8/7K w - - 0 1')
+        pinned_sqs = [Sq.E4]
+        pawn_moves = board._pawn_move_gen(pinned_sqs)
+        self.assertEqual(len(pawn_moves), 0)
+
     def test_knight_move_gen(self):
         """
-        TODO add tests with pinned_sqs parameter
         Tests the knight_move_gen() function of the Board class
         """
         board = Board()
@@ -793,11 +797,15 @@ class TestBoardClass(unittest.TestCase):
                                                            Move(Sq.E4, Sq.G5, MoveType.CAPTURE),
                                                            Move(Sq.E4, Sq.G3, MoveType.QUIET),
                                                            Move(Sq.E4, Sq.F2, MoveType.QUIET)]))
-        pass
+
+        # test for optional parameter pinned_sqs
+        board = Board('k7/8/2q5/8/8/5N2/8/7K w - - 0 1')
+        pinned_sqs = [Sq.F3]
+        knight_moves = board._knight_move_gen(pinned_sqs)
+        self.assertEqual(len(knight_moves), 0)
 
     def test_bishop_move_gen(self):
         """
-        TODO add tests with pinned_sqs parameter
         Tests the bishop_move_gen() function of the Board class
         """
         board = Board()
@@ -826,11 +834,15 @@ class TestBoardClass(unittest.TestCase):
                                                            Move(Sq.F3, Sq.E4, MoveType.QUIET),
                                                            Move(Sq.F3, Sq.D5, MoveType.QUIET),
                                                            Move(Sq.F3, Sq.C6, MoveType.CAPTURE)]))
-        pass
+
+        # test for optional parameter pinned_sqs
+        board = Board('k7/8/2q5/8/8/5N2/8/r2B3K w - - 0 1')
+        pinned_sqs = [Sq.D1]
+        bishop_moves = board._bishop_move_gen(pinned_sqs)
+        self.assertEqual(len(bishop_moves), 0)
 
     def test_rook_move_gen(self):
         """
-        TODO add tests with pinned_sqs parameter
         Tests the rook_move_gen() function of the Board class
         """
         board = Board()
@@ -877,9 +889,14 @@ class TestBoardClass(unittest.TestCase):
                                                          Move(Sq.F1, Sq.D1, MoveType.QUIET),
                                                          Move(Sq.F1, Sq.C1, MoveType.CAPTURE)]))
 
+        # test for optional parameter pinned_sqs
+        board = Board('k7/1b6/8/8/8/5R2/8/7K w - - 0 1')
+        pinned_sqs = [Sq.F3]
+        rook_moves = board._rook_move_gen(pinned_sqs)
+        self.assertEqual(len(rook_moves), 0)
+
     def test_queen_move_gen(self):
         """
-        TODO add tests with pinned_sqs parameter
         Tests the queen_move_gen() function of the Board class
         """
         board = Board()
@@ -927,6 +944,14 @@ class TestBoardClass(unittest.TestCase):
                                                           Move(Sq.G1, Sq.F2, MoveType.QUIET),
                                                           Move(Sq.G1, Sq.E3, MoveType.QUIET),
                                                           Move(Sq.G1, Sq.H2, MoveType.QUIET)]))
+
+        # test for optional parameter pinned_sqs
+        # note that the move capturing the pinning piece is not generated in this function, but in the
+        # Board._pinned_move_gen()
+        board = Board('k7/8/8/8/8/8/8/1r4QK w - - 0 1')
+        pinned_sqs = [Sq.G1]
+        queen_moves = board._queen_move_gen(pinned_sqs)
+        self.assertEqual(len(queen_moves), 0)
 
     def test_king_move_gen(self):
         """
