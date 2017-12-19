@@ -369,7 +369,7 @@ class Board:
                     moves.append(Move(pawn_sq, dest_sq, MoveType.DOUBLE))
 
             # Promotion
-            promo_bb = const.DOUBLE_P[pawn][pawn_sq] & target_bb
+            promo_bb = const.PROMO_P[pawn][pawn_sq] & target_bb
             if promo_bb != BitBoard(0):
                 for dest_sq in promo_bb.indices():
                     moves.append(Move(pawn_sq, dest_sq, MoveType.N_PROMO))
