@@ -4,6 +4,7 @@ This file defines the Board class.
 """
 from BitBoard import BitBoard
 from Color import Color
+from Direction import Direction
 import constants as const
 from Move import Move
 from MoveType import MoveType
@@ -430,7 +431,7 @@ class Board:
 
         for enemy_slider in enemy_sliders:
             # const.ATTACK[slider] and const.ATTACK[enemy_slider] uses same bitboards, so using either is fine
-            for _, ATTACK_DIR in const.ATTACK[enemy_slider].items():
+            for slider_dir, ATTACK_DIR in const.ATTACK[enemy_slider].items():
                 # get bitboard of slider pieces with king on their trajectory
                 sliders = ATTACK_DIR[king_sq] & self.bitboards[enemy_slider]
                 # get other pieces on that trajectory
@@ -447,17 +448,17 @@ class Board:
                     # if the piece between is not the king's piece, nothing is pinned
                     if len(blocks) == 1 and self.color_bb[self.turn][blocks[0]] == 1:
                         pinned_sqs.append(blocks[0])
-                        pinned_moves.extend(self._pinned_move_gen(blocks[0], slider_sq, enemy_slider))
+                        pinned_moves.extend(self._pinned_move_gen(blocks[0], slider_sq, slider_dir))
 
         return (pinned_sqs, pinned_moves)
 
-    def _pinned_move_gen(self, pinned_sq, slider_sq, slider_type):
+    def _pinned_move_gen(self, pinned_sq, slider_sq, slider_dir):
         """
         Returns a list of moves possible for a piece on the given pinned_sq square using given slider_sq and
-        slider_type. If there is no move possible, returns an empty list.
+        slider_dir. If there is no move possible, returns an empty list.
         :param pinned_sq: the square the pinned piece is on
         :param slider_sq: the square the pinning slider is on
-        :param slider_type: the Piece type of the slider
+        :param slider_dir: the direction the slider is pinning
         :return: a list of moves possible for a piece on the given pinned_sq square.
         """
 
@@ -484,9 +485,11 @@ class Board:
                 return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
         # 4. If slider, check if the slider can move the given direction
         else:
-            if pinned_type in {Piece.WB, Piece.BB} and slider_type in {Piece.WB, Piece.BB, Piece.WQ, Piece.BQ}:
+            if pinned_type in {Piece.WB, Piece.BB} and slider_dir in {Direction.UL, Direction.UR,
+                                                                      Direction.DL, Direction.DR}:
                 return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
-            elif pinned_type in {Piece.WR, Piece.BR} and slider_type in {Piece.WR, Piece.BR, Piece.WQ, Piece.BQ}:
+            elif pinned_type in {Piece.WR, Piece.BR} and slider_dir in {Direction.U, Direction.D,
+                                                                        Direction.L, Direction.R}:
                 return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
             # queen can always capture the pinning slider
             elif pinned_type in {Piece.WQ, Piece.BQ}:
