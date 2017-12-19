@@ -276,14 +276,15 @@ class Board:
             moves = pinned_moves
 
             # generate moves
-            # TODO exclude pinned pieces
-            moves.extend(self._pawn_move_gen())
-            moves.extend(self._knight_move_gen())
-            moves.extend(self._bishop_move_gen())
-            moves.extend(self._rook_move_gen())
-            moves.extend(self._queen_move_gen())
+            moves.extend(self._pawn_move_gen(pinned_sqs))
+            moves.extend(self._knight_move_gen(pinned_sqs))
+            moves.extend(self._bishop_move_gen(pinned_sqs))
+            moves.extend(self._rook_move_gen(pinned_sqs))
+            moves.extend(self._queen_move_gen(pinned_sqs))
             moves.extend(self._king_move_gen())
+            # TODO check if this also needes pinned_sqs
             moves.extend(self._castling_move_gen())
+
             return moves
 
     def get_attacking_sqs(self, sq):
@@ -495,15 +496,21 @@ class Board:
 
         return []
 
-    def _pawn_move_gen(self):
+    def _pawn_move_gen(self, pinned_sqs=None):
         """
         Returns a list of all possible legal pawn moves
+        :param pinned_sqs: (optional) a list of pinned squares to exclude from searching for possible moves
         :return: a list of all possible legal pawn moves
         """
+        if pinned_sqs is None:
+            pinned_sqs = []
+
         moves = []
         piece = Piece.WP if self.turn == Color.WHITE else Piece.BP
 
         for pawn_sq in self.piece_sq[piece]:
+            if pawn_sq in pinned_sqs:
+                continue
             # quiet moves
             quiet = const.MOVE_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
             for index in quiet.indices():
@@ -546,16 +553,21 @@ class Board:
 
         return moves
 
-    def _knight_move_gen(self):
+    def _knight_move_gen(self, pinned_sqs=None):
         """
-        TODO check if knight is pinned
         Returns a list of all possible legal knight moves
+        :param pinned_sqs: (optional) a list of pinned squares to exclude from searching for possible moves
         :return: a list of all possible legal knight moves
         """
+        if pinned_sqs is None:
+            pinned_sqs = []
+
         moves = []
         piece = Piece.WN if self.turn == Color.WHITE else Piece.BN
 
         for knight_sq in self.piece_sq[piece]:
+            if knight_sq in pinned_sqs:
+                continue
             capture = const.ATTACK[piece][knight_sq] & self.color_bb[Color.switch(self.turn)]
             for index in capture.indices():
                 moves.append(Move(knight_sq, index, MoveType.CAPTURE))
@@ -565,16 +577,21 @@ class Board:
 
         return moves
 
-    def _slider_move_gen(self, piece):
+    def _slider_move_gen(self, pinned_sqs, piece):
         """
-        TODO check for pin
         Returns a list of all possible legal moves for the given slider piece
         :param piece: a slider piece (bishop, rook, or queen)
+        :param pinned_sqs: a list of pinned squares to exclude from searching for possible moves
         :return: a list of all possible legal moves for the given slider piece
         """
+        if pinned_sqs is None:
+            pinned_sqs = []
+
         moves = []
 
         for sq in self.piece_sq[piece]:
+            if sq in pinned_sqs:
+                continue
             for direction, ATTACK_DIR in const.ATTACK[piece].items():
                 capture_or_block = ATTACK_DIR[sq] & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
                 if capture_or_block == BitBoard(0):
@@ -599,32 +616,32 @@ class Board:
 
         return moves
 
-    def _bishop_move_gen(self):
+    def _bishop_move_gen(self, pinned_sqs=None):
         """
-        TODO check for pin
         Returns a list of all possible legal bishop moves
+        :param pinned_sqs: (optional) a list of pinned squares to exclude from searching for possible moves
         :return: a list of all possible legal bishop moves
         """
         piece = Piece.WB if self.turn == Color.WHITE else Piece.BB
-        return self._slider_move_gen(piece)
+        return self._slider_move_gen(pinned_sqs, piece)
 
-    def _rook_move_gen(self):
+    def _rook_move_gen(self, pinned_sqs=None):
         """
-        TODO check for pin
         Returns a list of all possible legal rook moves
+        :param pinned_sqs: (optional) a list of pinned squares to exclude from searching for possible moves
         :return: a list of all possible legal rook moves
         """
         piece = Piece.WR if self.turn == Color.WHITE else Piece.BR
-        return self._slider_move_gen(piece)
+        return self._slider_move_gen(pinned_sqs, piece)
 
-    def _queen_move_gen(self):
+    def _queen_move_gen(self, pinned_sqs=None):
         """
-        TODO check for pin
         Returns a list of all possible legal queen moves
+        :param pinned_sqs: (optional) a list of pinned squares to exclude from searching for possible moves
         :return: a list of all possible legal queen moves
         """
         piece = Piece.WQ if self.turn == Color.WHITE else Piece.BQ
-        return self._slider_move_gen(piece)
+        return self._slider_move_gen(pinned_sqs, piece)
 
     def _king_move_gen(self):
         """

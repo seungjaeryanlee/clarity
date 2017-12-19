@@ -366,6 +366,7 @@ class TestBoardClass(unittest.TestCase):
 
         board.fen('r3k2r/Pppp1ppp/1b3nbN/nP6/BBP1P3/q4N2/Pp1P2PP/R2Q1RK1 w kq - 0 1')
         moves = board.move_gen()
+        print(board)
         self.assertEqual(len(moves), 6)
 
         board.fen('rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8')
@@ -707,6 +708,7 @@ class TestBoardClass(unittest.TestCase):
 
     def test_pawn_move_gen(self):
         """
+        TODO add tests with pinned_sqs parameter
         Tests the pawn_move_gen() function of the Board class
         """
         # test on starting position
@@ -759,6 +761,7 @@ class TestBoardClass(unittest.TestCase):
 
     def test_knight_move_gen(self):
         """
+        TODO add tests with pinned_sqs parameter
         Tests the knight_move_gen() function of the Board class
         """
         board = Board()
@@ -795,6 +798,7 @@ class TestBoardClass(unittest.TestCase):
 
     def test_bishop_move_gen(self):
         """
+        TODO add tests with pinned_sqs parameter
         Tests the bishop_move_gen() function of the Board class
         """
         board = Board()
@@ -827,6 +831,7 @@ class TestBoardClass(unittest.TestCase):
 
     def test_rook_move_gen(self):
         """
+        TODO add tests with pinned_sqs parameter
         Tests the rook_move_gen() function of the Board class
         """
         board = Board()
@@ -875,6 +880,7 @@ class TestBoardClass(unittest.TestCase):
 
     def test_queen_move_gen(self):
         """
+        TODO add tests with pinned_sqs parameter
         Tests the queen_move_gen() function of the Board class
         """
         board = Board()
