@@ -579,52 +579,62 @@ class TestBoardClass(unittest.TestCase):
         # pinned by bishop
         board = Board('k6K/1p6/8/8/8/8/8/7B b - - 0 1')
         pinned = board.find_pinned()
-        self.assertEqual(len(pinned), 1)
-        self.assertEqual(sorted(pinned), sorted([(Sq.B7, Sq.H1)]))
+        self.assertEqual(len(pinned[0]), 1)
+        self.assertEqual(sorted(pinned[0]), sorted([Sq.B7]))
+        self.assertEqual(len(pinned[1]), 0)
 
         # pinned by rook
         board = Board('k6K/8/8/n7/8/8/8/R7 b - - 0 1')
         pinned = board.find_pinned()
-        self.assertEqual(len(pinned), 1)
-        self.assertEqual(sorted(pinned), sorted([(Sq.A5, Sq.A1)]))
+        self.assertEqual(len(pinned[0]), 1)
+        self.assertEqual(sorted(pinned[0]), sorted([Sq.A5]))
+        self.assertEqual(len(pinned[1]), 0)
 
         # pinned by queen
         board = Board('k6K/1p6/8/8/8/5Q2/8/8 b - - 0 1')
         pinned = board.find_pinned()
-        self.assertEqual(len(pinned), 1)
-        self.assertEqual(sorted(pinned), sorted([(Sq.B7, Sq.F3)]))
+        self.assertEqual(len(pinned[0]), 1)
+        self.assertEqual(sorted(pinned[0]), sorted([Sq.B7]))
+        self.assertEqual(len(pinned[1]), 0)
 
         # no pinned piece (no slider on trajectory)
         board = Board('k6K/1p6/8/2r5/8/3b4/8/8 w - - 0 1')
         pinned = board.find_pinned()
-        self.assertEqual(len(pinned), 0)
+        self.assertEqual(len(pinned[0]), 0)
+        self.assertEqual(len(pinned[1]), 0)
 
         # no pinned piece (multiple allied piece on slider trajectory)
         board = Board('K6k/1N6/8/3P4/4q3/8/8/8 w - - 0 1')
         pinned = board.find_pinned()
-        self.assertEqual(len(pinned), 0)
+        self.assertEqual(len(pinned[0]), 0)
+        self.assertEqual(len(pinned[1]), 0)
 
         # no pinned piece (enemy piece on slider trajectory)
         board = Board('q3k3/8/2n5/3K4/8/8/8/7B w - - 0 1')
         pinned = board.find_pinned()
-        self.assertEqual(len(pinned), 0)
+        self.assertEqual(len(pinned[0]), 0)
+        self.assertEqual(len(pinned[1]), 0)
 
         # no pinned piece, piece in trajectory but further than king
         board = Board('1q5k/8/8/8/8/6K1/7R/8 w - - 0 1')
         pinned = board.find_pinned()
-        self.assertEqual(len(pinned), 0)
+        self.assertEqual(len(pinned[0]), 0)
+        self.assertEqual(len(pinned[1]), 0)
 
         # one pinned, piece in trajectory but further than king
         board = Board('q6k/8/8/8/4P3/5K2/8/7B w - - 0 1')
         pinned = board.find_pinned()
-        self.assertEqual(len(pinned), 1)
-        self.assertEqual(sorted(pinned), sorted([(Sq.E4, Sq.A8)]))
+        self.assertEqual(len(pinned[0]), 1)
+        self.assertEqual(sorted(pinned[0]), sorted([Sq.E4]))
+        self.assertEqual(len(pinned[1]), 0)
 
         # multiple pinned pieces
         board = Board('1q1k4/2R5/8/rN2K3/8/8/8/8 w - - 0 1')
         pinned = board.find_pinned()
-        self.assertEqual(len(pinned), 2)
-        self.assertEqual(sorted(pinned), sorted([(Sq.C7, Sq.B8), (Sq.B5, Sq.A5)]))
+        print(board)
+        self.assertEqual(len(pinned[0]), 2)
+        self.assertEqual(sorted(pinned[0]), sorted([Sq.C7, Sq.B5]))
+        self.assertEqual(len(pinned[1]), 0)
 
     def test_pinned_move_gen(self):
         """

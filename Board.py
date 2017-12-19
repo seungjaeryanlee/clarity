@@ -405,8 +405,8 @@ class Board:
 
     def find_pinned(self):
         """
-        Returns list of tuples of the square of pinned pieces and the square of the slider pinning it.
-        :return: a list of tuples of the square of pinned pieces and the square of the slider pinning it.
+        Returns a tuple of the list of the squares of pinned pieces and the list of moves possible for pinned pieces.
+        :return: a tuple of the list of the squares of pinned pieces and the list of moves possible for pinned pieces.
         """
 
         # Find the king. Use the directional attack bitboards of each slider on the KING'S SQUARE and AND(&) it with
@@ -423,7 +423,8 @@ class Board:
         # is zero or multiple allied piece, or if there is an enemy piece between the king and the enemy slider,
         # do nothing.
 
-        pinned = []
+        pinned_sqs = []
+        pinned_moves = []
         king_sq = self.piece_sq[Piece.WK if self.turn == Color.WHITE else Piece.BK][0]
         enemy_sliders = {Piece.BB, Piece.BR, Piece.BQ} if self.turn == Color.WHITE else {Piece.WB, Piece.WR, Piece.WQ}
 
@@ -445,10 +446,10 @@ class Board:
                     # if there are many pieces between the king and the slider, nothing is pinned
                     # if the piece between is not the king's piece, nothing is pinned
                     if len(blocks) == 1 and self.color_bb[self.turn][blocks[0]] == 1:
-                        pinned.append((blocks[0], slider_sq))
+                        pinned_sqs.append(blocks[0])
+                        pinned_moves.extend(self._pinned_move_gen(blocks[0], slider_sq, enemy_slider))
 
-        # TODO use Board._pinned_move_gen() and return (pinned_sqs, pinned_moves) tuple
-        return pinned
+        return (pinned_sqs, pinned_moves)
 
     def _pinned_move_gen(self, pinned_sq, slider_sq, slider_type):
         """
