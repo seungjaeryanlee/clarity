@@ -256,12 +256,11 @@ class Board:
             # king must move out of danger
             return self._king_move_gen()
         elif len(checks) == 1:
-            pinned = self.find_pinned()
-            pinned_sqs = [pinned_tuple[0] for pinned_tuple in pinned]
-
             # move king out of danger
             moves = self._king_move_gen()
+
             # capture piece attacking king
+            pinned_sqs, pinned_moves = self.find_pinned()
             attacking_sqs = self.get_attacking_sqs(checks[0])
             if len(attacking_sqs) > 0:
                 for attacking_sq in attacking_sqs:
@@ -274,12 +273,12 @@ class Board:
             # TODO pawn needs to move quiet or via double pawn push, not by capture.
             return moves
         else:
-            # TODO exclude pinned pieces
-            pinned = self.find_pinned()
-            pinned_sqs = [pinned_tuple[0] for pinned_tuple in pinned]
+            pinned_sqs, pinned_moves = self.find_pinned()
+            moves = pinned_moves
 
             # generate moves
-            moves = self._pawn_move_gen()
+            # TODO exclude pinned pieces
+            moves.extend(self._pawn_move_gen())
             moves.extend(self._knight_move_gen())
             moves.extend(self._bishop_move_gen())
             moves.extend(self._rook_move_gen())
