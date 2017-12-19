@@ -282,7 +282,6 @@ class Board:
             moves.extend(self._rook_move_gen(pinned_sqs))
             moves.extend(self._queen_move_gen(pinned_sqs))
             moves.extend(self._king_move_gen())
-            # TODO check if this also needes pinned_sqs
             moves.extend(self._castling_move_gen())
 
             return moves
