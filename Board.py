@@ -349,8 +349,8 @@ class Board:
 
         moves = []
         pawn = Piece.WP if self.turn == Color.WHITE else Piece.BP
-        pieces = {Piece.WN, Piece.WB, Piece.WR, Piece.WQ} if self.turn == Color.WHITE \
-            else {Piece.BN, Piece.BB, Piece.BR, Piece.BQ}
+        knight = Piece.WN if self.turn == Color.WHITE else Piece.BN
+        sliders = {Piece.WB, Piece.WR, Piece.WQ} if self.turn == Color.WHITE else {Piece.BB, Piece.BR, Piece.BQ}
 
         for pawn_sq in self.piece_sq[pawn]:
             if pawn_sq in pinned_sqs:
@@ -377,15 +377,26 @@ class Board:
                     moves.append(Move(pawn_sq, dest_sq, MoveType.R_PROMO))
                     moves.append(Move(pawn_sq, dest_sq, MoveType.Q_PROMO))
 
-        for piece in pieces:
-            for piece_sq in self.piece_sq[piece]:
-                if piece_sq in pinned_sqs:
-                    continue
+        # knights
+        for knight_sq in self.piece_sq[knight]:
+            if knight_sq in pinned_sqs:
+                continue
 
-                moves_bb = const.ATTACK[piece][piece_sq] & target_bb
-                if moves_bb != BitBoard(0):
-                    for dest_sq in moves_bb.indices():
-                        moves.append(Move(piece_sq, dest_sq, MoveType.QUIET))
+            moves_bb = const.ATTACK[knight][knight_sq] & target_bb
+            if moves_bb != BitBoard(0):
+                for dest_sq in moves_bb.indices():
+                    moves.append(Move(knight_sq, dest_sq, MoveType.QUIET))
+
+        # sliders
+        for slider in sliders:
+            for slider_sq in self.piece_sq[slider]:
+                if slider_sq in pinned_sqs:
+                    continue
+                for _, ATTACK_DIR in const.ATTACK[slider].items():
+                    moves_bb = ATTACK_DIR[slider_sq] & target_bb
+                    if moves_bb != BitBoard(0):
+                        for dest_sq in moves_bb.indices():
+                            moves.append(Move(slider_sq, dest_sq, MoveType.QUIET))
 
         return moves
 
