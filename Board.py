@@ -491,7 +491,7 @@ class Board:
                                                                               Direction.U, Direction.R}:
                 return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
             # queen can always capture the pinning slider
-            else:
+            elif pinned_type in {Piece.WQ, Piece.BQ}:
                 return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
 
         return []
