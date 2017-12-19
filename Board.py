@@ -310,9 +310,16 @@ class Board:
             if check_piece in {Piece.WB, Piece.BB, Piece.WR, Piece.BR, Piece.WQ, Piece.BQ}:
                 # (2) find squares between slider and king
                 between_sqs = self._get_sqs_between(checks[0], king_sq)
-                # TODO (3) iterate through all non-king pieces & check bitboards (MOVE_P, DOUBLE_P, PROMO_P, ATTACK)
-                # TODO     (ignore pinned pieces)
-                # TODO (4) if bb[sq] == 1, then add move
+
+                # create bitboard of target squares
+                # TODO make Board._get_sqs_between() return a BitBoard
+                target_bb = BitBoard(0)
+                for between_sq in between_sqs:
+                    target_bb[between_sq] = 1
+
+                # (3) iterate through all non-king pieces to get possible moves
+                moves.extend(self.get_target_noncapture_moves(target_bb, pinned_sqs))
+
             return moves
         else:
             pinned_sqs, pinned_moves = self.find_pinned()
