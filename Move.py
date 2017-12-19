@@ -39,6 +39,14 @@ class Move:
         """
         return self.num < other.num
 
+    def __repr__(self):
+        """
+        TODO untested
+        Overrides default function to a string with initial square (Sq), destination square (Sq)and move type (MoveType)
+        This allows for "correct" output when Move objects are printed in lists.
+        """
+        return str(self)
+
     def __str__(self):
         """
         Overrides default function to a string with initial square (Sq), destination square (Sq)and move type (MoveType)
