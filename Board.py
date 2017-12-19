@@ -175,6 +175,17 @@ class Board:
         self.half_move_clock = int(half_move_str)
         self.full_move_count = int(full_move_str)
 
+    def _get_piece_on_sq(self, sq):
+        """
+        Returns the Piece type of the piece on the given square (sq). Returns None if the square is empty.
+        :param sq: the square that the questioned piece is on
+        :return: the Piece type of the piece on the given square (sq). Returns None if the square is empty.
+        """
+        for piece in Piece:
+            if self.bitboards[piece][sq] == 1:
+                return piece
+        return None
+
     def make_move(self, move):
         """
         Make a given move and return the captured piece or 1 if no piece was captured
