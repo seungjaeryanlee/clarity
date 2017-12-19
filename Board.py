@@ -425,8 +425,9 @@ class Board:
         """
         checks = []
 
-        pawn = Piece.WP if self.turn == Color.WHITE else Piece.BP
-        enemy_pawn = Piece.BP if self.turn == Color.WHITE else Piece.WP
+        # detect color of the target piece since it changes which way pawn can attack
+        pawn = Piece.WP if self.color_bb[Color.WHITE][target_sq] else Piece.BP
+        enemy_pawn = Piece.BP if self.color_bb[Color.WHITE][target_sq]else Piece.WP
 
         pawns = const.ATTACK[pawn][target_sq] & self.bitboards[enemy_pawn]
         if pawns != BitBoard(0):
