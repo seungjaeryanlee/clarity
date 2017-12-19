@@ -406,7 +406,6 @@ class TestBoardClass(unittest.TestCase):
 
     def test_get_attacking_pawn_sqs(self):
         """
-        TODO write tests
         Tests the _get_attacking_pawn_sqs() function of the Board class
         """
         # normal

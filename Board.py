@@ -294,7 +294,6 @@ class Board:
         """
         checks = self._get_attacking_pawn_sqs(sq)
         checks.extend(self._get_attacking_knight_sqs(sq))
-        # TODO can also find pinned pieces similarly
         checks.extend(self._get_attacking_bishop_sqs(sq))
         checks.extend(self._get_attacking_rook_sqs(sq))
         checks.extend(self._get_attacking_queen_sqs(sq))
