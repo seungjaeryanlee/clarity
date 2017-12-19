@@ -186,6 +186,31 @@ class Board:
                 return piece
         return None
 
+    @staticmethod
+    def _get_sqs_between(sq1, sq2):
+        """
+        Returns a list of squares between squares sq1 and sq2. Assumes that the squares must be on the same line.
+        Excludes sq1 and sq2.
+        :param sq1: one end of the line segment
+        :param sq2: other end of the line segment
+        :return: a list of squares between squares sq1 and sq2, not including sq1 and sq2.
+        """
+        difference = sq1 - sq2
+
+        if difference % 9 == 0:    # Direction.UL <-> Direction.DR
+            step = 9
+        elif difference % 8 == 0:  # Direction.U <-> Direction.D
+            step = 8
+        elif difference % 7 == 0:  # Direction.UR <-> Direction.DL
+            step = 7
+        else:                      # Direction.L  <-> Direction.R
+            step = 1
+
+        if sq1 < sq2:
+            return range(sq1 + step, sq2, step)
+        else:
+            return range(sq2 + step, sq1, step)
+
     def make_move(self, move):
         """
         Make a given move and return the captured piece or 1 if no piece was captured
@@ -278,6 +303,7 @@ class Board:
                     if attacking_sq not in pinned_sqs:
                         # TODO alter Board.get_attacking_sqs() to return moves instead
                         moves.append(Move(attacking_sq, checks[0], MoveType.CAPTURE))
+
             # block slider piece attacking king
             # TODO 1. find squares between slider and king
             # TODO 2. iterate through all non-king pieces & check move bitboards (MOVE_P, DOUBLE_P, PROMO_P, ATTACK)

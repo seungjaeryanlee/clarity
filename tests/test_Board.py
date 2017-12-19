@@ -250,6 +250,26 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board._get_piece_on_sq(Sq.G7), Piece.BP)
         self.assertEqual(board._get_piece_on_sq(Sq.H7), Piece.BP)
 
+    def test_get_sqs_between(self):
+        """
+        Tests the _get_sqs_between() function of the Board class
+        """
+        # horizontal direction
+        self.assertEqual(sorted(Board._get_sqs_between(Sq.A1, Sq.A8)),
+                         sorted([Sq.A2, Sq.A3, Sq.A4, Sq.A5, Sq.A6, Sq.A7]))
+
+        # vertical direction
+        self.assertEqual(sorted(Board._get_sqs_between(Sq.C3, Sq.C5)),
+                         sorted([Sq.C4]))
+
+        # diagonal (UL-DR) direction
+        self.assertEqual(sorted(Board._get_sqs_between(Sq.B7, Sq.G2)),
+                         sorted([Sq.C6, Sq.D5, Sq.E4, Sq.F3]))
+
+        # diagonal (UR-DL) direction
+        self.assertEqual(sorted(Board._get_sqs_between(Sq.D2, Sq.F4)),
+                         sorted([Sq.E3]))
+
     def test_make_move(self):
         """
         Tests the make_move() function of the Board class
