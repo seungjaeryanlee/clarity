@@ -453,7 +453,6 @@ class Board:
 
     def _pinned_move_gen(self, pinned_sq, slider_sq, slider_direction):
         """
-        TODO untested
         Returns a list of moves possible for a piece on the given pinned_sq square using given slider_sq and
         slider_type. If there is no move possible, returns an empty list.
         :param pinned_sq: the square the pinned piece is on
