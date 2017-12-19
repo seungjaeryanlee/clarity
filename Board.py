@@ -264,9 +264,9 @@ class Board:
             attacking_sqs = self.get_attacking_sqs(checks[0])
             if len(attacking_sqs) > 0:
                 for attacking_sq in attacking_sqs:
-                    # note that even if it is pinned, this capture will free the pin
-                    # TODO check type of capture (CAPTURE, X_PROMO_CAPTURE)
-                    moves.append(Move(attacking_sq, checks[0], MoveType.CAPTURE))
+                    if attacking_sq not in pinned_sqs:
+                        # TODO check type of capture (CAPTURE, X_PROMO_CAPTURE)
+                        moves.append(Move(attacking_sq, checks[0], MoveType.CAPTURE))
             # 3. block slider piece attacking king
             # TODO similar to above, but check for all spaces in between the slider and the king, and also
             # TODO pawn needs to move quiet or via double pawn push, not by capture.
