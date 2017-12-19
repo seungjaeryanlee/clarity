@@ -265,11 +265,13 @@ class Board:
             if len(attacking_sqs) > 0:
                 for attacking_sq in attacking_sqs:
                     if attacking_sq not in pinned_sqs:
-                        # TODO check type of capture (CAPTURE, X_PROMO_CAPTURE)
+                        # TODO alter Board.get_attacking_sqs() to return moves instead
                         moves.append(Move(attacking_sq, checks[0], MoveType.CAPTURE))
-            # 3. block slider piece attacking king
-            # TODO similar to above, but check for all spaces in between the slider and the king, and also
-            # TODO pawn needs to move quiet or via double pawn push, not by capture.
+            # block slider piece attacking king
+            # TODO 1. find squares between slider and king
+            # TODO 2. iterate through all non-king pieces & check move bitboards (MOVE_P, DOUBLE_P, PROMO_P, ATTACK)
+            # TODO    (ignore pinned pieces)
+            # TODO 3. if bb[sq] == 1, then add move
             return moves
         else:
             pinned_sqs, pinned_moves = self.find_pinned()
