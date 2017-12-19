@@ -659,7 +659,7 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(sorted(moves), [Move(Sq.A3, Sq.A1, MoveType.CAPTURE)])
 
         # pawn pinned by bishop
-        board = Board('k6K/6N1/8/8/8/2P5/1b6/8 w - - 0 1')
+        board = Board('K6b/8/8/8/8/2p5/1B6/8 b - - 0 1')
         moves = board._pinned_move_gen(Sq.C3, Sq.B2, Direction.UR)
         self.assertEqual(len(moves), 1)
         self.assertEqual(sorted(moves), [Move(Sq.C3, Sq.B2, MoveType.CAPTURE)])
@@ -691,9 +691,9 @@ class TestBoardClass(unittest.TestCase):
 
         # queen pinned by bishop
         board = Board('k6K/8/5Q2/8/8/8/1b6/8 w - - 0 1')
-        moves = board._pinned_move_gen(Sq.H6, Sq.B2, Direction.UR)
+        moves = board._pinned_move_gen(Sq.F6, Sq.B2, Direction.UR)
         self.assertEqual(len(moves), 1)
-        self.assertEqual(sorted(moves), [Move(Sq.H6, Sq.B2, MoveType.CAPTURE)])
+        self.assertEqual(sorted(moves), [Move(Sq.F6, Sq.B2, MoveType.CAPTURE)])
 
     def test_pawn_move_gen(self):
         """
