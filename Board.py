@@ -395,9 +395,11 @@ class Board:
                 for _, ATTACK_DIR in const.ATTACK[slider].items():
                     moves_bb = ATTACK_DIR[slider_sq] & target_bb
                     if moves_bb != BitBoard(0):
-                        # TODO check that there is nothing between slider_sq and dest_sq
                         for dest_sq in moves_bb.indices():
-                            moves.append(Move(slider_sq, dest_sq, MoveType.QUIET))
+                            # check that there is nothing between slider_sq and dest_sq
+                            if Board._get_sqs_between(slider_sq, dest_sq) \
+                                    & (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK]) == BitBoard(0):
+                                moves.append(Move(slider_sq, dest_sq, MoveType.QUIET))
 
         return moves
 
