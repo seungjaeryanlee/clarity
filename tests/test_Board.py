@@ -435,6 +435,13 @@ class TestBoardClass(unittest.TestCase):
         moves = board.move_gen()
         self.assertEqual(len(moves), 1)
 
+    def test_get_target_noncapture_moves(self):
+        """
+        TODO add tests
+        Tests the get_target_noncapture_moves() function of the Board class
+        """
+        pass
+
     def test_get_attacking_sqs(self):
         """
         Tests the get_attacking_sqs() function of the Board class

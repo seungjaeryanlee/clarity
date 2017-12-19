@@ -329,6 +329,59 @@ class Board:
 
             return moves
 
+    def get_target_noncapture_moves(self, target_bb, pinned_sqs=None):
+        """
+        TODO untested
+        Returns a list of possible moves to move without capture to a index in target bitboard (target_bb)
+        :param target_bb: the bitboard with value 1 on target bit indices
+        :param pinned_sqs: a list of pinned squares to ignore while generating moves
+        :return: a list of possible moves to move without capture to a index in target bitboard (target_bb)
+        """
+        if pinned_sqs is None:
+            pinned_sqs = []
+
+        moves = []
+        pawn = Piece.WP if self.turn == Color.WHITE else Piece.BP
+        pieces = {Piece.WN, Piece.WB, Piece.WR, Piece.WQ} if self.turn == Color.WHITE \
+            else {Piece.BN, Piece.BB, Piece.BR, Piece.BQ}
+
+        for pawn_sq in self.piece_sq[pawn]:
+            if pawn_sq in pinned_sqs:
+                continue
+
+            # Quiet move
+            quiet_bb = const.MOVE_P[pawn][pawn_sq] & target_bb
+            if quiet_bb != BitBoard(0):
+                for dest_sq in quiet_bb.indices():
+                    moves.append(Move(pawn_sq, dest_sq, MoveType.QUIET))
+
+            # Double pawn push
+            doubles_bb = const.DOUBLE_P[pawn][pawn_sq] & target_bb
+            if doubles_bb != BitBoard(0):
+                for dest_sq in doubles_bb.indices():
+                    moves.append(Move(pawn_sq, dest_sq, MoveType.DOUBLE))
+
+            # Promotion
+            promo_bb = const.DOUBLE_P[pawn][pawn_sq] & target_bb
+            if promo_bb != BitBoard(0):
+                for dest_sq in promo_bb.indices():
+                    moves.append(Move(pawn_sq, dest_sq, MoveType.N_PROMO))
+                    moves.append(Move(pawn_sq, dest_sq, MoveType.B_PROMO))
+                    moves.append(Move(pawn_sq, dest_sq, MoveType.R_PROMO))
+                    moves.append(Move(pawn_sq, dest_sq, MoveType.Q_PROMO))
+
+        for piece in pieces:
+            for piece_sq in self.piece_sq[piece]:
+                if piece_sq in pinned_sqs:
+                    continue
+
+                moves_bb = const.ATTACK[piece][piece_sq] & target_bb
+                if moves_bb != BitBoard(0):
+                    for dest_sq in moves_bb.indices():
+                        moves.append(Move(piece_sq, dest_sq, MoveType.QUIET))
+
+        return moves
+
     def get_attacking_sqs(self, target_sq):
         """
         Returns a list of squares of pieces that can attack the target square (target_sq).
