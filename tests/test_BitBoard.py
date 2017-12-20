@@ -3,7 +3,7 @@
 This file defines unit tests for the BitBoard class.
 """
 import unittest
-from BitBoard import BitBoard
+from clarity.BitBoard import BitBoard
 
 
 class TestBitBoardClass(unittest.TestCase):

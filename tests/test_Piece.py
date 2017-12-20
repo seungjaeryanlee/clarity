@@ -3,8 +3,8 @@
 This file defines unit tests for the Piece enum.
 """
 import unittest
-from Color import Color
-from Piece import Piece
+from clarity.Color import Color
+from clarity.Piece import Piece
 
 
 class TestPieceEnum(unittest.TestCase):
