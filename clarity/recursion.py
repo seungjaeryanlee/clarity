@@ -9,10 +9,17 @@ def perft(board, depth):
     """
     Returns the number of nodes (depth)-ply deep from the given (board).
 
-    :param :class:`Board` board: the board to search nodes from
-    :param int depth: the depth to search nodes for
-    :return: the number of nodes (depth)-ply deep from the given (board).
-    :rtype: int
+    Parameters
+    ----------
+    board : Board
+        the board to search nodes from
+    depth : int
+        the depth to search nodes for
+
+    Returns
+    -------
+    int
+        the number of nodes (depth)-ply deep from the given (board).
     """
     # TODO untested
 
