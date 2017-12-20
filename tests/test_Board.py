@@ -277,12 +277,18 @@ class TestBoardClass(unittest.TestCase):
         """
         board = Board()
         move = Move(Sq.E2, Sq.E4, MoveType.DOUBLE)
-        capture = board.make_move(move)
+        captured_piece, castling, ep_square, half_move_clock, = board.make_move(move)
+        self.assertEqual(captured_piece, -1)
+        self.assertEqual(castling[Piece.WK], True)
+        self.assertEqual(castling[Piece.WQ], True)
+        self.assertEqual(castling[Piece.BK], True)
+        self.assertEqual(castling[Piece.BQ], True)
+        self.assertEqual(ep_square, -1)
+        self.assertEqual(half_move_clock, 0)
         self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
         self.assertEqual(board.color_bb[Color.WHITE].num, int('00001000000000001111011111111111', 2))
         self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1111111111111111000000000000000000000000000000000000000000000000', 2))
-        self.assertEqual(capture, -1)
         self.assertListEqual(sorted(board.piece_sq[Piece.WP]),
                              sorted([Sq.A2, Sq.B2, Sq.C2, Sq.D2, Sq.E4, Sq.F2, Sq.G2, Sq.H2]))
         self.assertListEqual(sorted(board.piece_sq[Piece.WN]),
@@ -309,12 +315,18 @@ class TestBoardClass(unittest.TestCase):
                              sorted([Sq.E8]))
 
         move = Move(Sq.B8, Sq.C6, MoveType.QUIET)
-        capture = board.make_move(move)
+        captured_piece, castling, ep_square, half_move_clock, = board.make_move(move)
+        self.assertEqual(captured_piece, -1)
+        self.assertEqual(castling[Piece.WK], True)
+        self.assertEqual(castling[Piece.WQ], True)
+        self.assertEqual(castling[Piece.BK], True)
+        self.assertEqual(castling[Piece.BQ], True)
+        self.assertEqual(ep_square, Sq.E3)
+        self.assertEqual(half_move_clock, 0)
         self.assertEqual(board.fen(), 'r1bqkbnr/pppppppp/2n5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2')
         self.assertEqual(board.color_bb[Color.WHITE].num, int('00001000000000001111011111111111', 2))
         self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1011111111111111001000000000000000000000000000000000000000000000', 2))
-        self.assertEqual(capture, -1)
         self.assertListEqual(sorted(board.piece_sq[Piece.WP]),
                              sorted([Sq.A2, Sq.B2, Sq.C2, Sq.D2, Sq.E4, Sq.F2, Sq.G2, Sq.H2]))
         self.assertListEqual(sorted(board.piece_sq[Piece.WN]),
@@ -341,12 +353,18 @@ class TestBoardClass(unittest.TestCase):
                              sorted([Sq.E8]))
 
         move = Move(Sq.E1, Sq.E2, MoveType.QUIET)
-        capture = board.make_move(move)
+        captured_piece, castling, ep_square, half_move_clock, = board.make_move(move)
+        self.assertEqual(captured_piece, -1)
+        self.assertEqual(castling[Piece.WK], True)
+        self.assertEqual(castling[Piece.WQ], True)
+        self.assertEqual(castling[Piece.BK], True)
+        self.assertEqual(castling[Piece.BQ], True)
+        self.assertEqual(ep_square, -1)
+        self.assertEqual(half_move_clock, 1)
         self.assertEqual(board.fen(), 'r1bqkbnr/pppppppp/2n5/8/4P3/8/PPPPKPPP/RNBQ1BNR b kq - 2 2')
         self.assertEqual(board.color_bb[Color.WHITE].num, int('00001000000000001111111111110111', 2))
         self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1011111111111111001000000000000000000000000000000000000000000000', 2))
-        self.assertEqual(capture, -1)
         self.assertListEqual(sorted(board.piece_sq[Piece.WP]),
                              sorted([Sq.A2, Sq.B2, Sq.C2, Sq.D2, Sq.E4, Sq.F2, Sq.G2, Sq.H2]))
         self.assertListEqual(sorted(board.piece_sq[Piece.WN]),
@@ -374,12 +392,18 @@ class TestBoardClass(unittest.TestCase):
 
         board.fen('rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w - - 0 2')
         move = Move(Sq.E4, Sq.D5, MoveType.CAPTURE)
-        capture = board.make_move(move)
+        captured_piece, castling, ep_square, half_move_clock, = board.make_move(move)
+        self.assertEqual(captured_piece, Piece.BP)
+        self.assertEqual(castling[Piece.WK], False)
+        self.assertEqual(castling[Piece.WQ], False)
+        self.assertEqual(castling[Piece.BK], False)
+        self.assertEqual(castling[Piece.BQ], False)
+        self.assertEqual(ep_square, -1)
+        self.assertEqual(half_move_clock, 0)
         self.assertEqual(board.fen(), 'rnbqkbnr/ppp1pppp/8/3P4/8/8/PPPP1PPP/RNBQKBNR b - - 0 2')
         self.assertEqual(board.color_bb[Color.WHITE].num, int('0001000000000000000000001111011111111111', 2))
         self.assertEqual(board.color_bb[Color.BLACK].num,
                          int('1111111111101111000000000000000000000000000000000000000000000000', 2))
-        self.assertEqual(capture, Piece.BP)
         self.assertListEqual(sorted(board.piece_sq[Piece.WP]),
                              sorted([Sq.A2, Sq.B2, Sq.C2, Sq.D2, Sq.D5, Sq.F2, Sq.G2, Sq.H2]))
         self.assertListEqual(sorted(board.piece_sq[Piece.WN]),

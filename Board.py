@@ -254,6 +254,12 @@ class Board:
 
         self.turn = Color.switch(self.turn)
 
+        # save castling, ep_square, half_move_clock, full_move_count to return for undo_move
+        ## copies dictionary (PEP 448)
+        save_castling = {**self.castling}
+        save_ep_square = self.ep_square
+        save_half_move_clock = self.half_move_clock
+
         # update castling
         if moved_piece == Piece.WR:
             if move.init_sq() == Sq.A1:
@@ -285,7 +291,7 @@ class Board:
         if self.turn == Color.WHITE:
             self.full_move_count += 1
 
-        return captured_piece
+        return captured_piece, save_castling, save_ep_square, save_half_move_clock
 
     def undo_move(self, move, captured_piece, castling, ep_square, half_move_clock, full_move_count):
         """
