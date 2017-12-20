@@ -1156,9 +1156,9 @@ class TestBoardClass(unittest.TestCase):
 
         # white pawn
         board = Board('8/8/8/8/8/8/7P/8 w - - 0 1')
-        assert board.eval() == const.PIECE_VALUE[Piece.WP] + const.PCSQ_VALUE[Piece.WP][Sq.H1]
+        assert board.eval() == const.PIECE_VALUE[Piece.WP] + const.PCSQ_VALUE[Piece.WP][Sq.H2]
         board = Board('8/8/8/8/8/8/7P/8 b - - 0 1')
-        assert board.eval() == -(const.PIECE_VALUE[Piece.WP] + const.PCSQ_VALUE[Piece.WP][Sq.H1])
+        assert board.eval() == -(const.PIECE_VALUE[Piece.WP] + const.PCSQ_VALUE[Piece.WP][Sq.H2])
 
         # black pawn
         board = Board('8/3p4/8/8/8/8/8/8 w - - 0 1')
