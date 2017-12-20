@@ -287,7 +287,7 @@ class Board:
 
         return captured_piece
 
-    def undo_move(self, move, captured_piece, wk_castling, wq_castling, bk_castling, bq_castling, ep_square, half_move_clock, full_move_count):
+    def undo_move(self, move, captured_piece, castling, ep_square, half_move_clock, full_move_count):
         """
         TODO untested
         TODO finish docstring
@@ -318,10 +318,7 @@ class Board:
             # update self.color_bb
             self.color_bb[Piece.color(captured_piece)][dest_sq] = 1
 
-        self.castling[Piece.WK] = wk_castling
-        self.castling[Piece.WQ] = wq_castling
-        self.castling[Piece.BK] = bk_castling
-        self.castling[Piece.BQ] = bq_castling
+        self.castling = castling
         self.ep_square = ep_square
         self.half_move_clock = half_move_clock
         self.full_move_count = full_move_count
