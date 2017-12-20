@@ -3,6 +3,7 @@
 This file defines unit tests for the Board class.
 """
 import unittest
+import constants as const
 from Board import Board
 from Color import Color
 from Direction import Direction
@@ -1145,5 +1146,82 @@ class TestBoardClass(unittest.TestCase):
         TODO add more tests
         Tests the test_eval() function of the Board class
         """
+        # starting position
         board = Board()
         assert board.eval() == 0
+
+        # no piece
+        board = Board('8/8/8/8/8/8/8/8 w - - 0 1')
+        assert board.eval() == 0
+
+        # white pawn
+        board = Board('8/8/8/8/8/8/7P/8 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.WP] + const.PCSQ_VALUE[Piece.WP][Sq.H1]
+        board = Board('8/8/8/8/8/8/7P/8 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.WP] + const.PCSQ_VALUE[Piece.WP][Sq.H1])
+
+        # black pawn
+        board = Board('8/3p4/8/8/8/8/8/8 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.BP] + const.PCSQ_VALUE[Piece.BP][Sq.D7]
+        board = Board('8/3p4/8/8/8/8/8/8 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.BP] + const.PCSQ_VALUE[Piece.BP][Sq.D7])
+
+        # white knight
+        board = Board('8/8/8/8/8/8/8/1N6 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.WN] + const.PCSQ_VALUE[Piece.WN][Sq.B1]
+        board = Board('8/8/8/8/8/8/8/1N6 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.WN] + const.PCSQ_VALUE[Piece.WN][Sq.B1])
+
+        # black knight
+        board = Board('8/8/8/8/2n5/8/8/8 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.BN] + const.PCSQ_VALUE[Piece.BN][Sq.C4]
+        board = Board('8/8/8/8/2n5/8/8/8 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.BN] + const.PCSQ_VALUE[Piece.BN][Sq.C4])
+
+        # white bishop
+        board = Board('8/8/8/8/8/8/6B1/8 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.WB] + const.PCSQ_VALUE[Piece.WB][Sq.G2]
+        board = Board('8/8/8/8/8/8/6B1/8 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.WB] + const.PCSQ_VALUE[Piece.WB][Sq.G2])
+
+        # black bishop
+        board = Board('6b1/8/8/8/8/8/8/8 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.BB] + const.PCSQ_VALUE[Piece.BB][Sq.G8]
+        board = Board('6b1/8/8/8/8/8/8/8 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.BB] + const.PCSQ_VALUE[Piece.BB][Sq.G8])
+
+        # white rook
+        board = Board('8/8/8/8/8/8/8/R7 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.WR] + const.PCSQ_VALUE[Piece.WR][Sq.A1]
+        board = Board('8/8/8/8/8/8/8/R7 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.WR] + const.PCSQ_VALUE[Piece.WR][Sq.A1])
+
+        # black rook
+        board = Board('8/7r/8/8/8/8/8/8 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.BR] + const.PCSQ_VALUE[Piece.BR][Sq.H7]
+        board = Board('8/7r/8/8/8/8/8/8 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.BR] + const.PCSQ_VALUE[Piece.BR][Sq.H7])
+
+        # white queen
+        board = Board('8/8/8/8/8/8/2Q5/8 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.WQ] + const.PCSQ_VALUE[Piece.WQ][Sq.C2]
+        board = Board('8/8/8/8/8/8/2Q5/8 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.WQ] + const.PCSQ_VALUE[Piece.WQ][Sq.C2])
+
+        # black queen
+        board = Board('3q4/8/8/8/8/8/8/8 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.BQ] + const.PCSQ_VALUE[Piece.BQ][Sq.D8]
+        board = Board('3q4/8/8/8/8/8/8/8 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.BQ] + const.PCSQ_VALUE[Piece.BQ][Sq.D8])
+
+        # white king
+        board = Board('8/8/8/8/8/8/8/4K3 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.WK] + const.PCSQ_VALUE[Piece.WK][Sq.E1]
+        board = Board('8/8/8/8/8/8/8/4K3 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.WK] + const.PCSQ_VALUE[Piece.WK][Sq.E1])
+
+        # black king
+        board = Board('8/8/3k4/8/8/8/8/8 w - - 0 1')
+        assert board.eval() == const.PIECE_VALUE[Piece.BK] + const.PCSQ_VALUE[Piece.BK][Sq.D6]
+        board = Board('8/8/3k4/8/8/8/8/8 b - - 0 1')
+        assert board.eval() == -(const.PIECE_VALUE[Piece.BK] + const.PCSQ_VALUE[Piece.BK][Sq.D6])
