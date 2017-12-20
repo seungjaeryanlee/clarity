@@ -21,7 +21,11 @@ class Board:
         """
         Run when a Board object is created. If fen_str is specified, set the board according to the given FEN string.
         Otherwise, set the board to the starting position.
-        :param fen_str: FEN string to set the board to (if specified)
+
+        Parameters
+        ----------
+        fen_str : str
+            FEN string to set the board to (if specified)
         """
         # dictionary of bitboards for each piece. bits set to their starting positions
         self.bitboards = {
@@ -80,8 +84,12 @@ class Board:
 
     def __str__(self):
         """
-        Overrides default function to a string showing a 8x8 chessboard with character notation strings
-        :return: a string of 8x8 chessboard with character notation strings
+        Overrides default function to a string showing a 8x8 chessboard with character notation strings.
+
+        Returns
+        -------
+        str
+            a string of 8x8 chessboard with character notation strings
         """
         return self._get_fen().split(' ')[0].replace('/', '\n').replace('1', '-').replace('2', '--')\
                                                                .replace('3', '---').replace('4', '----')\
@@ -90,9 +98,17 @@ class Board:
 
     def fen(self, fen_str=None):
         """
-        Returns a FEN string or sets the board according to given FEN string
-        :param fen_str: FEN string given to set the board
-        :return: the FEN string of the board if fen_str is not specified, None if fen_str is specified
+        Returns a FEN string or sets the board according to given FEN string.
+
+        Parameters
+        ----------
+        fen_str : str, optional
+            FEN string given to set the board
+
+        Returns
+        -------
+        str or None
+            the FEN string of the board if fen_str is not specified, None if fen_str is specified
         """
         if fen_str is None:
             return self._get_fen()
@@ -101,8 +117,12 @@ class Board:
 
     def _get_fen(self):
         """
-        Returns the FEN string of the board
-        :return: the FEN string of the board
+        Returns the FEN string of the board.
+
+        Returns
+        -------
+        str
+            the FEN string of the board
         """
         fen_str = ''
 
@@ -143,8 +163,12 @@ class Board:
 
     def _set_fen(self, fen_str):
         """
-        Sets the board according to the given FEN string
-        :param fen_str: FEN string to set the board to
+        Sets the board according to the given FEN string.
+
+        Parameters
+        ----------
+        fen_str : str
+            FEN string to set the board to
         """
         # TODO validate fen_str
         board_str, turn_str, castling_str, ep_str, half_move_str, full_move_str = fen_str.split(' ')
@@ -181,8 +205,16 @@ class Board:
     def _get_piece_on_sq(self, sq):
         """
         Returns the Piece type of the piece on the given square (sq). Returns None if the square is empty.
-        :param sq: the square that the questioned piece is on
-        :return: the Piece type of the piece on the given square (sq). Returns None if the square is empty.
+
+        Parameters
+        ----------
+        sq : Sq
+            the square that the questioned piece is on
+
+        Returns
+        -------
+        Piece or None
+            the Piece type of the piece on the given square (sq). Returns None if the square is empty.
         """
         for piece in Piece:
             if self.bitboards[piece][sq] == 1:
@@ -194,9 +226,18 @@ class Board:
         """
         Returns a BitBoard with bit index 1 for squares between squares sq1 and sq2. Assumes that the squares must be
         on the same line. Excludes sq1 and sq2.
-        :param sq1: one end of the line segment
-        :param sq2: other end of the line segment
-        :return: a BitBoard with bit index 1 for squares between squares sq1 and sq2, not including sq1 and sq2.
+
+        Parameters
+        ----------
+        sq1 : Sq
+            one end of the line segment
+        sq2 : Sq
+            other end of the line segment
+
+        Returns
+        -------
+        BitBoard
+            a BitBoard with bit index 1 for squares between squares sq1 and sq2, not including sq1 and sq2.
         """
         difference = sq1 - sq2
 
@@ -222,9 +263,22 @@ class Board:
 
     def make_move(self, move):
         """
-        Make a given move and return the captured piece or 1 if no piece was captured
-        :param move: captured piece from the move
-        :return: the captured piece if a piece was captured, otherwise 1
+        Make a given move and return the captured piece or -1 if no piece was captured.
+
+        Parameters
+        ----------
+        move: Move
+            the move to make on the board.
+        Returns
+        -------
+        captured_piece : Piece or -1
+            the captured piece if a piece was captured, otherwise -1
+        castling : dict
+            dictionary of castling booleans before the move was made
+        ep_square : Sq or -1
+            en passant square before the move was made
+        half_move_clock : int
+            half move clock before the move before the move was made
         """
         captured_piece = -1
         moved_piece = -1
@@ -296,9 +350,20 @@ class Board:
     def undo_move(self, move, captured_piece, castling, ep_square, half_move_clock):
         """
         TODO untested
-        TODO finish docstring
-        Undoes a given move with the help of extra parameters
-        :param move: move to undo from the board
+        Undoes a given move with the help of extra parameters.
+
+        Parameters
+        ----------
+        move : Move
+            move to undo from the board
+        captured_piece : Piece
+            piece captured from the move to restore
+        castling : dict
+            the castling state before the move
+        ep_square : Sq or -1
+            the en passant square before the move
+        half_move_clock : int
+            the half move clock before the move
         """
 
         init_sq = move.init_sq()
@@ -334,7 +399,11 @@ class Board:
     def move_gen(self):
         """
         Returns a list of all possible legal moves
-        :return: a list of all possible legal moves
+
+        Returns
+        -------
+        moves : list of Move
+            a list of all possible legal moves
         """
         king = Piece.WK if self.turn == Color.WHITE else Piece.BK
         king_sq = self.piece_sq[king][0]
@@ -384,10 +453,19 @@ class Board:
     def get_target_noncapture_moves(self, target_bb, pinned_sqs=None):
         """
         TODO untested
-        Returns a list of possible moves to move without capture to a index in target bitboard (target_bb)
-        :param target_bb: the bitboard with value 1 on target bit indices
-        :param pinned_sqs: a list of pinned squares to ignore while generating moves
-        :return: a list of possible moves to move without capture to a index in target bitboard (target_bb)
+        Returns a list of possible moves to move without capture to a index in target bitboard (target_bb).
+
+        Parameters
+        ----------
+        target_bb : BitBoard
+            the bitboard with value 1 on target bit indices
+        pinned_sqs : list of Sq, optional
+            a list of pinned squares to ignore while generating moves
+
+        Returns
+        -------
+        list of Move
+            a list of possible moves to move without capture to a index in target bitboard (target_bb)
         """
         if pinned_sqs is None:
             pinned_sqs = []
@@ -451,7 +529,15 @@ class Board:
     def get_attacking_sqs(self, target_sq):
         """
         Returns a list of squares of pieces that can attack the target square (target_sq).
-        :param target_sq: the target square to attack
+
+        Parameters
+        ----------
+        target_sq : Sq or int
+            the target square to attack
+
+        Returns
+        -------
+        :param target_sq:
         :return: a list of squares of pieces that can attack the target square (target_sq).
         """
         checks = self._get_attacking_pawn_sqs(target_sq)
@@ -465,8 +551,16 @@ class Board:
     def _get_attacking_pawn_sqs(self, target_sq):
         """
         Returns a list of squares of pawns that can attack the target square (target_sq).
-        :param target_sq: the target square to attack
-        :return: a list of squares of pawns that can attack the target square (target_sq).
+
+        Parameters
+        ----------
+        target_sq : Sq or int
+            the target square to attack
+
+        Returns
+        -------
+        list of Sq
+            a list of squares of pawns that can attack the target square (target_sq).
         """
         checks = []
 
@@ -484,8 +578,16 @@ class Board:
     def _get_attacking_knight_sqs(self, target_sq):
         """
         Returns a list of squares of knights that can attack the target square (target_sq).
-        :param target_sq: the target square to attack
-        :return: a list of squares of knights that can attack the target square (target_sq).
+
+        Parameters
+        ----------
+        target_sq : Sq or int
+            the target square to attack
+
+        Returns
+        -------
+        list of Sq
+            a list of squares of knights that can attack the target square (target_sq).
         """
         checks = []
 
@@ -503,8 +605,20 @@ class Board:
     def _get_attacking_slider_sqs(self, target_sq, slider, enemy_slider):
         """
         Returns a list of squares of sliders that can attack the target square (target_sq).
-        :param target_sq: the target square to attack
-        :return: a list of squares of sliders that can attack the target square (target_sq).
+
+        Parameters
+        ----------
+        target_sq : Sq or int
+            the target square to attack
+        slider : Piece
+            the slider piece to check for attacks on the target
+        enemy_slider : Piece
+            the enemy slider piece to check for attacks on the target
+
+        Returns
+        -------
+        list of Sq
+            a list of squares of sliders that can attack the target square (target_sq).
         """
 
         # Find the king. Use the directional attack bitboards of each slider on the KING'S SQUARE and AND(&) it with
@@ -541,8 +655,16 @@ class Board:
     def _get_attacking_bishop_sqs(self, target_sq):
         """
         Returns a list of squares of bishops that can attack the target square (target_sq).
-        :param target_sq: the target square to attack
-        :return: a list of squares of bishops that can attack the target square (target_sq).
+
+        Parameters
+        ----------
+        target_sq : Sq or int
+            the target square to attack
+
+        Returns
+        -------
+        list of Sq
+            a list of squares of bishops that can attack the target square (target_sq).
         """
         bishop = Piece.WB if self.turn == Color.WHITE else Piece.BB
         enemy_bishop = Piece.BB if self.turn == Color.WHITE else Piece.WB
@@ -552,8 +674,16 @@ class Board:
     def _get_attacking_rook_sqs(self, target_sq):
         """
         Returns a list of squares of rooks that can attack the target square (target_sq).
-        :param target_sq: the target square to attack
-        :return: a list of squares of rooks that can attack the target square (target_sq).
+
+        Parameters
+        ----------
+        target_sq : Sq or int
+            the target square to attack
+
+        Returns
+        -------
+        list of Sq
+            a list of squares of rooks that can attack the target square (target_sq).
         """
         rook = Piece.WR if self.turn == Color.WHITE else Piece.BR
         enemy_rook = Piece.BR if self.turn == Color.WHITE else Piece.WR
@@ -563,8 +693,16 @@ class Board:
     def _get_attacking_queen_sqs(self, target_sq):
         """
         Returns a list of squares of queens that can attack the target square (target_sq).
-        :param target_sq: the target square to attack
-        :return: a list of squares of queens that can attack the target square (target_sq).
+
+        Parameters
+        ----------
+        target_sq : Sq or int
+            the target square to attack
+
+        Returns
+        -------
+        list of Sq
+            a list of squares of queens that can attack the target square (target_sq).
         """
         queen = Piece.WQ if self.turn == Color.WHITE else Piece.BQ
         enemy_queen = Piece.BQ if self.turn == Color.WHITE else Piece.WQ
@@ -574,7 +712,11 @@ class Board:
     def find_pinned(self):
         """
         Returns a tuple of the list of the squares of pinned pieces and the list of moves possible for pinned pieces.
-        :return: a tuple of the list of the squares of pinned pieces and the list of moves possible for pinned pieces.
+
+        Returns
+        -------
+        (list of Piece, list of Move)
+            a tuple of the list of the squares of pinned pieces and the list of moves possible for pinned pieces.
         """
 
         # Find the king. Use the directional attack bitboards of each slider on the KING'S SQUARE and AND(&) it with
@@ -623,10 +765,20 @@ class Board:
         """
         Returns a list of moves possible for a piece on the given pinned_sq square using given slider_sq and
         slider_dir. If there is no move possible, returns an empty list.
-        :param pinned_sq: the square the pinned piece is on
-        :param slider_sq: the square the pinning slider is on
-        :param slider_dir: the direction the slider is pinning
-        :return: a list of moves possible for a piece on the given pinned_sq square.
+
+        Parameters
+        ----------
+        pinned_sq : Sq or int
+            the square the pinned piece is on
+        slider_sq : Sq or int
+            the square the pinning slider is on
+        slider_dir : Direction
+            the direction the slider is pinning
+
+        Returns
+        -------
+        list of Move
+            a list of moves possible for a piece on the given pinned_sq square.
         """
 
         # The only move the pinned piece can make is capturing the slider piece pinning it. 1. If the pinned piece is
@@ -666,9 +818,17 @@ class Board:
 
     def _pawn_move_gen(self, pinned_sqs=None):
         """
-        Returns a list of all possible legal pawn moves
-        :param pinned_sqs: (optional) a list of pinned squares to exclude from searching for possible moves
-        :return: a list of all possible legal pawn moves
+        Returns a list of all possible legal pawn moves.
+
+        Parameters
+        ----------
+        pinned_sqs : list of Sq, optional
+            a list of pinned squares to exclude from searching for possible moves
+
+        Returns
+        -------
+        list of Move
+            a list of all possible legal pawn moves
         """
         if pinned_sqs is None:
             pinned_sqs = []
@@ -724,8 +884,16 @@ class Board:
     def _knight_move_gen(self, pinned_sqs=None):
         """
         Returns a list of all possible legal knight moves
-        :param pinned_sqs: (optional) a list of pinned squares to exclude from searching for possible moves
-        :return: a list of all possible legal knight moves
+
+        Parameters
+        ----------
+        pinned_sqs : list of Sq, optional
+            a list of pinned squares to exclude from searching for possible moves
+
+        Returns
+        -------
+        list of Move
+            a list of all possible legal knight moves
         """
         if pinned_sqs is None:
             pinned_sqs = []
@@ -748,9 +916,18 @@ class Board:
     def _slider_move_gen(self, pinned_sqs, piece):
         """
         Returns a list of all possible legal moves for the given slider piece
-        :param piece: a slider piece (bishop, rook, or queen)
-        :param pinned_sqs: a list of pinned squares to exclude from searching for possible moves
-        :return: a list of all possible legal moves for the given slider piece
+
+        Parameters
+        ----------
+        pinned_sqs : list of Sq
+            a list of pinned squares to exclude from searching for possible moves
+        piece : Piece
+            slider piece to generate moves for
+
+        Returns
+        -------
+        list of Move
+            a list of all possible legal moves for the given slider piece
         """
         if pinned_sqs is None:
             pinned_sqs = []
@@ -786,35 +963,63 @@ class Board:
 
     def _bishop_move_gen(self, pinned_sqs=None):
         """
-        Returns a list of all possible legal bishop moves
-        :param pinned_sqs: (optional) a list of pinned squares to exclude from searching for possible moves
-        :return: a list of all possible legal bishop moves
+        Returns a list of all possible legal bishop moves.
+
+        Parameters
+        ----------
+        pinned_sqs: list of Sq, optional
+            a list of pinned squares to exclude from searching for possible moves
+
+        Returns
+        -------
+        list of Move
+            a list of all possible legal bishop moves
         """
         piece = Piece.WB if self.turn == Color.WHITE else Piece.BB
         return self._slider_move_gen(pinned_sqs, piece)
 
     def _rook_move_gen(self, pinned_sqs=None):
         """
-        Returns a list of all possible legal rook moves
-        :param pinned_sqs: (optional) a list of pinned squares to exclude from searching for possible moves
-        :return: a list of all possible legal rook moves
+        Returns a list of all possible legal rook moves.
+
+        Parameters
+        ----------
+        pinned_sqs: list of Sq, optional
+            a list of pinned squares to exclude from searching for possible moves
+
+        Returns
+        -------
+        list of Move
+            a list of all possible legal rook moves
         """
         piece = Piece.WR if self.turn == Color.WHITE else Piece.BR
         return self._slider_move_gen(pinned_sqs, piece)
 
     def _queen_move_gen(self, pinned_sqs=None):
         """
-        Returns a list of all possible legal queen moves
-        :param pinned_sqs: (optional) a list of pinned squares to exclude from searching for possible moves
-        :return: a list of all possible legal queen moves
+        Returns a list of all possible legal queen moves.
+
+        Parameters
+        ----------
+        pinned_sqs: list of Sq, optional
+            a list of pinned squares to exclude from searching for possible moves
+
+        Returns
+        -------
+        list of Move
+            a list of all possible legal queen moves
         """
         piece = Piece.WQ if self.turn == Color.WHITE else Piece.BQ
         return self._slider_move_gen(pinned_sqs, piece)
 
     def _king_move_gen(self):
         """
-        Returns a list of all possible legal king moves
-        :return: a list of all possible legal king moves
+        Returns a list of all possible legal king moves.
+
+        Returns
+        -------
+        list of Move
+            a list of all possible legal king moves
         """
         moves = []
         piece = Piece.WK if self.turn == Color.WHITE else Piece.BK
@@ -835,8 +1040,12 @@ class Board:
 
     def _castling_move_gen(self):
         """
-        Returns a list of all possible legal castling moves
-        :return: a list of all possible legal castling moves
+        Returns a list of all possible legal castling moves.
+
+        Returns
+        -------
+        list of Move
+            a list of all possible legal castling moves
         """
         moves = []
         king = Piece.WK if self.turn == Color.WHITE else Piece.BK
@@ -880,8 +1089,12 @@ class Board:
 
     def _get_safe_bb(self):
         """
-        Returns the BitBoard of safe squares
-        :return: the BitBoard of safe squares
+        Returns the BitBoard of safe squares.
+
+        Returns
+        -------
+        safe_bb : BitBoard
+            a BitBoard object with safe squares marked
         """
         danger_bb = BitBoard(0)
         if self.turn == Color.WHITE:
@@ -933,7 +1146,11 @@ class Board:
     def eval(self):
         """
         Returns the relative advantage of the side that will move next.
-        :return: the relative advantage of the side that will move next.
+
+        Returns
+        -------
+        int
+            the relative advantage of the side that will move next.
         """
         white_advantage = 0
 
