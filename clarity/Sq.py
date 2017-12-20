@@ -7,7 +7,7 @@ from enum import IntEnum
 
 class Sq(IntEnum):
     """
-    This enum translate filerank name of the chess square to a index of the bitboard.
+    This enum translates filerank name of the chess square to a index of the bitboard.
     """
 
     A8 = 63
@@ -78,9 +78,17 @@ class Sq(IntEnum):
     @staticmethod
     def filerank_to_sq(filerank):
         """
-        Returns the Sq value of the given filerank string
-        :param filerank: the filerank string (ex. c6) to convert to Sq value
-        :return: the Sq value of the given filerank string
+        Returns the Sq value of the given filerank string.
+
+        Parameters
+        ----------
+        filerank : str
+            a filerank format [a-h][1-8] string
+
+        Returns
+        -------
+        Sq
+            the Sq index value of the given filerank string
         """
         # TODO validate filerank
         return Sq(8 * (int(filerank[1]) - 1) + (ord('h') - ord(filerank[0])))
@@ -88,9 +96,17 @@ class Sq(IntEnum):
     @staticmethod
     def sq_to_filerank(sq):
         """
-        Returns the filerank string of the given Sq value
-        :param sq: the Sq value to get filerank string of
-        :return: the filerank string of the given Sq value
+        Returns the filerank string of the given Sq value.
+
+        Parameters
+        ----------
+        sq : Sq
+            the Sq value to convert to filerank notation
+
+        Returns
+        -------
+        str
+            the filerank string ([a-h][1-8]) of the given Sq value
         """
         # TODO validate sq
         return chr(ord('h') - int(sq % 8)) + str(int(sq / 8) + 1)

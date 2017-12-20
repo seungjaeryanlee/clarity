@@ -331,7 +331,6 @@ class Board:
         if self.turn == Color.BLACK:
             self.full_move_count -= 1
 
-
     def move_gen(self):
         """
         Returns a list of all possible legal moves
