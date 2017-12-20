@@ -293,7 +293,7 @@ class Board:
 
         return captured_piece, save_castling, save_ep_square, save_half_move_clock
 
-    def undo_move(self, move, captured_piece, castling, ep_square, half_move_clock, full_move_count):
+    def undo_move(self, move, captured_piece, castling, ep_square, half_move_clock):
         """
         TODO untested
         TODO finish docstring
@@ -327,7 +327,10 @@ class Board:
         self.castling = castling
         self.ep_square = ep_square
         self.half_move_clock = half_move_clock
-        self.full_move_count = full_move_count
+        # note that turn is already changed back
+        if self.turn == Color.BLACK:
+            self.full_move_count -= 1
+
 
     def move_gen(self):
         """
