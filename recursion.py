@@ -7,6 +7,7 @@ from Board import Board
 
 def perft(board, depth):
     """
+    TODO untested
     Returns the number of nodes (depth)-ply deep from the given (board).
     :param board: the board to search nodes from
     :param depth: the depth to search nodes for
@@ -19,13 +20,12 @@ def perft(board, depth):
 
     moves = board.move_gen()
     for move in moves:
-        board.make_move(move)
+        captured_piece, castling, ep_square, half_move_count = board.make_move(move)
         nodes += perft(board, depth-1)
-        # TODO implement Board.undo_move()
-        board.undo_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_count)
 
     return nodes
 
 # only runs when this module is called directly
 if __name__ == '__main__':
-    print(perft(Board(), 1))
+    print(perft(Board(), 3))
