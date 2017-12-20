@@ -2,14 +2,14 @@
 """
 This file defines the Board class.
 """
-from BitBoard import BitBoard
-from Color import Color
-from Direction import Direction
-import constants as const
-from Move import Move
-from MoveType import MoveType
-from Piece import Piece
-from Sq import Sq
+from clarity.BitBoard import BitBoard
+from clarity.Color import Color
+from clarity.Direction import Direction
+import clarity.constants as const
+from clarity.Move import Move
+from clarity.MoveType import MoveType
+from clarity.Piece import Piece
+from clarity.Sq import Sq
 
 
 class Board:

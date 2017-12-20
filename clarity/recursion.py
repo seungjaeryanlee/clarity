@@ -2,7 +2,7 @@
 """
 This file defines the recursion functions.
 """
-from Board import Board
+from clarity.Board import Board
 
 
 def perft(board, depth):
