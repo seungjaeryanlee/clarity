@@ -1169,3 +1169,18 @@ ATTACK = {
     Piece.BQ: _ATTACK_Q,
     Piece.BK: _ATTACK_K,
 }
+
+PIECE_VALUE = {
+    Piece.WP: 100,
+    Piece.WN: 300,
+    Piece.WB: 300,
+    Piece.WR: 500,
+    Piece.WQ: 900,
+    Piece.WK: 9999,
+    Piece.BP: -100,
+    Piece.BN: -300,
+    Piece.BB: -300,
+    Piece.BR: -500,
+    Piece.BQ: -900,
+    Piece.BK: -9999,
+}

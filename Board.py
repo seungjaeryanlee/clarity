@@ -889,7 +889,12 @@ class Board:
         Returns the relative advantage of the side that will move next.
         :return: the relative advantage of the side that will move next.
         """
-        pass
+        white_advantage = 0
+
+        for piece in Piece:
+            white_advantage += const.PIECE_VALUE[piece] * len(self.piece_sq[piece])
+
+        return white_advantage
 
 
 # only runs when this module is called directly
