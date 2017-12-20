@@ -895,7 +895,7 @@ class Board:
             for piece_sq in self.piece_sq[piece]:
                 white_advantage += const.PIECE_VALUE[piece] + const.PCSQ_VALUE[piece][piece_sq]
 
-        return white_advantage
+        return white_advantage if self.turn == Color.WHITE else -white_advantage
 
 
 # only runs when this module is called directly
