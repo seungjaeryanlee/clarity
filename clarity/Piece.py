@@ -28,18 +28,34 @@ class Piece(Enum):
     @staticmethod
     def color(piece):
         """
-        Returns the color of the given piece. If given piece is not in the enum, returns Color.WHITE by default.
-        :param piece: piece to check its color
-        :return: the color of the given piece or if not piece, Color.WHITE
+        Returns the color of the given piece.
+
+        Parameters
+        ----------
+        piece : Piece
+            piece to check its color
+
+        Returns
+        -------
+        Color
+            the color of the given piece
         """
         return Color.BLACK if piece in {Piece.BP, Piece.BN, Piece.BB, Piece.BR, Piece.BQ, Piece.BK} else Color.WHITE
 
     @staticmethod
     def to_char(piece):
         """
-        Returns the character notation of the given piece
-        :param piece: the piece to return the character notation of
-        :return: the character notation of the given piece
+        Returns the character notation of the given piece.
+
+        Parameters
+        ----------
+        piece : Piece
+            the piece to return the character notation of
+
+        Returns
+        -------
+        str
+            the character notation of the given piece
         """
         # TODO validate piece or add default value for dictionary?
         return {
@@ -61,8 +77,16 @@ class Piece(Enum):
     def from_char(char):
         """
         Returns the Piece value of the given character notation
-        :param char: the character notation to return Piece value of
-        :return: the Piece value of the given character notation
+
+        Parameters
+        ----------
+        char : str
+            the character notation to return Piece value of
+
+        Returns
+        -------
+        Piece
+            the Piece value of the given character notation
         """
         # TODO validate piece or add default value for dictionary?
         return {
