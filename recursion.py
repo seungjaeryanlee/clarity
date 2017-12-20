@@ -7,12 +7,15 @@ from Board import Board
 
 def perft(board, depth):
     """
-    TODO untested
     Returns the number of nodes (depth)-ply deep from the given (board).
-    :param board: the board to search nodes from
-    :param depth: the depth to search nodes for
+
+    :param Board board: the board to search nodes from
+    :param int depth: the depth to search nodes for
     :return: the number of nodes (depth)-ply deep from the given (board).
+    :rtype: int
     """
+    # TODO untested
+
     if depth == 0:
         return 1
 
