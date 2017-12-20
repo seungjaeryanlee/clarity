@@ -284,6 +284,45 @@ class Board:
 
         return captured_piece
 
+    def undo_move(self, move, captured_piece, wk_castling, wq_castling, bk_castling, bq_castling, ep_square, half_move_clock, full_move_count):
+        """
+        TODO untested
+        TODO finish docstring
+        Undoes a given move with the help of extra parameters
+        :param move: move to undo from the board
+        """
+
+        init_sq = move.init_sq()
+        dest_sq = move.dest_sq()
+        moved_piece = self._get_piece_on_sq(dest_sq)
+        # update self.bitboards
+        self.bitboards[moved_piece][dest_sq] = 0
+        self.bitboards[moved_piece][init_sq] = 1
+        # update self.piece_sq
+        self.piece_sq[moved_piece].remove(dest_sq)
+        self.piece_sq[moved_piece].append(init_sq)
+        # update self.color_bb
+        self.color_bb[Piece.color(moved_piece)][dest_sq] = 0
+        self.color_bb[Piece.color(moved_piece)][init_sq] = 1
+        # update self.turn
+        self.turn = Color.switch(self.turn)
+
+        if captured_piece != -1:
+            # update self.bitboards
+            self.bitboards[captured_piece][dest_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[captured_piece].append(dest_sq)
+            # update self.color_bb
+            self.color_bb[Piece.color(captured_piece)][dest_sq] = 1
+
+        self.wk_castling = wk_castling
+        self.wq_castling = wq_castling
+        self.bk_castling = bk_castling
+        self.bq_castling = bq_castling
+        self.ep_square = ep_square
+        self.half_move_clock = half_move_clock
+        self.full_move_count = full_move_count
+
     def move_gen(self):
         """
         Returns a list of all possible legal moves
