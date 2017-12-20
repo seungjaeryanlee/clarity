@@ -1139,3 +1139,11 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(sorted((~safe_bb).indices()), sorted([Sq.B8, Sq.C8, Sq.D8, Sq.E8, Sq.F8, Sq.G8,
                                                                Sq.A7, Sq.B7, Sq.C7, Sq.D7, Sq.E7, Sq.F7, Sq.G7, Sq.H7,
                                                                Sq.A6, Sq.B6, Sq.C6, Sq.D6, Sq.E6, Sq.F6, Sq.G6, Sq.H6]))
+
+    def test_eval(self):
+        """
+        TODO add more tests
+        Tests the test_eval() function of the Board class
+        """
+        board = Board()
+        assert board.eval() == 0

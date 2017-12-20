@@ -883,6 +883,14 @@ class Board:
 
         return ~danger_bb
 
+    def eval(self):
+        """
+        TODO implement
+        Returns the relative advantage of the side that will move next.
+        :return: the relative advantage of the side that will move next.
+        """
+        pass
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':
