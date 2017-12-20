@@ -18,7 +18,11 @@ class Color(Enum):
     def switch(color):
         """
         Returns the opposite color of the given color
-        :return: the opposite color of the given color
+
+        Returns
+        -------
+        Color
+            the opposite color of the given color
         """
         if color == Color.WHITE:
             return Color.BLACK
