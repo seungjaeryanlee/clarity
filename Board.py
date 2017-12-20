@@ -885,14 +885,15 @@ class Board:
 
     def eval(self):
         """
-        TODO implement
+        TODO untested
         Returns the relative advantage of the side that will move next.
         :return: the relative advantage of the side that will move next.
         """
         white_advantage = 0
 
         for piece in Piece:
-            white_advantage += const.PIECE_VALUE[piece] * len(self.piece_sq[piece])
+            for piece_sq in self.piece_sq[piece]:
+                white_advantage += const.PIECE_VALUE[piece] + const.PCSQ_VALUE[piece][piece_sq]
 
         return white_advantage
 

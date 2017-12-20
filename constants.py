@@ -1184,3 +1184,32 @@ PIECE_VALUE = {
     Piece.BQ: -900,
     Piece.BK: -9999,
 }
+
+# TODO fill data
+_PCSQ_WP = [0] * 64
+_PCSQ_WN = [0] * 64
+_PCSQ_WB = [0] * 64
+_PCSQ_WR = [0] * 64
+_PCSQ_WQ = [0] * 64
+_PCSQ_WK = [0] * 64
+_PCSQ_BP = [0] * 64
+_PCSQ_BN = [0] * 64
+_PCSQ_BB = [0] * 64
+_PCSQ_BR = [0] * 64
+_PCSQ_BQ = [0] * 64
+_PCSQ_BK = [0] * 64
+
+PCSQ_VALUE = {
+    Piece.WP: _PCSQ_WP,
+    Piece.WN: _PCSQ_WN,
+    Piece.WB: _PCSQ_WB,
+    Piece.WR: _PCSQ_WR,
+    Piece.WQ: _PCSQ_WQ,
+    Piece.WK: _PCSQ_WK,
+    Piece.BP: _PCSQ_BP,
+    Piece.BN: _PCSQ_BN,
+    Piece.BB: _PCSQ_BB,
+    Piece.BR: _PCSQ_BR,
+    Piece.BQ: _PCSQ_BQ,
+    Piece.BK: _PCSQ_BK,
+}
