@@ -15,7 +15,7 @@ class BitBoard:
         """
         Run when a BitBoard object is created.
 
-        :param numpy.uint64 uint64_number: a 64-bit unsigned integer to initialize the BitBoard to.
+        :param int or numpy.uint64 uint64_number: a 64-bit unsigned integer to initialize the BitBoard to.
         """
         # a 64-bit integer that represents the bitboard
         self.num = np.uint64(uint64_number)
