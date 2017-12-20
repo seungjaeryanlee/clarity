@@ -15,7 +15,10 @@ class BitBoard:
         """
         Run when a BitBoard object is created.
 
-        :param int or numpy.uint64 uint64_number: a 64-bit unsigned integer to initialize the BitBoard to.
+        Parameters
+        ----------
+        uint64_number : int or numpy.uint64
+                        a 64-bit unsigned integer to initialize the BitBoard to.
         """
         # a 64-bit integer that represents the bitboard
         self.num = np.uint64(uint64_number)
@@ -24,9 +27,15 @@ class BitBoard:
         """
         Allows using [] operator for a BitBoard object to retrieve nth bit from the right.
 
-        :param int n: the index of the bit to retrieve, counting from right to left.
-        :return: the bit from the right.
-        :rtype: int
+        Parameters
+        ----------
+        n : int
+            the index of the bit to retrieve, counting from right to left.
+
+        Returns
+        -------
+        int
+            the bit from the right.
         """
         return (self.num >> np.uint64(n)) & np.uint64(1)
 
@@ -34,8 +43,12 @@ class BitBoard:
         """
         Allows using [] operator for a BitBoard object to set the nth bit from the right.
 
-        :param int n: the index of the bit to set, counting from right to left.
-        :param int bit: the value to set the nth bit to. Should be 0 or 1.
+        Parameters
+        ----------
+        n : int
+            the index of the bit to set, counting from right to left.
+        bit : int
+            the value to set the nth bit to. Should be 0 or 1.
         """
         if self[n] != bit:
             self.num ^= (np.uint64(1) << np.uint64(n))
@@ -44,8 +57,10 @@ class BitBoard:
         """
         Overrides default function to a string showing a 8x8 chessboard with bits.
 
-        :return: a string of 64 bits
-        :rtype: str
+        Returns
+        -------
+        str
+            a string of 64 bits with line breaks for every 8 bits.
         """
         return textwrap.fill('{:064b}'.format(self.num), 8)
 
@@ -54,9 +69,15 @@ class BitBoard:
         Allows using the AND operator (&) for two BitBoard objects. Returns the result of a bitwise and (&) of self
         and other.
 
-        :param BitBoard other: a BitBoard object to AND with self
-        :return: the result of a bitwise and (&) of self and other
-        :rtype: BitBoard
+        Parameters
+        ----------
+        other : BitBoard
+            a BitBoard object to AND with self
+
+        Returns
+        -------
+        BitBoard
+            the result of a bitwise and (&) of self and other
         """
         return BitBoard(self.num & other.num)
 
@@ -65,9 +86,15 @@ class BitBoard:
         Allows using the OR operator (|) for two BitBoard objects. Returns the result of a bitwise or (|) of self and
         other.
 
-        :param other: a BitBoard object to OR with self
-        :return: the result of a bitwise or (|) of self and other.
-        :rtype: BitBoard
+        Parameters
+        ----------
+        other : BitBoard
+            a BitBoard object to OR with self
+
+        Returns
+        -------
+        BitBoard
+            the result of a bitwise or (|) of self and other.
         """
         return BitBoard(self.num | other.num)
 
@@ -76,8 +103,10 @@ class BitBoard:
         Allows using the NOT operator (~) on a BitBoard object. Returns the inverse of the encapsulated 64-bit unsigned
         integer.
 
-        :return: the inverse of the encapsulated 64-bit unsigned integer
-        :rtype: BitBoard
+        Returns
+        -------
+        BitBoard
+            the inverse of the encapsulated 64-bit unsigned integer
         """
         return BitBoard(~self.num)
 
@@ -86,9 +115,15 @@ class BitBoard:
         Allows using the equality operator (==) on a BitBoard object. Returns True if self and other have the same
         number, False otherwise.
 
-        :param BitBoard other: a BitBoard object to check equality against
-        :return: True if self and other have the same number, False otherwise.
-        :rtype: bool
+        Parameters
+        ----------
+        other : BitBoard
+            a BitBoard object to check equality against
+
+        Returns
+        -------
+        bool
+            True if self and other have the same number, False otherwise.
         """
         # TODO considering allowing other to be either Int or BitBoard type
         return self.num == other.num
@@ -97,8 +132,10 @@ class BitBoard:
         """
         Returns the indices of bits with value 1.
 
-        :return: the indices of bits with value 1
-        :rtype: list of int
+        Returns
+        -------
+        list of int
+            the indices of bits with value 1
         """
         bits = []
         for i in range(64):
