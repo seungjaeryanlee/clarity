@@ -167,3 +167,7 @@ texinfo_documents = [
 
 # Display private functions in Docs
 autodoc_default_flags = ['members', 'undoc-members', 'private-members']
+
+# Prevent autodoc from ordering members alphabetically, and instead order
+# them the same way they are ordered in the source code.
+autodoc_member_order = 'bysource'
