@@ -64,10 +64,12 @@ class Board:
         # en passant square (if no square, -1)
         self.ep_square = -1
         # possibility to castling (checked based on rook/king being moved)
-        self.wk_castling = True
-        self.wq_castling = True
-        self.bk_castling = True
-        self.bq_castling = True
+        self.castling = {
+            Piece.WK: True,
+            Piece.WQ: True,
+            Piece.BK: True,
+            Piece.BQ: True,
+        }
         # number of half moves for the fifty move rule
         self.half_move_clock = 0
         # number of full moves made
@@ -127,11 +129,12 @@ class Board:
                 fen_str += '/'
 
         fen_str += ' ' + ('w' if self.turn == Color.WHITE else 'b')
-        fen_str += ' ' + ('K' if self.wk_castling else '')
-        fen_str += 'Q' if self.wq_castling else ''
-        fen_str += 'k' if self.bk_castling else ''
-        fen_str += 'q' if self.bq_castling else ''
-        fen_str += '-' if not (self.wk_castling or self.wq_castling or self.bk_castling or self.bq_castling) else ''
+        fen_str += ' ' + ('K' if self.castling[Piece.WK] else '')
+        fen_str += 'Q' if self.castling[Piece.WQ] else ''
+        fen_str += 'k' if self.castling[Piece.BK] else ''
+        fen_str += 'q' if self.castling[Piece.BQ] else ''
+        fen_str += '-' if not (self.castling[Piece.WK] or self.castling[Piece.WQ]
+                               or self.castling[Piece.BK] or self.castling[Piece.BQ]) else ''
         fen_str += ' ' + ('-' if self.ep_square == -1 else Sq.sq_to_filerank(self.ep_square))
         fen_str += ' ' + str(self.half_move_clock)
         fen_str += ' ' + str(self.full_move_count)
@@ -167,10 +170,10 @@ class Board:
             bit_index += 1
 
         self.turn = Color.WHITE if turn_str == 'w' else Color.BLACK
-        self.wk_castling = True if 'K' in castling_str else False
-        self.wq_castling = True if 'Q' in castling_str else False
-        self.bk_castling = True if 'k' in castling_str else False
-        self.bq_castling = True if 'q' in castling_str else False
+        self.castling[Piece.WK] = True if 'K' in castling_str else False
+        self.castling[Piece.WQ] = True if 'Q' in castling_str else False
+        self.castling[Piece.BK] = True if 'k' in castling_str else False
+        self.castling[Piece.BQ] = True if 'q' in castling_str else False
         self.ep_square = -1 if ep_str == '-' else Sq.filerank_to_sq(ep_str)
         self.half_move_clock = int(half_move_str)
         self.full_move_count = int(full_move_str)
@@ -254,22 +257,22 @@ class Board:
         # update castling
         if moved_piece == Piece.WR:
             if move.init_sq() == Sq.A1:
-                self.wq_castling = False
+                self.castling[Piece.WQ] = False
             if move.init_sq() == Sq.H1:
-                self.wk_castling = False
+                self.castling[Piece.WK] = False
         elif moved_piece == Piece.WK:
             if move.init_sq() == Sq.E1:
-                self.wk_castling = False
-                self.wq_castling = False
+                self.castling[Piece.WK] = False
+                self.castling[Piece.WQ] = False
         elif moved_piece == Piece.BR:
             if move.init_sq() == Sq.A8:
-                self.bq_castling = False
+                self.castling[Piece.BQ] = False
             if move.init_sq() == Sq.H8:
-                self.bk_castling = False
+                self.castling[Piece.BK] = False
         elif moved_piece == Piece.BK:
             if move.init_sq() == Sq.E8:
-                self.bk_castling = False
-                self.bq_castling = False
+                self.castling[Piece.BK] = False
+                self.castling[Piece.BQ] = False
 
         # compute en passant square
         if move.move_type() == MoveType.DOUBLE:
@@ -315,10 +318,10 @@ class Board:
             # update self.color_bb
             self.color_bb[Piece.color(captured_piece)][dest_sq] = 1
 
-        self.wk_castling = wk_castling
-        self.wq_castling = wq_castling
-        self.bk_castling = bk_castling
-        self.bq_castling = bq_castling
+        self.castling[Piece.WK] = wk_castling
+        self.castling[Piece.WQ] = wq_castling
+        self.castling[Piece.BK] = bk_castling
+        self.castling[Piece.BQ] = bq_castling
         self.ep_square = ep_square
         self.half_move_clock = half_move_clock
         self.full_move_count = full_move_count
@@ -842,26 +845,26 @@ class Board:
             return []
 
         if self.turn == Color.WHITE:
-            if self.wk_castling:
+            if self.castling[Piece.WK]:
                 # is there a piece between?
                 if pieces_bb[Sq.F1] == 0 and pieces_bb[Sq.G1] == 0:
                     # will king be on check while moving or after move?
                     if len(self.get_attacking_sqs(Sq.F1)) == 0 and len(self.get_attacking_sqs(Sq.G1)) == 0:
                         moves.append(Move(Sq.E1, Sq.G1, MoveType.K_CASTLE))
-            if self.wq_castling:
+            if self.castling[Piece.WQ]:
                 # is there a piece between?
                 if pieces_bb[Sq.D1] == 0 and pieces_bb[Sq.C1] == 0:
                     # will king be on check while moving or after move?
                     if len(self.get_attacking_sqs(Sq.D1)) == 0 and len(self.get_attacking_sqs(Sq.C1)) == 0:
                         moves.append(Move(Sq.E1, Sq.C1, MoveType.Q_CASTLE))
         else:
-            if self.bk_castling:
+            if self.castling[Piece.BK]:
                 # is there a piece between?
                 if pieces_bb[Sq.F8] == 0 and pieces_bb[Sq.G8] == 0:
                     # will king be on check while moving or after move?
                     if len(self.get_attacking_sqs(Sq.F8)) == 0 and len(self.get_attacking_sqs(Sq.G8)) == 0:
                         moves.append(Move(Sq.E8, Sq.G8, MoveType.K_CASTLE))
-            if self.bq_castling:
+            if self.castling[Piece.BQ]:
                 # is there a piece between?
                 if pieces_bb[Sq.D8] == 0 and pieces_bb[Sq.C8] == 0:
                     # will king be on check while moving or after move?

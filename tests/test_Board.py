@@ -50,10 +50,10 @@ class TestBoardClass(unittest.TestCase):
                          int('0000100000000000000000000000000000000000000000000000000000000000', 2))
         self.assertEqual(board.turn, Color.WHITE)
         self.assertEqual(board.ep_square, -1)
-        self.assertEqual(board.wk_castling, True)
-        self.assertEqual(board.wq_castling, True)
-        self.assertEqual(board.bk_castling, True)
-        self.assertEqual(board.bq_castling, True)
+        self.assertEqual(board.castling[Piece.WK], True)
+        self.assertEqual(board.castling[Piece.WQ], True)
+        self.assertEqual(board.castling[Piece.BK], True)
+        self.assertEqual(board.castling[Piece.BQ], True)
         self.assertEqual(board.half_move_clock, 0)
         self.assertEqual(board.full_move_count, 1)
 
@@ -85,10 +85,10 @@ class TestBoardClass(unittest.TestCase):
                          int('0000000000000000000000000000000000000000000000000000000000000001', 2))
         self.assertEqual(board.turn, Color.BLACK)
         self.assertEqual(board.ep_square, -1)
-        self.assertEqual(board.wk_castling, False)
-        self.assertEqual(board.wq_castling, False)
-        self.assertEqual(board.bk_castling, False)
-        self.assertEqual(board.bq_castling, False)
+        self.assertEqual(board.castling[Piece.WK], False)
+        self.assertEqual(board.castling[Piece.WQ], False)
+        self.assertEqual(board.castling[Piece.BK], False)
+        self.assertEqual(board.castling[Piece.BQ], False)
         self.assertEqual(board.half_move_clock, 0)
         self.assertEqual(board.full_move_count, 1)
 
@@ -124,8 +124,8 @@ class TestBoardClass(unittest.TestCase):
         board.bitboards[Piece.WP][Sq.E4] = 1
         board.bitboards[Piece.WP][Sq.E2] = 0
         board.turn = Color.BLACK
-        board.wk_castling = False
-        board.bk_castling = False
+        board.castling[Piece.WK] = False
+        board.castling[Piece.BK] = False
         board.ep_square = Sq.A8
         board.half_move_clock = 13
         board.full_move_count = 20
@@ -143,10 +143,10 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board.bitboards[Piece.WP][Sq.E4], 1)
         self.assertEqual(board.color_bb[Color.WHITE][Sq.E4], 1)
         self.assertEqual(board.turn, Color.BLACK)
-        self.assertEqual(board.wk_castling, True)
-        self.assertEqual(board.wq_castling, True)
-        self.assertEqual(board.bk_castling, True)
-        self.assertEqual(board.bq_castling, True)
+        self.assertEqual(board.castling[Piece.WK], True)
+        self.assertEqual(board.castling[Piece.WQ], True)
+        self.assertEqual(board.castling[Piece.BK], True)
+        self.assertEqual(board.castling[Piece.BQ], True)
         self.assertEqual(board.ep_square, Sq.E3)
         self.assertEqual(board.half_move_clock, 0)
         self.assertEqual(board.full_move_count, 1)
@@ -181,10 +181,10 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(board.bitboards[Piece.BP][Sq.C5], 1)
         self.assertEqual(board.color_bb[Color.BLACK][Sq.C5], 1)
         self.assertEqual(board.turn, Color.WHITE)
-        self.assertEqual(board.wk_castling, False)
-        self.assertEqual(board.wq_castling, False)
-        self.assertEqual(board.bk_castling, False)
-        self.assertEqual(board.bq_castling, False)
+        self.assertEqual(board.castling[Piece.WK], False)
+        self.assertEqual(board.castling[Piece.WQ], False)
+        self.assertEqual(board.castling[Piece.BK], False)
+        self.assertEqual(board.castling[Piece.BQ], False)
         self.assertEqual(board.ep_square, Sq.C6)
         self.assertEqual(board.half_move_clock, 1)
         self.assertEqual(board.full_move_count, 2)
