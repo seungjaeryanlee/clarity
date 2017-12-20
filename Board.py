@@ -885,7 +885,6 @@ class Board:
 
     def eval(self):
         """
-        TODO untested
         Returns the relative advantage of the side that will move next.
         :return: the relative advantage of the side that will move next.
         """

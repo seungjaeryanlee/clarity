@@ -1185,7 +1185,6 @@ PIECE_VALUE = {
     Piece.BK: -9999,
 }
 
-# TODO fill data
 # https://chessprogramming.wikispaces.com/Simplified+evaluation+function
 _PCSQ_WP = [
       0,   0,   0,   0,   0,   0,   0,   0,
