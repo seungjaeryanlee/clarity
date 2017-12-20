@@ -1,6 +1,0 @@
-#!/bin/bash
-if [ "$1" == "-v" ]; then
-    python -m pytest tests/ -v
-else
-    python -m pytest tests/
-fi
