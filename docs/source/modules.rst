@@ -1,5 +1,5 @@
-clarity
-=======
+src
+===
 
 .. toctree::
    :maxdepth: 4
@@ -14,4 +14,3 @@ clarity
    Sq
    constants
    recursion
-   tests
