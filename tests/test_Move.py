@@ -3,9 +3,9 @@
 This file defines unit tests for the Move class.
 """
 import unittest
-from clarity.Move import Move
-from clarity.MoveType import MoveType
-from clarity.Sq import Sq
+from Move import Move
+from MoveType import MoveType
+from Sq import Sq
 
 
 class TestMoveClass(unittest.TestCase):

@@ -3,14 +3,14 @@
 This file defines unit tests for the Board class.
 """
 import unittest
-import clarity.constants as const
-from clarity.Board import Board
-from clarity.Color import Color
-from clarity.Direction import Direction
-from clarity.Move import Move
-from clarity.MoveType import MoveType
-from clarity.Piece import Piece
-from clarity.Sq import Sq
+import constants as const
+from Board import Board
+from Color import Color
+from Direction import Direction
+from Move import Move
+from MoveType import MoveType
+from Piece import Piece
+from Sq import Sq
 
 
 class TestBoardClass(unittest.TestCase):

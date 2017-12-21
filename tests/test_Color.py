@@ -3,7 +3,7 @@
 This file defines unit tests for the Color enum.
 """
 import unittest
-from clarity.Color import Color
+from Color import Color
 
 
 class TestColorEnum(unittest.TestCase):
