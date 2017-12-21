@@ -2,10 +2,10 @@
 """
 This file defines the constants used in Clarity.
 """
-from BitBoard import BitBoard
-from Direction import Direction
-from Piece import Piece
-from Sq import Sq
+from .BitBoard import BitBoard
+from .Direction import Direction
+from .Piece import Piece
+from .Sq import Sq
 
 
 # Move bitboards for pawns

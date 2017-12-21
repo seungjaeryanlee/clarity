@@ -3,7 +3,7 @@
 This file defines unit tests for the Sq enum.
 """
 import unittest
-from Sq import Sq
+from clarity.Sq import Sq
 
 
 class TestColorEnum(unittest.TestCase):

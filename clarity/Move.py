@@ -3,8 +3,8 @@
 This file defines the Board class.
 """
 import numpy as np
-from MoveType import MoveType
-from Sq import Sq
+from .MoveType import MoveType
+from .Sq import Sq
 
 
 class Move:
