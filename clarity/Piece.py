@@ -3,7 +3,7 @@
 This file defines the Piece enum.
 """
 from enum import Enum
-from clarity.Color import Color
+from Color import Color
 
 
 class Piece(Enum):
