@@ -10,4 +10,4 @@ sys.path.append('../clarity')
 from clarity.Board import Board
 from clarity.recursion import perft
 
-cProfile.run('perft(Board(), 2)')
+cProfile.run('perft(Board(), 2)', filename='perft.prof')
