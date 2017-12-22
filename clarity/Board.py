@@ -349,7 +349,6 @@ class Board:
 
     def undo_move(self, move, captured_piece, castling, ep_square, half_move_clock):
         """
-        TODO untested
         Undoes a given move with the help of extra parameters.
 
         Parameters

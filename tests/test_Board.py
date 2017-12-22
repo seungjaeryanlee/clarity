@@ -429,6 +429,108 @@ class TestBoardClass(unittest.TestCase):
         self.assertListEqual(sorted(board.piece_sq[Piece.BK]),
                              sorted([Sq.E8]))
 
+    def test_undo_move(self):
+        """
+        Tests the undo_move() function of the Board class
+        """
+        # make and undo a quiet move
+        board = Board()
+        move = Move(Sq.D2, Sq.D3, MoveType.QUIET)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == Board().fen()
+
+        # make and undo a double pawn push move
+        board = Board()
+        move = Move(Sq.E2, Sq.E4, MoveType.DOUBLE)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == Board().fen()
+
+        # make and undo a kingside castling
+        board = Board('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1')
+        move = Move(Sq.E1, Sq.G1, MoveType.K_CASTLE)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1'
+
+        # make and undo a queenside castling
+        board = Board('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/R3KBNR w KQkq - 0 1')
+        move = Move(Sq.E1, Sq.C1, MoveType.Q_CASTLE)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/R3KBNR w KQkq - 0 1'
+
+        # make and undo a capture
+        board = Board('rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w - - 0 2')
+        move = Move(Sq.E4, Sq.D5, MoveType.CAPTURE)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w - - 0 2'
+
+        # make and undo an en passant capture
+        board = Board('rnbqkbnr/ppp1pppp/8/8/3pP3/8/PPPP1PPP/RNBQKBNR b - e3 0 1')
+        move = Move(Sq.D4, Sq.E3, MoveType.EP_CAPTURE)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'rnbqkbnr/ppp1pppp/8/8/3pP3/8/PPPP1PPP/RNBQKBNR b - e3 0 1'
+
+        # make and undo a promotion to knight
+        board = Board('k7/7P/8/pp6/8/8/8/7K w - - 0 10')
+        move = Move(Sq.H7, Sq.H8, MoveType.N_PROMO)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'k7/7P/8/pp6/8/8/8/7K w - - 0 10'
+
+        # make and undo a promotion to bishop
+        board = Board('k7/7P/8/pp6/8/8/8/7K w - - 0 10')
+        move = Move(Sq.H7, Sq.H8, MoveType.B_PROMO)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'k7/7P/8/pp6/8/8/8/7K w - - 0 10'
+
+        # make and undo a promotion to rook
+        board = Board('k7/7P/8/pp6/8/8/8/7K w - - 0 10')
+        move = Move(Sq.H7, Sq.H8, MoveType.R_PROMO)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'k7/7P/8/pp6/8/8/8/7K w - - 0 10'
+
+        # make and undo a promotion to queen
+        board = Board('k7/7P/8/pp6/8/8/8/7K w - - 0 10')
+        move = Move(Sq.H7, Sq.H8, MoveType.Q_PROMO)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'k7/7P/8/pp6/8/8/8/7K w - - 0 10'
+
+        # make and undo a promotion capture to knight
+        board = Board('k5p1/7P/8/pp6/8/8/8/7K w - - 0 10')
+        move = Move(Sq.H7, Sq.G8, MoveType.N_PROMO_CAPTURE)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'k5p1/7P/8/pp6/8/8/8/7K w - - 0 10'
+
+        # make and undo a promotion capture to bishop
+        board = Board('k5p1/7P/8/pp6/8/8/8/7K w - - 0 10')
+        move = Move(Sq.H7, Sq.G8, MoveType.B_PROMO_CAPTURE)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'k5p1/7P/8/pp6/8/8/8/7K w - - 0 10'
+
+        # make and undo a promotion capture to rook
+        board = Board('k5p1/7P/8/pp6/8/8/8/7K w - - 0 10')
+        move = Move(Sq.H7, Sq.G8, MoveType.R_PROMO_CAPTURE)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'k5p1/7P/8/pp6/8/8/8/7K w - - 0 10'
+
+        # make and undo a promotion capture to queen
+        board = Board('k5p1/7P/8/pp6/8/8/8/7K w - - 0 10')
+        move = Move(Sq.H7, Sq.G8, MoveType.Q_PROMO_CAPTURE)
+        captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+        assert board.fen() == 'k5p1/7P/8/pp6/8/8/8/7K w - - 0 10'
+
     def test_move_gen(self):
         """
         # TODO add more specific tests comparing individual moves using Counter()
