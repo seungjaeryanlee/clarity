@@ -397,6 +397,10 @@ class BitBoard:
         list of int
             the indices of bits with value 1
         """
+
+        # We used lookup tables here. Read more about other methods here:
+        # https://chessprogramming.wikispaces.com/Bitboard+Serialization
+
         if self.num == 0:
             return []
 
