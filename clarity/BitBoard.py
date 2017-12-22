@@ -137,6 +137,9 @@ class BitBoard:
         list of int
             the indices of bits with value 1
         """
+        if self.num == 0:
+            return []
+
         bits = []
         for i in range(64):
             if self[i] == 1:
