@@ -141,11 +141,16 @@ class BitBoard:
             return []
 
         bits = []
-        for i in range(64):
-            if self[i] == 1:
-                bits.append(i)
-        return bits
+        index = 0
+        n = self.num
 
+        while n != 0:
+            if n & np.uint64(1) == 1:
+                bits.append(index)
+            n = n >> np.uint64(1)
+            index += 1
+
+        return bits
 
 # only runs when this module is called directly
 if __name__ == '__main__':
