@@ -514,7 +514,7 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(pawn_sqs), 0)
 
         # double check
-        # TODO check if multiple pieces of same piece type putting king on check is possible
+        # not possible in actual game of chess
         board = Board('7K/8/8/8/8/4k3/3P1P2/8 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
@@ -550,7 +550,7 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(knight_sqs), 0)
 
         # double check
-        # TODO check if multiple pieces of same piece type putting king on check is possible
+        # not possible in actual game of chess
         board = Board('7K/8/8/8/8/4k3/8/3N1N2 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
@@ -585,7 +585,7 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(bishop_sqs), 0)
 
         # double check
-        # TODO check if multiple pieces of same piece type putting king on check is possible
+        # not possible in actual game of chess
         board = Board('7K/8/8/8/8/4k3/3B4/6B1 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
@@ -620,7 +620,7 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(rook_sqs), 0)
 
         # double check
-        # TODO check if multiple pieces of same piece type putting king on check is possible
+        # not possible in actual game of chess
         board = Board('7K/8/8/4R3/8/2R1k3/3B4/6B1 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
@@ -655,7 +655,7 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(queen_sqs), 0)
 
         # triple check
-        # TODO check if multiple pieces of same piece type putting king on check is possible
+        # not possible in actual game of chess
         board = Board('7K/8/6Q1/5n2/8/3Q2k1/7Q/6b1 b - - 0 1')
         king = Piece.WK if board.turn == Color.WHITE else Piece.BK
         king_sq = board.piece_sq[king][0]
