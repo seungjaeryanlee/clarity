@@ -22,6 +22,8 @@ def perft(board, depth):
         the number of nodes (depth)-ply deep from the given (board).
     """
 
+    if depth == 1:
+        return len(board.move_gen())
     if depth == 0:
         return 1
 
