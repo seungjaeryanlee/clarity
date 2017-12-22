@@ -5,7 +5,6 @@ Note that this file will contain PyCharm warnings on imports. Please disregard t
 """
 import cProfile
 
-# TODO check if there is a better method for this
 import os, sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from clarity.Board import Board

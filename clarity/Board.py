@@ -289,7 +289,6 @@ class Board:
                 self.bitboards[piece][move.dest_sq()] = 1
                 self.color_bb[self.turn][move.init_sq()] = 0
                 self.color_bb[self.turn][move.dest_sq()] = 1
-        # TODO how about iterating over all opponent piece and setting the bit as 0 without check?
         for piece in Piece:
             # ignore piece that just moved there
             if piece == moved_piece:
