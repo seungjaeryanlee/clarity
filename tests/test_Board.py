@@ -1330,12 +1330,21 @@ class TestBoardClass(unittest.TestCase):
 
     def test_eval(self):
         """
-        TODO add more tests
         Tests the test_eval() function of the Board class
         """
         # starting position
         board = Board()
         assert board.eval() == 0
+
+        # after 1. e4
+        board.make_move(Move(Sq.E2, Sq.E4, MoveType.DOUBLE))
+        # note that make_move() also changes the turn
+        assert board.eval() == -(const.PCSQ_VALUE[Piece.WP][Sq.E4] - const.PCSQ_VALUE[Piece.WP][Sq.E2])
+        # after 1. e4 - d5
+        board.make_move(Move(Sq.D7, Sq.D5, MoveType.DOUBLE))
+        assert board.eval() == (const.PCSQ_VALUE[Piece.WP][Sq.E4] - const.PCSQ_VALUE[Piece.WP][Sq.E2]) + \
+               (const.PCSQ_VALUE[Piece.BP][Sq.D5] - const.PCSQ_VALUE[Piece.BP][Sq.D7])
+
 
         # no piece
         board = Board('8/8/8/8/8/8/8/8 w - - 0 1')
