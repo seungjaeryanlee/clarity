@@ -874,7 +874,17 @@ class Board:
             # check for en passant
             if self.ep_square != -1:
                 if const.ATTACK[piece][pawn_sq][self.ep_square]:
-                    moves.append(Move(pawn_sq, self.ep_square, MoveType.EP_CAPTURE))
+                    # make sure en passant is putting king on check by temporarily deleting ep square and
+                    # seeing if the pawn to move is pinned then
+                    # get location of enemy pawn that double-pawn pushed last move
+                    enemy_pawn_sq = self.ep_square - 8 if self.turn == Color.WHITE else self.ep_square + 8
+                    # temporarily remove enemy pawn from board to see if the two pawns are blocking a slider
+                    # that can attack king
+                    self.color_bb[Color.switch(self.turn)][enemy_pawn_sq] = 0
+                    if len(self.get_attacking_sqs(pawn_sq)) == 0:
+                        moves.append(Move(pawn_sq, self.ep_square, MoveType.EP_CAPTURE))
+                    # add back the enemy pawn that was removed temporarily
+                    self.color_bb[Color.switch(self.turn)][enemy_pawn_sq] = 1
 
         return moves
 
