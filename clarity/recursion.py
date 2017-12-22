@@ -21,7 +21,6 @@ def perft(board, depth):
     int
         the number of nodes (depth)-ply deep from the given (board).
     """
-    # TODO untested
 
     if depth == 0:
         return 1
