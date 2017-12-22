@@ -4,6 +4,7 @@ This file defines unit tests for the Board class.
 """
 import unittest
 from clarity import constants as const
+from clarity.BitBoard import BitBoard
 from clarity.Board import Board
 from clarity.Color import Color
 from clarity.Direction import Direction
@@ -564,10 +565,48 @@ class TestBoardClass(unittest.TestCase):
 
     def test_get_target_noncapture_moves(self):
         """
-        TODO add tests
         Tests the get_target_noncapture_moves() function of the Board class
         """
-        pass
+        # no target
+        board = Board()
+        target_bb = BitBoard(0)
+        moves = board.get_target_noncapture_moves(target_bb)
+        assert len(moves) == 0
+
+        # one target square, one move - pawn quiet move
+        board = Board('k7/pp6/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1')
+        target_bb = BitBoard(0)
+        target_bb[Sq.G3] = 1
+        moves = board.get_target_noncapture_moves(target_bb)
+        assert len(moves) == 1
+        assert sorted(moves) == sorted([Move(Sq.G2, Sq.G3, MoveType.QUIET)])
+
+        # one target square, one move - pawn double pawn push
+        board = Board('k7/pp6/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1')
+        target_bb = BitBoard(0)
+        target_bb[Sq.H4] = 1
+        moves = board.get_target_noncapture_moves(target_bb)
+        assert len(moves) == 1
+        assert sorted(moves) == sorted([Move(Sq.H2, Sq.H4, MoveType.DOUBLE)])
+
+        # one target square, two moves - pawn quiet move and knight
+        board = Board('k7/pp6/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1')
+        target_bb = BitBoard(0)
+        target_bb[Sq.H3] = 1
+        moves = board.get_target_noncapture_moves(target_bb)
+        assert len(moves) == 2
+        assert sorted(moves) == sorted([Move(Sq.H2, Sq.H3, MoveType.QUIET), Move(Sq.G1, Sq.H3, MoveType.QUIET)])
+
+        # two target squares, three moves
+        board = Board('k7/pp6/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1')
+        target_bb = BitBoard(0)
+        target_bb[Sq.H3] = 1
+        target_bb[Sq.E4] = 1
+        moves = board.get_target_noncapture_moves(target_bb)
+        assert len(moves) == 3
+        assert sorted(moves) == sorted([Move(Sq.E2, Sq.E4, MoveType.DOUBLE),
+                                        Move(Sq.H2, Sq.H3, MoveType.QUIET),
+                                        Move(Sq.G1, Sq.H3, MoveType.QUIET)])
 
     def test_get_attacking_sqs(self):
         """

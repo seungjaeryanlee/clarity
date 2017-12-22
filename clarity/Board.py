@@ -451,7 +451,6 @@ class Board:
 
     def get_target_noncapture_moves(self, target_bb, pinned_sqs=None):
         """
-        TODO untested
         Returns a list of possible moves to move without capture to a index in target bitboard (target_bb).
 
         Parameters
