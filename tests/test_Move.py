@@ -72,6 +72,16 @@ class TestMoveClass(unittest.TestCase):
         self.assertEqual(move1, move3)
         self.assertEqual(move1, move2)
 
+    def test_repr(self):
+        """
+        Tests the repr() function of the Move class.
+        """
+        move = Move(Sq.E7, Sq.E8, MoveType.N_PROMO)
+        self.assertEqual(repr(move), 'Sq.E7 Sq.E8 MoveType.N_PROMO')
+
+        move = Move(Sq.A2, Sq.A3, MoveType.QUIET)
+        self.assertEqual(repr(move), 'Sq.A2 Sq.A3 MoveType.QUIET')
+
     def test_str(self):
         """
         Tests the str() function of the Move class.
