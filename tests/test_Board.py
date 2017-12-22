@@ -134,7 +134,6 @@ class TestBoardClass(unittest.TestCase):
 
     def _test_set_fen(self):
         """
-        TODO Add more tests
         Tests the _set_fen() function of the Board class
         """
         board = Board()
@@ -213,6 +212,29 @@ class TestBoardClass(unittest.TestCase):
                              sorted([Sq.D8]))
         self.assertListEqual(sorted(board.piece_sq[Piece.BK]),
                              sorted([Sq.E8]))
+
+        board.fen('8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 10 30')
+        assert board.turn == Color.WHITE
+        assert not board.castling[Piece.WK]
+        assert not board.castling[Piece.WQ]
+        assert not board.castling[Piece.BK]
+        assert not board.castling[Piece.BQ]
+        assert board.ep_square == -1
+        assert board.half_move_clock == 10
+        assert board.full_move_count == 30
+        assert sorted(board.piece_sq[Piece.WP]) == sorted([Sq.B5, Sq.E2, Sq.G2])
+        assert sorted(board.piece_sq[Piece.WP]) == sorted([Sq.B5, Sq.E2, Sq.G2])
+        assert len(board.piece_sq[Piece.WN]) == 0
+        assert len(board.piece_sq[Piece.WB]) == 0
+        assert sorted(board.piece_sq[Piece.WR]) == sorted([Sq.B4])
+        assert len(board.piece_sq[Piece.WQ]) == 0
+        assert sorted(board.piece_sq[Piece.WK]) == sorted([Sq.A5])
+        assert sorted(board.piece_sq[Piece.BP]) == sorted([Sq.C7, Sq.D6, Sq.F4])
+        assert len(board.piece_sq[Piece.BN]) == 0
+        assert len(board.piece_sq[Piece.BB]) == 0
+        assert sorted(board.piece_sq[Piece.BR]) == sorted([Sq.H5])
+        assert len(board.piece_sq[Piece.BQ]) == 0
+        assert sorted(board.piece_sq[Piece.BK]) == sorted([Sq.H4])
 
     def test_get_piece_on_sq(self):
         """
