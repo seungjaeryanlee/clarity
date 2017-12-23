@@ -46,4 +46,20 @@ class TestRecursion():
         """
         Tests the negamax() function of the recursion module.
         """
-        pass
+        # TODO add more tests
+
+        # test that the best move negamax() returns gives the best score from _negamax_recur()
+        board = Board()
+        best_move = negamax(board, 1)
+        best_score = _negamax_recur(board, 1)
+        board.make_move(best_move)
+        assert board.eval() == -best_score
+
+        # test that _negamax_recur() gives the best score
+        board = Board()
+        moves = board.move_gen()
+        best_score = _negamax_recur(board, 1)
+        for move in moves:
+            captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
+            assert best_score >= -board.eval()
+            board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
