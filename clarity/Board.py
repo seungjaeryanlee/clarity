@@ -280,6 +280,7 @@ class Board:
         half_move_clock : int
             half move clock before the move before the move was made
         """
+        # TODO change piece type if MoveType is X_PROMO or X_PROMO_CAPTURE
         captured_piece = -1
         moved_piece = -1
         for piece in Piece:
