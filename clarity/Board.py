@@ -290,6 +290,7 @@ class Board:
                 self.bitboards[piece][move.dest_sq()] = 1
                 self.color_bb[self.turn][move.init_sq()] = 0
                 self.color_bb[self.turn][move.dest_sq()] = 1
+        # TODO check different square for en passant capture
         for piece in Piece:
             # ignore piece that just moved there
             if piece == moved_piece:
