@@ -291,15 +291,18 @@ class Board:
                 self.color_bb[self.turn][move.init_sq()] = 0
                 self.color_bb[self.turn][move.dest_sq()] = 1
         # TODO check different square for en passant capture
-        for piece in Piece:
-            # ignore piece that just moved there
-            if piece == moved_piece:
-                continue
-            if self.bitboards[piece][move.dest_sq()]:
-                self.bitboards[piece][move.dest_sq()] = 0
-                self.color_bb[Color.switch(self.turn)][move.dest_sq()] = 0
-                captured_piece = piece
-                break
+        if move.move_type() in {MoveType.CAPTURE, MoveType.N_PROMO_CAPTURE, MoveType.B_PROMO_CAPTURE,
+                                MoveType.R_PROMO_CAPTURE, MoveType.Q_PROMO_CAPTURE, MoveType.EP_CAPTURE,
+                                MoveType.EP_CAPTURE}:
+            for piece in Piece:
+                # ignore piece that just moved there
+                if piece == moved_piece:
+                    continue
+                if self.bitboards[piece][move.dest_sq()]:
+                    self.bitboards[piece][move.dest_sq()] = 0
+                    self.color_bb[Color.switch(self.turn)][move.dest_sq()] = 0
+                    captured_piece = piece
+                    break
 
         # update self.piece_sq
         self.piece_sq[moved_piece].remove(move.init_sq())
