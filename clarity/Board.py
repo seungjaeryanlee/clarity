@@ -283,32 +283,34 @@ class Board:
         # TODO change piece type if MoveType is X_PROMO or X_PROMO_CAPTURE
         captured_piece = -1
         moved_piece = -1
+        init_sq = move.init_sq()
+        dest_sq = move.dest_sq()
+        move_type = move.move_type()
         for piece in Piece:
-            if self.bitboards[piece][move.init_sq()]:
+            if self.bitboards[piece][init_sq]:
                 moved_piece = piece
-                self.bitboards[piece][move.init_sq()] = 0
-                self.bitboards[piece][move.dest_sq()] = 1
-                self.color_bb[self.turn][move.init_sq()] = 0
-                self.color_bb[self.turn][move.dest_sq()] = 1
+                self.bitboards[piece][init_sq] = 0
+                self.bitboards[piece][dest_sq] = 1
+                self.color_bb[self.turn][init_sq] = 0
+                self.color_bb[self.turn][dest_sq] = 1
         # TODO check different square for en passant capture
-        if move.move_type() in {MoveType.CAPTURE, MoveType.N_PROMO_CAPTURE, MoveType.B_PROMO_CAPTURE,
-                                MoveType.R_PROMO_CAPTURE, MoveType.Q_PROMO_CAPTURE, MoveType.EP_CAPTURE,
-                                MoveType.EP_CAPTURE}:
+        if move_type in {MoveType.CAPTURE, MoveType.N_PROMO_CAPTURE, MoveType.B_PROMO_CAPTURE, MoveType.R_PROMO_CAPTURE,
+                         MoveType.Q_PROMO_CAPTURE, MoveType.EP_CAPTURE, MoveType.EP_CAPTURE}:
             for piece in Piece:
                 # ignore piece that just moved there
                 if piece == moved_piece:
                     continue
-                if self.bitboards[piece][move.dest_sq()]:
-                    self.bitboards[piece][move.dest_sq()] = 0
-                    self.color_bb[Color.switch(self.turn)][move.dest_sq()] = 0
+                if self.bitboards[piece][dest_sq]:
+                    self.bitboards[piece][dest_sq] = 0
+                    self.color_bb[Color.switch(self.turn)][dest_sq] = 0
                     captured_piece = piece
                     break
 
         # update self.piece_sq
-        self.piece_sq[moved_piece].remove(move.init_sq())
-        self.piece_sq[moved_piece].append(move.dest_sq())
+        self.piece_sq[moved_piece].remove(init_sq)
+        self.piece_sq[moved_piece].append(dest_sq)
         if captured_piece != -1:
-            self.piece_sq[captured_piece].remove(move.dest_sq())
+            self.piece_sq[captured_piece].remove(dest_sq)
 
         self.turn = Color.switch(self.turn)
 
@@ -320,27 +322,27 @@ class Board:
 
         # update castling
         if moved_piece == Piece.WR:
-            if move.init_sq() == Sq.A1:
+            if init_sq == Sq.A1:
                 self.castling[Piece.WQ] = False
-            if move.init_sq() == Sq.H1:
+            if init_sq == Sq.H1:
                 self.castling[Piece.WK] = False
         elif moved_piece == Piece.WK:
-            if move.init_sq() == Sq.E1:
+            if init_sq == Sq.E1:
                 self.castling[Piece.WK] = False
                 self.castling[Piece.WQ] = False
         elif moved_piece == Piece.BR:
-            if move.init_sq() == Sq.A8:
+            if minit_sq == Sq.A8:
                 self.castling[Piece.BQ] = False
-            if move.init_sq() == Sq.H8:
+            if init_sq == Sq.H8:
                 self.castling[Piece.BK] = False
         elif moved_piece == Piece.BK:
-            if move.init_sq() == Sq.E8:
+            if init_sq == Sq.E8:
                 self.castling[Piece.BK] = False
                 self.castling[Piece.BQ] = False
 
         # compute en passant square
-        if move.move_type() == MoveType.DOUBLE:
-            self.ep_square = Sq((move.init_sq() + move.dest_sq()) / 2)
+        if move_type == MoveType.DOUBLE:
+            self.ep_square = Sq((init_sq + dest_sq) / 2)
         else:
             self.ep_square = -1
 
