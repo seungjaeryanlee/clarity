@@ -8,6 +8,8 @@ import textwrap
 
 # used in BitBoard.indices()
 EIGHT_ONES = np.uint64(0xFF)
+UINT64_PADDING = [np.uint64(0), np.uint64(8), np.uint64(16), np.uint64(24),
+                  np.uint64(32), np.uint64(40), np.uint64(48), np.uint64(56)]
 
 # Added lookup table for fast BitBoard.indices()
 row_to_indices = [
@@ -410,11 +412,11 @@ class BitBoard:
 
         bits = []
 
-        for i in [0, 8, 16, 24, 32, 40, 48, 56]:
-            row = (self.num >> np.uint64(i)) & EIGHT_ONES
+        for i in [0, 1, 2, 3, 4, 5, 6, 7]:
+            row = (self.num >> UINT64_PADDING[i]) & EIGHT_ONES
             indices = row_to_indices[row]
             for index in indices:
-                bits.append(index + i)
+                bits.append(index + i*8)
 
         return bits
 
