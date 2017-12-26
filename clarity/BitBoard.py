@@ -10,6 +10,7 @@ import textwrap
 EIGHT_ONES = np.uint64(0xFF)
 UINT64_PADDING = [np.uint64(0), np.uint64(8), np.uint64(16), np.uint64(24),
                   np.uint64(32), np.uint64(40), np.uint64(48), np.uint64(56)]
+UINT64_ONE = np.uint64(1)
 
 # Added lookup table for fast BitBoard.indices()
 row_to_indices = [
@@ -303,7 +304,7 @@ class BitBoard:
         int
             the bit from the right.
         """
-        return (self.num >> np.uint64(n)) & np.uint64(1)
+        return (self.num >> np.uint64(n)) & UINT64_ONE
 
     def __setitem__(self, n, bit):
         """
@@ -316,7 +317,7 @@ class BitBoard:
         bit : int
             the value to set the nth bit to. Should be 0 or 1.
         """
-        self.num ^= (np.uint64(-bit) ^ self.num) & (np.uint64(1) << np.uint64(n))
+        self.num ^= (np.uint64(-bit) ^ self.num) & (UINT64_ONE << np.uint64(n))
 
     def __str__(self):
         """
