@@ -5,6 +5,10 @@ This file defines the BitBoard class.
 import numpy as np
 import textwrap
 
+
+# used in BitBoard.indices()
+EIGHT_ONES = np.uint64(0xFF)
+
 # Added lookup table for fast BitBoard.indices()
 row_to_indices = [
     [],  # 0: 0
@@ -404,7 +408,6 @@ class BitBoard:
         if self.num == 0:
             return []
 
-        EIGHT_ONES = np.uint64(0xFF)
         bits = []
 
         for i in [0, 8, 16, 24, 32, 40, 48, 56]:
