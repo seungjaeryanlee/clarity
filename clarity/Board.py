@@ -331,7 +331,7 @@ class Board:
                 self.castling[Piece.WK] = False
                 self.castling[Piece.WQ] = False
         elif moved_piece == Piece.BR:
-            if minit_sq == Sq.A8:
+            if init_sq == Sq.A8:
                 self.castling[Piece.BQ] = False
             if init_sq == Sq.H8:
                 self.castling[Piece.BK] = False
