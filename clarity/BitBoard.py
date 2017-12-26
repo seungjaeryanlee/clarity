@@ -316,8 +316,7 @@ class BitBoard:
         bit : int
             the value to set the nth bit to. Should be 0 or 1.
         """
-        if self[n] != bit:
-            self.num ^= (np.uint64(1) << np.uint64(n))
+        self.num ^= (np.uint64(-bit) ^ self.num) & (np.uint64(1) << np.uint64(n))
 
     def __str__(self):
         """
