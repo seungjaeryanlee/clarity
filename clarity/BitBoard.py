@@ -404,10 +404,11 @@ class BitBoard:
         if self.num == 0:
             return []
 
+        EIGHT_ONES = np.uint64(0xFF)
         bits = []
 
         for i in [0, 8, 16, 24, 32, 40, 48, 56]:
-            row = (self.num >> np.uint64(i)) & np.uint64(0xFF)
+            row = (self.num >> np.uint64(i)) & EIGHT_ONES
             indices = row_to_indices[row]
             for index in indices:
                 bits.append(index + i)
