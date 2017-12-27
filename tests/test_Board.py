@@ -617,7 +617,7 @@ class TestBoardClass(unittest.TestCase):
         assert sorted(board.piece_sq[Piece.BK]) == sorted([Sq.A8])
 
         # MoveType.Q_CASTLE
-        board.fen('6bk/8/8/8/4pP2/8/8/R3K3 w Q - 0 1')
+        board.fen('6bk/8/8/8/8/8/8/R3K3 w Q - 0 1')
         move = Move(Sq.E1, Sq.C1, MoveType.Q_CASTLE)
         captured_piece, castling, ep_square, half_move_clock, = board.make_move(move)
         assert captured_piece == -1
@@ -627,7 +627,7 @@ class TestBoardClass(unittest.TestCase):
         assert not castling[Piece.BQ]
         assert ep_square == -1
         assert half_move_clock == 0
-        assert board.fen() == '6bk/8/8/8/8/8/8/2KR4 b - - 0 1'
+        assert board.fen() == '6bk/8/8/8/8/8/8/2KR4 b - - 1 1'
         assert board.color_bb[Color.WHITE].num == int('00000000'
                                                       '00000000'
                                                       '00000000'
