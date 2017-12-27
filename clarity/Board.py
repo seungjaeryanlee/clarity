@@ -371,6 +371,36 @@ class Board:
             self.piece_sq[rook].remove(rook_init_sq)
             self.piece_sq[rook].append(rook_dest_sq)
 
+        elif move_type == MoveType.Q_CASTLE:
+            rook, king = (Piece.WR, Piece.WK) if self.turn == Color.WHITE else (Piece.BR, Piece.BK)
+            rook_init_sq = init_sq + 4
+            rook_dest_sq = dest_sq - 1
+
+            # set for updating castling
+            moved_piece = king
+
+            # move king
+            # update self.bitboards
+            self.bitboards[king][init_sq] = 0
+            self.bitboards[king][dest_sq] = 1
+            # update self.color_bb
+            self.color_bb[self.turn][init_sq] = 0
+            self.color_bb[self.turn][dest_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[king].remove(init_sq)
+            self.piece_sq[king].append(dest_sq)
+
+            # move rook
+            # update self.bitboards
+            self.bitboards[rook][rook_init_sq] = 0
+            self.bitboards[rook][rook_dest_sq] = 1
+            # update self.color_bb
+            self.color_bb[self.turn][rook_init_sq] = 0
+            self.color_bb[self.turn][rook_dest_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[rook].remove(rook_init_sq)
+            self.piece_sq[rook].append(rook_dest_sq)
+
         else:
             for piece in Piece:
                 if self.bitboards[piece][init_sq]:
