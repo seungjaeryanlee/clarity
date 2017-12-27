@@ -641,6 +641,7 @@ class Board:
             # king must move out of danger
             return self._king_move_gen()
         elif len(checks) == 1:
+            # TODO fails last unit tests for perft()
             # move king out of danger
             moves = self._king_move_gen()
 
