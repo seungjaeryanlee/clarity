@@ -100,7 +100,7 @@ class Sq(IntEnum):
 
         Parameters
         ----------
-        sq : Sq
+        sq : Sq or int
             the Sq value to convert to filerank notation
 
         Returns

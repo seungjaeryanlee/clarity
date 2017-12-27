@@ -98,10 +98,10 @@ class Move:
 
         Returns
         -------
-        int
+        Sq
             the bit index of the initial square
         """
-        return self.num >> np.uint16(10)
+        return Sq(self.num >> np.uint16(10))
 
     def dest_sq(self):
         """
@@ -109,10 +109,10 @@ class Move:
 
         Returns
         -------
-        int
+        Sq
             the bit index of the destination square
         """
-        return (self.num >> np.uint16(4)) & np.uint16(63)
+        return Sq((self.num >> np.uint16(4)) & np.uint16(63))
 
     def move_type(self):
         """
@@ -120,7 +120,7 @@ class Move:
 
         Returns
         -------
-        int
+        MoveType
             the move type index
         """
         return MoveType(self.num & np.uint16(15))

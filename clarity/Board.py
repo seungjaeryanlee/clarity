@@ -208,7 +208,7 @@ class Board:
 
         Parameters
         ----------
-        sq : Sq
+        sq : Sq or int
             the square that the questioned piece is on
 
         Returns
@@ -331,8 +331,9 @@ class Board:
                     self.color_bb[self.turn][init_sq] = 0
                     self.color_bb[self.turn][dest_sq] = 1
             # TODO check different square for en passant capture
-            if move_type in {MoveType.CAPTURE, MoveType.N_PROMO_CAPTURE, MoveType.B_PROMO_CAPTURE, MoveType.R_PROMO_CAPTURE,
-                             MoveType.Q_PROMO_CAPTURE, MoveType.EP_CAPTURE, MoveType.EP_CAPTURE}:
+            if move_type in {MoveType.CAPTURE, MoveType.N_PROMO_CAPTURE, MoveType.B_PROMO_CAPTURE,
+                             MoveType.R_PROMO_CAPTURE, MoveType.Q_PROMO_CAPTURE, MoveType.EP_CAPTURE,
+                             MoveType.EP_CAPTURE}:
                 for piece in Piece:
                     # ignore piece that just moved there
                     if piece == moved_piece:
@@ -352,7 +353,7 @@ class Board:
         self.turn = Color.switch(self.turn)
 
         # save castling, ep_square, half_move_clock, full_move_count to return for undo_move
-        ## copies dictionary (PEP 448)
+        # copies dictionary (PEP 448)
         save_castling = {**self.castling}
         save_ep_square = self.ep_square
         save_half_move_clock = self.half_move_clock

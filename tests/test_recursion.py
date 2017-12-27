@@ -6,7 +6,7 @@ from clarity.Board import Board
 from clarity.recursion import perft, negamax, _negamax_recur
 
 
-class TestRecursion():
+class TestRecursion:
     """
     This class tests the Color enum.
     """
@@ -39,8 +39,6 @@ class TestRecursion():
         board = Board('r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10')
         assert perft(board, 1) == 1
         assert perft(board, 2) == 46
-
-
 
     def test_negamax(self):
         """

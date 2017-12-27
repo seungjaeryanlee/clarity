@@ -536,7 +536,6 @@ class TestBoardClass(unittest.TestCase):
 
         # TODO add more tests (X_PROMO, X_PROMO_CAPTURE, EP_CAPTURE, X_CASTLE)
 
-
     def test_undo_move(self):
         """
         Tests the undo_move() function of the Board class
@@ -1428,8 +1427,7 @@ class TestBoardClass(unittest.TestCase):
         # after 1. e4 - d5
         board.make_move(Move(Sq.D7, Sq.D5, MoveType.DOUBLE))
         assert board.eval() == (const.PCSQ_VALUE[Piece.WP][Sq.E4] - const.PCSQ_VALUE[Piece.WP][Sq.E2]) + \
-               (const.PCSQ_VALUE[Piece.BP][Sq.D5] - const.PCSQ_VALUE[Piece.BP][Sq.D7])
-
+            (const.PCSQ_VALUE[Piece.BP][Sq.D5] - const.PCSQ_VALUE[Piece.BP][Sq.D7])
 
         # no piece
         board = Board('8/8/8/8/8/8/8/8 w - - 0 1')
