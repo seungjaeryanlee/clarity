@@ -1007,7 +1007,6 @@ class Board:
         list of Move
             a list of moves possible for a piece on the given pinned_sq square.
         """
-        # TODO the pinned piece can also move along the slider direction
         # The only move the pinned piece can make is capturing the slider piece pinning it. 1. If the pinned piece is
         # a pawn, it can only capture a bishop on its attacking square. 2. Otherwise, check if the piece on the pinned
         # square is a slider that can slide the correct direction. Note that pinned knights can never move.
@@ -1030,16 +1029,21 @@ class Board:
             if const.ATTACK[pinned_type][pinned_sq][slider_sq] == 1:
                 return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
         # 4. If slider, check if the slider can move the given direction
+        # queen can always capture the pinning slider
         else:
-            if pinned_type in {Piece.WB, Piece.BB} and slider_dir in {Direction.UL, Direction.UR,
-                                                                      Direction.DL, Direction.DR}:
-                return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
-            elif pinned_type in {Piece.WR, Piece.BR} and slider_dir in {Direction.U, Direction.D,
-                                                                        Direction.L, Direction.R}:
-                return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
-            # queen can always capture the pinning slider
-            elif pinned_type in {Piece.WQ, Piece.BQ}:
-                return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
+            if (pinned_type in {Piece.WB, Piece.BB} and slider_dir in {Direction.UL, Direction.UR,
+                                                                       Direction.DL, Direction.DR}) \
+                or (pinned_type in {Piece.WR, Piece.BR} and slider_dir in {Direction.U, Direction.D,
+                                                                           Direction.L, Direction.R}) \
+                    or (pinned_type in {Piece.WQ, Piece.BQ}):
+                moves = []
+                king_sq = self.piece_sq[Piece.WK if self.turn == Color.WHITE else Piece.BK][0]
+                bb = self._get_sqs_between(slider_sq, king_sq)
+                for sq in bb.indices():
+                    if sq != pinned_sq:
+                        moves.append(Move(pinned_sq, sq, MoveType.QUIET))
+                moves.append(Move(pinned_sq, slider_sq, MoveType.CAPTURE))
+                return moves
 
         return []
 
