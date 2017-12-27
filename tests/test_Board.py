@@ -497,7 +497,7 @@ class TestBoardClass(unittest.TestCase):
         board.fen('k5n1/7P/8/8/8/8/8/n6K w - - 0 1')
         move = Move(Sq.H7, Sq.G8, MoveType.N_PROMO_CAPTURE)
         captured_piece, castling, ep_square, half_move_clock, = board.make_move(move)
-        assert captured_piece == -1
+        assert captured_piece == Piece.BN
         assert not castling[Piece.WK]
         assert not castling[Piece.WQ]
         assert not castling[Piece.BK]

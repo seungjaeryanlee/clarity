@@ -286,31 +286,68 @@ class Board:
         init_sq = move.init_sq()
         dest_sq = move.dest_sq()
         move_type = move.move_type()
-        for piece in Piece:
-            if self.bitboards[piece][init_sq]:
-                moved_piece = piece
-                self.bitboards[piece][init_sq] = 0
-                self.bitboards[piece][dest_sq] = 1
-                self.color_bb[self.turn][init_sq] = 0
-                self.color_bb[self.turn][dest_sq] = 1
-        # TODO check different square for en passant capture
-        if move_type in {MoveType.CAPTURE, MoveType.N_PROMO_CAPTURE, MoveType.B_PROMO_CAPTURE, MoveType.R_PROMO_CAPTURE,
-                         MoveType.Q_PROMO_CAPTURE, MoveType.EP_CAPTURE, MoveType.EP_CAPTURE}:
+
+        if move_type == MoveType.N_PROMO:
+            moved_piece, knight = (Piece.WP, Piece.WN) if self.turn == Color.WHITE else (Piece.BP, Piece.BN)
+
+            # update self.bitboards
+            self.bitboards[moved_piece][init_sq] = 0
+            self.bitboards[knight][dest_sq] = 1
+            # update self.color_bb
+            self.color_bb[self.turn][init_sq] = 0
+            self.color_bb[self.turn][dest_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[moved_piece].remove(init_sq)
+            self.piece_sq[knight].append(dest_sq)
+
+        elif move_type == MoveType.N_PROMO_CAPTURE:
+            moved_piece, knight = (Piece.WP, Piece.WN) if self.turn == Color.WHITE else (Piece.BP, Piece.BN)
+
+            # delete captured piece
             for piece in Piece:
-                # ignore piece that just moved there
-                if piece == moved_piece:
-                    continue
                 if self.bitboards[piece][dest_sq]:
                     self.bitboards[piece][dest_sq] = 0
                     self.color_bb[Color.switch(self.turn)][dest_sq] = 0
                     captured_piece = piece
                     break
-
-        # update self.piece_sq
-        self.piece_sq[moved_piece].remove(init_sq)
-        self.piece_sq[moved_piece].append(dest_sq)
-        if captured_piece != -1:
             self.piece_sq[captured_piece].remove(dest_sq)
+
+            # update self.bitboards
+            self.bitboards[moved_piece][init_sq] = 0
+            self.bitboards[knight][dest_sq] = 1
+            # update self.color_bb
+            self.color_bb[self.turn][init_sq] = 0
+            self.color_bb[self.turn][dest_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[moved_piece].remove(init_sq)
+            self.piece_sq[knight].append(dest_sq)
+
+        else:
+            for piece in Piece:
+                if self.bitboards[piece][init_sq]:
+                    moved_piece = piece
+                    self.bitboards[piece][init_sq] = 0
+                    self.bitboards[piece][dest_sq] = 1
+                    self.color_bb[self.turn][init_sq] = 0
+                    self.color_bb[self.turn][dest_sq] = 1
+            # TODO check different square for en passant capture
+            if move_type in {MoveType.CAPTURE, MoveType.N_PROMO_CAPTURE, MoveType.B_PROMO_CAPTURE, MoveType.R_PROMO_CAPTURE,
+                             MoveType.Q_PROMO_CAPTURE, MoveType.EP_CAPTURE, MoveType.EP_CAPTURE}:
+                for piece in Piece:
+                    # ignore piece that just moved there
+                    if piece == moved_piece:
+                        continue
+                    if self.bitboards[piece][dest_sq]:
+                        self.bitboards[piece][dest_sq] = 0
+                        self.color_bb[Color.switch(self.turn)][dest_sq] = 0
+                        captured_piece = piece
+                        break
+
+            # update self.piece_sq
+            self.piece_sq[moved_piece].remove(init_sq)
+            self.piece_sq[moved_piece].append(dest_sq)
+            if captured_piece != -1:
+                self.piece_sq[captured_piece].remove(dest_sq)
 
         self.turn = Color.switch(self.turn)
 
