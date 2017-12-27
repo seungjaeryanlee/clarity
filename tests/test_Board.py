@@ -586,12 +586,12 @@ class TestBoardClass(unittest.TestCase):
         assert not castling[Piece.BQ]
         assert ep_square == -1
         assert half_move_clock == 0
-        assert board.fen() == 'k5n1/7P/8/8/4pP2/8/8/5RK1 b - - 0 1'
+        assert board.fen() == 'k5n1/8/8/8/4pP2/8/8/5RK1 b - - 1 1'
         assert board.color_bb[Color.WHITE].num == int('00000000'
                                                       '00000000'
                                                       '00000000'
                                                       '00000000'
-                                                      '00000010'
+                                                      '00000100'
                                                       '00000000'
                                                       '00000000'
                                                       '00000110', 2)
@@ -599,17 +599,17 @@ class TestBoardClass(unittest.TestCase):
                                                       '00000000'
                                                       '00000000'
                                                       '00000000'
-                                                      '00000100'
+                                                      '00001000'
                                                       '00000000'
                                                       '00000000'
                                                       '00000000', 2)
-        assert sorted(board.piece_sq[Piece.WP]) == sorted([Sq.G4])
+        assert sorted(board.piece_sq[Piece.WP]) == sorted([Sq.F4])
         assert len(board.piece_sq[Piece.WN]) == 0
         assert len(board.piece_sq[Piece.WB]) == 0
         assert sorted(board.piece_sq[Piece.WR]) == sorted([Sq.F1])
         assert len(board.piece_sq[Piece.WQ]) == 0
         assert sorted(board.piece_sq[Piece.WK]) == sorted([Sq.G1])
-        assert sorted(board.piece_sq[Piece.BP]) == sorted([Sq.F4])
+        assert sorted(board.piece_sq[Piece.BP]) == sorted([Sq.E4])
         assert sorted(board.piece_sq[Piece.BN]) == sorted([Sq.G8])
         assert len(board.piece_sq[Piece.BB]) == 0
         assert len(board.piece_sq[Piece.BR]) == 0
