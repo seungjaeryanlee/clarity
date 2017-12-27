@@ -1007,7 +1007,7 @@ class Board:
         list of Move
             a list of moves possible for a piece on the given pinned_sq square.
         """
-
+        # TODO the pinned piece can also move along the slider direction
         # The only move the pinned piece can make is capturing the slider piece pinning it. 1. If the pinned piece is
         # a pawn, it can only capture a bishop on its attacking square. 2. Otherwise, check if the piece on the pinned
         # square is a slider that can slide the correct direction. Note that pinned knights can never move.
