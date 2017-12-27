@@ -543,6 +543,60 @@ class Board:
             self.piece_sq[enemy_pawn].append(enemy_pawn_sq)
             self.color_bb[Piece.color(enemy_pawn)][enemy_pawn_sq] = 1
 
+        elif move_type == MoveType.K_CASTLE:
+            rook, king = (Piece.WR, Piece.WK) if self.turn == Color.WHITE else (Piece.BR, Piece.BK)
+            rook_init_sq = init_sq - 3
+            rook_dest_sq = dest_sq + 1
+
+            # undo king
+            # update self.bitboards
+            self.bitboards[king][dest_sq] = 0
+            self.bitboards[king][init_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[king].remove(dest_sq)
+            self.piece_sq[king].append(init_sq)
+            # update self.color_bb
+            self.color_bb[self.turn][dest_sq] = 0
+            self.color_bb[self.turn][init_sq] = 1
+
+            # undo king
+            # update self.bitboards
+            self.bitboards[rook][rook_dest_sq] = 0
+            self.bitboards[rook][rook_init_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[rook].remove(rook_dest_sq)
+            self.piece_sq[rook].append(rook_init_sq)
+            # update self.color_bb
+            self.color_bb[self.turn][rook_dest_sq] = 0
+            self.color_bb[self.turn][rook_init_sq] = 1
+
+        elif move_type == MoveType.Q_CASTLE:
+            rook, king = (Piece.WR, Piece.WK) if self.turn == Color.WHITE else (Piece.BR, Piece.BK)
+            rook_init_sq = init_sq + 4
+            rook_dest_sq = dest_sq - 1
+
+            # undo king
+            # update self.bitboards
+            self.bitboards[king][dest_sq] = 0
+            self.bitboards[king][init_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[king].remove(dest_sq)
+            self.piece_sq[king].append(init_sq)
+            # update self.color_bb
+            self.color_bb[self.turn][dest_sq] = 0
+            self.color_bb[self.turn][init_sq] = 1
+
+            # undo king
+            # update self.bitboards
+            self.bitboards[rook][rook_dest_sq] = 0
+            self.bitboards[rook][rook_init_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[rook].remove(rook_dest_sq)
+            self.piece_sq[rook].append(rook_init_sq)
+            # update self.color_bb
+            self.color_bb[self.turn][rook_dest_sq] = 0
+            self.color_bb[self.turn][rook_init_sq] = 1
+
         else:
             moved_piece = self._get_piece_on_sq(dest_sq)
             # update self.bitboards
