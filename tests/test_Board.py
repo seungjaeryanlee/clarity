@@ -534,7 +534,130 @@ class TestBoardClass(unittest.TestCase):
         assert len(board.piece_sq[Piece.BQ]) == 0
         assert sorted(board.piece_sq[Piece.BK]) == sorted([Sq.A8])
 
-        # TODO add more tests (X_PROMO, X_PROMO_CAPTURE, EP_CAPTURE, X_CASTLE)
+        # MoveType.EP_CAPTURE
+        board.fen('k5n1/8/8/8/4pP2/8/8/n6K b - f3 1 1')
+        move = Move(Sq.E4, Sq.F3, MoveType.EP_CAPTURE)
+        captured_piece, castling, ep_square, half_move_clock, = board.make_move(move)
+        assert captured_piece == Piece.WP
+        assert not castling[Piece.WK]
+        assert not castling[Piece.WQ]
+        assert not castling[Piece.BK]
+        assert not castling[Piece.BQ]
+        assert ep_square == Sq.F3
+        assert half_move_clock == 1
+        assert board.fen() == 'k5n1/8/8/8/8/5p2/8/n6K w - - 0 2'
+        assert board.color_bb[Color.WHITE].num == int('00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000001', 2)
+        assert board.color_bb[Color.BLACK].num == int('10000010'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000100'
+                                                      '00000000'
+                                                      '10000000', 2)
+        assert len(board.piece_sq[Piece.WP]) == 0
+        assert len(board.piece_sq[Piece.WN]) == 0
+        assert len(board.piece_sq[Piece.WB]) == 0
+        assert len(board.piece_sq[Piece.WR]) == 0
+        assert len(board.piece_sq[Piece.WQ]) == 0
+        assert sorted(board.piece_sq[Piece.WK]) == sorted([Sq.H1])
+        assert sorted(board.piece_sq[Piece.BP]) == sorted([Sq.F3])
+        assert sorted(board.piece_sq[Piece.BN]) == sorted([Sq.G8, Sq.A1])
+        assert len(board.piece_sq[Piece.BB]) == 0
+        assert len(board.piece_sq[Piece.BR]) == 0
+        assert len(board.piece_sq[Piece.BQ]) == 0
+        assert sorted(board.piece_sq[Piece.BK]) == sorted([Sq.A8])
+
+        # MoveType.K_CASTLE
+        board.fen('k5n1/8/8/8/4pP2/8/8/4K2R w K - 0 1')
+        move = Move(Sq.E1, Sq.G1, MoveType.K_CASTLE)
+        captured_piece, castling, ep_square, half_move_clock, = board.make_move(move)
+        assert captured_piece == -1
+        assert castling[Piece.WK]
+        assert not castling[Piece.WQ]
+        assert not castling[Piece.BK]
+        assert not castling[Piece.BQ]
+        assert ep_square == -1
+        assert half_move_clock == 0
+        assert board.fen() == 'k5n1/7P/8/8/4pP2/8/8/5RK1 b - - 0 1'
+        assert board.color_bb[Color.WHITE].num == int('00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000010'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000110', 2)
+        assert board.color_bb[Color.BLACK].num == int('10000010'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000100'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000', 2)
+        assert sorted(board.piece_sq[Piece.WP]) == sorted([Sq.G4])
+        assert len(board.piece_sq[Piece.WN]) == 0
+        assert len(board.piece_sq[Piece.WB]) == 0
+        assert sorted(board.piece_sq[Piece.WR]) == sorted([Sq.F1])
+        assert len(board.piece_sq[Piece.WQ]) == 0
+        assert sorted(board.piece_sq[Piece.WK]) == sorted([Sq.G1])
+        assert sorted(board.piece_sq[Piece.BP]) == sorted([Sq.F4])
+        assert sorted(board.piece_sq[Piece.BN]) == sorted([Sq.G8])
+        assert len(board.piece_sq[Piece.BB]) == 0
+        assert len(board.piece_sq[Piece.BR]) == 0
+        assert len(board.piece_sq[Piece.BQ]) == 0
+        assert sorted(board.piece_sq[Piece.BK]) == sorted([Sq.A8])
+
+        # MoveType.Q_CASTLE
+        board.fen('6bk/8/8/8/4pP2/8/8/R3K3 w Q - 0 1')
+        move = Move(Sq.E1, Sq.C1, MoveType.Q_CASTLE)
+        captured_piece, castling, ep_square, half_move_clock, = board.make_move(move)
+        assert captured_piece == -1
+        assert not castling[Piece.WK]
+        assert castling[Piece.WQ]
+        assert not castling[Piece.BK]
+        assert not castling[Piece.BQ]
+        assert ep_square == -1
+        assert half_move_clock == 0
+        assert board.fen() == '6bk/8/8/8/8/8/8/2KR4 b - - 0 1'
+        assert board.color_bb[Color.WHITE].num == int('00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00110000', 2)
+        assert board.color_bb[Color.BLACK].num == int('00000011'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000'
+                                                      '00000000', 2)
+        assert len(board.piece_sq[Piece.WP]) == 0
+        assert len(board.piece_sq[Piece.WN]) == 0
+        assert len(board.piece_sq[Piece.WB]) == 0
+        assert sorted(board.piece_sq[Piece.WR]) == sorted([Sq.D1])
+        assert len(board.piece_sq[Piece.WQ]) == 0
+        assert sorted(board.piece_sq[Piece.WK]) == sorted([Sq.C1])
+        assert len(board.piece_sq[Piece.BP]) == 0
+        assert len(board.piece_sq[Piece.BN]) == 0
+        assert sorted(board.piece_sq[Piece.BB]) == sorted([Sq.G8])
+        assert len(board.piece_sq[Piece.BR]) == 0
+        assert len(board.piece_sq[Piece.BQ]) == 0
+        assert sorted(board.piece_sq[Piece.BK]) == sorted([Sq.H8])
+
+        # TODO add more tests (X_PROMO, X_PROMO_CAPTURE)
 
     def test_undo_move(self):
         """
