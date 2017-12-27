@@ -1084,7 +1084,6 @@ class Board:
                 moves.append(Move(pawn_sq, index, MoveType.CAPTURE))
 
             # quiet promotion moves
-            # TODO check if there exists a 7th/2nd row pawn before this?
             promo = const.PROMO_P[piece][pawn_sq] & ~(self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK])
             for index in promo.indices():
                 moves.append(Move(pawn_sq, index, MoveType.N_PROMO))
@@ -1093,7 +1092,6 @@ class Board:
                 moves.append(Move(pawn_sq, index, MoveType.Q_PROMO))
 
             # capture promotion moves
-            # TODO check if there exists a 7th/2nd row pawn before this?
             promo_capture = const.PROMO_CAPTURE_P[piece][pawn_sq] & self.color_bb[Color.switch(self.turn)]
             for index in promo_capture.indices():
                 moves.append(Move(pawn_sq, index, MoveType.N_PROMO_CAPTURE))
