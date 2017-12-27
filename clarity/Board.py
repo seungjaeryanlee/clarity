@@ -280,47 +280,46 @@ class Board:
         half_move_clock : int
             half move clock before the move before the move was made
         """
-        # TODO change piece type if MoveType is X_PROMO or X_PROMO_CAPTURE
         captured_piece = -1
         moved_piece = -1
         init_sq = move.init_sq()
         dest_sq = move.dest_sq()
         move_type = move.move_type()
 
-        if move_type == MoveType.N_PROMO:
-            moved_piece, knight = (Piece.WP, Piece.WN) if self.turn == Color.WHITE else (Piece.BP, Piece.BN)
+        if move_type in {MoveType.N_PROMO, MoveType.B_PROMO, MoveType.R_PROMO, MoveType.Q_PROMO,
+                         MoveType.N_PROMO_CAPTURE, MoveType.B_PROMO_CAPTURE, MoveType.R_PROMO_CAPTURE,
+                         MoveType.Q_PROMO_CAPTURE}:
+
+            # delete captured piece if capture
+            if move_type in {MoveType.N_PROMO_CAPTURE, MoveType.B_PROMO_CAPTURE, MoveType.R_PROMO_CAPTURE,
+                             MoveType.Q_PROMO_CAPTURE}:
+                for piece in Piece:
+                    if self.bitboards[piece][dest_sq]:
+                        self.bitboards[piece][dest_sq] = 0
+                        self.color_bb[Color.switch(self.turn)][dest_sq] = 0
+                        captured_piece = piece
+                        break
+                self.piece_sq[captured_piece].remove(dest_sq)
+
+            # get piece type
+            if move_type in {MoveType.N_PROMO, MoveType.N_PROMO_CAPTURE}:
+                moved_piece, promo_piece = (Piece.WP, Piece.WN) if self.turn == Color.WHITE else (Piece.BP, Piece.BN)
+            elif move_type in {MoveType.B_PROMO, MoveType.B_PROMO_CAPTURE}:
+                moved_piece, promo_piece = (Piece.WP, Piece.WB) if self.turn == Color.WHITE else (Piece.BP, Piece.BB)
+            elif move_type in {MoveType.R_PROMO, MoveType.R_PROMO_CAPTURE}:
+                moved_piece, promo_piece = (Piece.WP, Piece.WR) if self.turn == Color.WHITE else (Piece.BP, Piece.BR)
+            else:  # MoveType.Q_PROMO, MoveType.Q_PROMO_CAPTURE
+                moved_piece, promo_piece = (Piece.WP, Piece.WQ) if self.turn == Color.WHITE else (Piece.BP, Piece.BQ)
 
             # update self.bitboards
             self.bitboards[moved_piece][init_sq] = 0
-            self.bitboards[knight][dest_sq] = 1
+            self.bitboards[promo_piece][dest_sq] = 1
             # update self.color_bb
             self.color_bb[self.turn][init_sq] = 0
             self.color_bb[self.turn][dest_sq] = 1
             # update self.piece_sq
             self.piece_sq[moved_piece].remove(init_sq)
-            self.piece_sq[knight].append(dest_sq)
-
-        elif move_type == MoveType.N_PROMO_CAPTURE:
-            moved_piece, knight = (Piece.WP, Piece.WN) if self.turn == Color.WHITE else (Piece.BP, Piece.BN)
-
-            # delete captured piece
-            for piece in Piece:
-                if self.bitboards[piece][dest_sq]:
-                    self.bitboards[piece][dest_sq] = 0
-                    self.color_bb[Color.switch(self.turn)][dest_sq] = 0
-                    captured_piece = piece
-                    break
-            self.piece_sq[captured_piece].remove(dest_sq)
-
-            # update self.bitboards
-            self.bitboards[moved_piece][init_sq] = 0
-            self.bitboards[knight][dest_sq] = 1
-            # update self.color_bb
-            self.color_bb[self.turn][init_sq] = 0
-            self.color_bb[self.turn][dest_sq] = 1
-            # update self.piece_sq
-            self.piece_sq[moved_piece].remove(init_sq)
-            self.piece_sq[knight].append(dest_sq)
+            self.piece_sq[promo_piece].append(dest_sq)
 
         else:
             for piece in Piece:
@@ -415,14 +414,23 @@ class Board:
         dest_sq = move.dest_sq()
         move_type = move.move_type()
 
-        if move_type in {MoveType.N_PROMO, MoveType.N_PROMO_CAPTURE}:
-            pawn, knight = (Piece.WP, Piece.WN) if self.turn == Color.WHITE else (Piece.BP, Piece.BN)
+        if move_type in {MoveType.N_PROMO, MoveType.B_PROMO, MoveType.R_PROMO, MoveType.Q_PROMO,
+                         MoveType.N_PROMO_CAPTURE, MoveType.B_PROMO_CAPTURE, MoveType.R_PROMO_CAPTURE,
+                         MoveType.Q_PROMO_CAPTURE}:
+            if move_type in {MoveType.N_PROMO, MoveType.N_PROMO_CAPTURE}:
+                pawn, promo_piece = (Piece.WP, Piece.WN) if self.turn == Color.WHITE else (Piece.BP, Piece.BN)
+            elif move_type in {MoveType.B_PROMO, MoveType.B_PROMO_CAPTURE}:
+                pawn, promo_piece = (Piece.WP, Piece.WB) if self.turn == Color.WHITE else (Piece.BP, Piece.BB)
+            elif move_type in {MoveType.R_PROMO, MoveType.R_PROMO_CAPTURE}:
+                pawn, promo_piece = (Piece.WP, Piece.WR) if self.turn == Color.WHITE else (Piece.BP, Piece.BR)
+            else:  # MoveType.Q_PROMO, MoveType.Q_PROMO_CAPTURE
+                pawn, promo_piece = (Piece.WP, Piece.WQ) if self.turn == Color.WHITE else (Piece.BP, Piece.BQ)
 
             # update self.bitboards
-            self.bitboards[knight][dest_sq] = 0
+            self.bitboards[promo_piece][dest_sq] = 0
             self.bitboards[pawn][init_sq] = 1
             # update self.piece_sq
-            self.piece_sq[knight].remove(dest_sq)
+            self.piece_sq[promo_piece].remove(dest_sq)
             self.piece_sq[pawn].append(init_sq)
             # update self.color_bb
             self.color_bb[self.turn][dest_sq] = 0
