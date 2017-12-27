@@ -321,6 +321,26 @@ class Board:
             self.piece_sq[moved_piece].remove(init_sq)
             self.piece_sq[promo_piece].append(dest_sq)
 
+        elif move_type == MoveType.EP_CAPTURE:
+            pawn, enemy_pawn = (Piece.WP, Piece.BP) if self.turn == Color.WHITE else (Piece.BP, Piece.WP)
+            moved_piece = pawn
+            enemy_pawn_sq = (dest_sq - 8) if self.turn == Color.WHITE else (dest_sq + 8)
+
+            # delete captured piece
+            self.bitboards[enemy_pawn][enemy_pawn_sq] = 0
+            self.color_bb[Color.switch(self.turn)][enemy_pawn_sq] = 0
+            captured_piece = enemy_pawn
+            self.piece_sq[captured_piece].remove(enemy_pawn_sq)
+            # update self.bitboards
+            self.bitboards[pawn][init_sq] = 0
+            self.bitboards[pawn][dest_sq] = 1
+            # update self.color_bb
+            self.color_bb[self.turn][init_sq] = 0
+            self.color_bb[self.turn][dest_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[pawn].remove(init_sq)
+            self.piece_sq[pawn].append(dest_sq)
+
         else:
             for piece in Piece:
                 if self.bitboards[piece][init_sq]:
@@ -436,6 +456,33 @@ class Board:
             self.color_bb[self.turn][dest_sq] = 0
             self.color_bb[self.turn][init_sq] = 1
 
+            if captured_piece != -1:
+                # update self.bitboards
+                self.bitboards[captured_piece][dest_sq] = 1
+                # update self.piece_sq
+                self.piece_sq[captured_piece].append(dest_sq)
+                # update self.color_bb
+                self.color_bb[Piece.color(captured_piece)][dest_sq] = 1
+
+        elif move_type == MoveType.EP_CAPTURE:
+            pawn, enemy_pawn = (Piece.WP, Piece.BP) if self.turn == Color.WHITE else (Piece.BP, Piece.WP)
+            enemy_pawn_sq = (dest_sq - 8) if self.turn == Color.WHITE else (dest_sq + 8)
+
+            # update self.bitboards
+            self.bitboards[pawn][dest_sq] = 0
+            self.bitboards[pawn][init_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[pawn].remove(dest_sq)
+            self.piece_sq[pawn].append(init_sq)
+            # update self.color_bb
+            self.color_bb[self.turn][dest_sq] = 0
+            self.color_bb[self.turn][init_sq] = 1
+
+            # restore enemy pawn
+            self.bitboards[enemy_pawn][enemy_pawn_sq] = 1
+            self.piece_sq[enemy_pawn].append(enemy_pawn_sq)
+            self.color_bb[Piece.color(enemy_pawn)][enemy_pawn_sq] = 1
+
         else:
             moved_piece = self._get_piece_on_sq(dest_sq)
             # update self.bitboards
@@ -448,13 +495,13 @@ class Board:
             self.color_bb[Piece.color(moved_piece)][dest_sq] = 0
             self.color_bb[Piece.color(moved_piece)][init_sq] = 1
 
-        if captured_piece != -1:
-            # update self.bitboards
-            self.bitboards[captured_piece][dest_sq] = 1
-            # update self.piece_sq
-            self.piece_sq[captured_piece].append(dest_sq)
-            # update self.color_bb
-            self.color_bb[Piece.color(captured_piece)][dest_sq] = 1
+            if captured_piece != -1:
+                # update self.bitboards
+                self.bitboards[captured_piece][dest_sq] = 1
+                # update self.piece_sq
+                self.piece_sq[captured_piece].append(dest_sq)
+                # update self.color_bb
+                self.color_bb[Piece.color(captured_piece)][dest_sq] = 1
 
         self.castling = castling
         self.ep_square = ep_square
