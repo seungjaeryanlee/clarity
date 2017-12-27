@@ -1349,6 +1349,11 @@ class Board:
             for sq in self.piece_sq[enemy_piece]:
                 danger_bb = danger_bb | const.ATTACK[enemy_piece][sq]
 
+        # check for X_PROMO_CAPTURE
+        enemy_pawn = Piece.BP if self.turn == Color.WHITE else Piece.WP
+        for sq in self.piece_sq[enemy_pawn]:
+            danger_bb |= const.PROMO_CAPTURE_P[enemy_pawn][sq]
+
         # exclude king when checking for slider blocks
         block_bb = (self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK]) & ~self.bitboards[king]
 
