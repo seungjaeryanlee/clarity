@@ -407,21 +407,37 @@ class Board:
         half_move_clock : int
             the half move clock before the move
         """
+        # update self.turn
+        self.turn = Color.switch(self.turn)
 
         init_sq = move.init_sq()
         dest_sq = move.dest_sq()
-        moved_piece = self._get_piece_on_sq(dest_sq)
-        # update self.bitboards
-        self.bitboards[moved_piece][dest_sq] = 0
-        self.bitboards[moved_piece][init_sq] = 1
-        # update self.piece_sq
-        self.piece_sq[moved_piece].remove(dest_sq)
-        self.piece_sq[moved_piece].append(init_sq)
-        # update self.color_bb
-        self.color_bb[Piece.color(moved_piece)][dest_sq] = 0
-        self.color_bb[Piece.color(moved_piece)][init_sq] = 1
-        # update self.turn
-        self.turn = Color.switch(self.turn)
+        move_type = move.move_type()
+
+        if move_type in {MoveType.N_PROMO, MoveType.N_PROMO_CAPTURE}:
+            pawn, knight = (Piece.WP, Piece.WN) if self.turn == Color.WHITE else (Piece.BP, Piece.BN)
+
+            # update self.bitboards
+            self.bitboards[knight][dest_sq] = 0
+            self.bitboards[pawn][init_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[knight].remove(dest_sq)
+            self.piece_sq[pawn].append(init_sq)
+            # update self.color_bb
+            self.color_bb[self.turn][dest_sq] = 0
+            self.color_bb[self.turn][init_sq] = 1
+
+        else:
+            moved_piece = self._get_piece_on_sq(dest_sq)
+            # update self.bitboards
+            self.bitboards[moved_piece][dest_sq] = 0
+            self.bitboards[moved_piece][init_sq] = 1
+            # update self.piece_sq
+            self.piece_sq[moved_piece].remove(dest_sq)
+            self.piece_sq[moved_piece].append(init_sq)
+            # update self.color_bb
+            self.color_bb[Piece.color(moved_piece)][dest_sq] = 0
+            self.color_bb[Piece.color(moved_piece)][init_sq] = 1
 
         if captured_piece != -1:
             # update self.bitboards
