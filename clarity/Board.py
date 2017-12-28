@@ -1113,6 +1113,7 @@ class Board:
                     enemy_pawn_sq = self.ep_square - 8 if self.turn == Color.WHITE else self.ep_square + 8
                     # temporarily remove enemy pawn from board to see if the two pawns are blocking a slider
                     # that can attack king
+                    # TODO probably should call find_pinned(), not get_attacking_sqs() ?
                     self.color_bb[Color.switch(self.turn)][enemy_pawn_sq] = 0
                     if len(self.get_attacking_sqs(pawn_sq)) == 0:
                         moves.append(Move(pawn_sq, self.ep_square, MoveType.EP_CAPTURE))
