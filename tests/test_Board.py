@@ -1101,6 +1101,8 @@ class TestBoardClass(unittest.TestCase):
         """
         Tests the _pinned_move_gen() function of the Board class
         """
+        # TODO numerous wrong fen positions. needs review
+
         # pawn pinned by rook
         board = Board('k6K/8/8/8/8/p7/8/R7 b - - 0 1')
         moves = board._pinned_move_gen(Sq.A3, Sq.A1, Direction.U)
