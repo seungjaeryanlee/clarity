@@ -2,11 +2,10 @@
 """
 This file defines unit tests for the Color enum.
 """
-import unittest
 from clarity.Color import Color
 
 
-class TestColorEnum(unittest.TestCase):
+class TestColorEnum:
     """
     This class tests the Color enum.
     """
@@ -15,7 +14,7 @@ class TestColorEnum(unittest.TestCase):
         """
         Tests the switch() function of the Color enum.
         """
-        self.assertEqual(Color.WHITE, Color.switch(Color.BLACK))
-        self.assertEqual(Color.BLACK, Color.switch(Color.WHITE))
-        self.assertEqual(Color.NEITHER, Color.switch(Color.NEITHER))
-        self.assertEqual(Color.BLACK, Color.switch(Color.WHITE))
+        assert Color.WHITE == Color.switch(Color.BLACK)
+        assert Color.BLACK == Color.switch(Color.WHITE)
+        assert Color.NEITHER == Color.switch(Color.NEITHER)
+        assert Color.BLACK == Color.switch(Color.WHITE)
