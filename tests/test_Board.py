@@ -111,7 +111,7 @@ class TestBoardClass(unittest.TestCase):
         Tests the _get_fen() function of the Board class
         """
         board = Board()
-        self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+        assert board.fen() == 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
         board.bitboards[Piece.WP][Sq.E4] = 1
         board.bitboards[Piece.WP][Sq.E2] = 0
@@ -121,7 +121,7 @@ class TestBoardClass(unittest.TestCase):
         board.ep_square = Sq.A8
         board.half_move_clock = 13
         board.full_move_count = 20
-        self.assertEqual(board.fen(), 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b Qq a8 13 20')
+        assert board.fen() == 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b Qq a8 13 20'
 
     def _test_set_fen(self):
         """
