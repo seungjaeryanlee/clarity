@@ -225,38 +225,41 @@ class TestBoardClass(unittest.TestCase):
         Tests the _get_piece_on_sq() function of the Board class
         """
         board = Board()
-        self.assertEqual(board._get_piece_on_sq(Sq.A1), Piece.WR)
-        self.assertEqual(board._get_piece_on_sq(Sq.B1), Piece.WN)
-        self.assertEqual(board._get_piece_on_sq(Sq.C1), Piece.WB)
-        self.assertEqual(board._get_piece_on_sq(Sq.D1), Piece.WQ)
-        self.assertEqual(board._get_piece_on_sq(Sq.E1), Piece.WK)
-        self.assertEqual(board._get_piece_on_sq(Sq.F1), Piece.WB)
-        self.assertEqual(board._get_piece_on_sq(Sq.G1), Piece.WN)
-        self.assertEqual(board._get_piece_on_sq(Sq.H1), Piece.WR)
-        self.assertEqual(board._get_piece_on_sq(Sq.A8), Piece.BR)
-        self.assertEqual(board._get_piece_on_sq(Sq.B8), Piece.BN)
-        self.assertEqual(board._get_piece_on_sq(Sq.C8), Piece.BB)
-        self.assertEqual(board._get_piece_on_sq(Sq.D8), Piece.BQ)
-        self.assertEqual(board._get_piece_on_sq(Sq.E8), Piece.BK)
-        self.assertEqual(board._get_piece_on_sq(Sq.F8), Piece.BB)
-        self.assertEqual(board._get_piece_on_sq(Sq.G8), Piece.BN)
-        self.assertEqual(board._get_piece_on_sq(Sq.H8), Piece.BR)
-        self.assertEqual(board._get_piece_on_sq(Sq.A2), Piece.WP)
-        self.assertEqual(board._get_piece_on_sq(Sq.B2), Piece.WP)
-        self.assertEqual(board._get_piece_on_sq(Sq.C2), Piece.WP)
-        self.assertEqual(board._get_piece_on_sq(Sq.D2), Piece.WP)
-        self.assertEqual(board._get_piece_on_sq(Sq.E2), Piece.WP)
-        self.assertEqual(board._get_piece_on_sq(Sq.F2), Piece.WP)
-        self.assertEqual(board._get_piece_on_sq(Sq.G2), Piece.WP)
-        self.assertEqual(board._get_piece_on_sq(Sq.H2), Piece.WP)
-        self.assertEqual(board._get_piece_on_sq(Sq.A7), Piece.BP)
-        self.assertEqual(board._get_piece_on_sq(Sq.B7), Piece.BP)
-        self.assertEqual(board._get_piece_on_sq(Sq.C7), Piece.BP)
-        self.assertEqual(board._get_piece_on_sq(Sq.D7), Piece.BP)
-        self.assertEqual(board._get_piece_on_sq(Sq.E7), Piece.BP)
-        self.assertEqual(board._get_piece_on_sq(Sq.F7), Piece.BP)
-        self.assertEqual(board._get_piece_on_sq(Sq.G7), Piece.BP)
-        self.assertEqual(board._get_piece_on_sq(Sq.H7), Piece.BP)
+        assert board._get_piece_on_sq(Sq.A1) == Piece.WR
+        assert board._get_piece_on_sq(Sq.B1) == Piece.WN
+        assert board._get_piece_on_sq(Sq.C1) == Piece.WB
+        assert board._get_piece_on_sq(Sq.D1) == Piece.WQ
+        assert board._get_piece_on_sq(Sq.E1) == Piece.WK
+        assert board._get_piece_on_sq(Sq.F1) == Piece.WB
+        assert board._get_piece_on_sq(Sq.G1) == Piece.WN
+        assert board._get_piece_on_sq(Sq.H1) == Piece.WR
+
+        assert board._get_piece_on_sq(Sq.A8) == Piece.BR
+        assert board._get_piece_on_sq(Sq.B8) == Piece.BN
+        assert board._get_piece_on_sq(Sq.C8) == Piece.BB
+        assert board._get_piece_on_sq(Sq.D8) == Piece.BQ
+        assert board._get_piece_on_sq(Sq.E8) == Piece.BK
+        assert board._get_piece_on_sq(Sq.F8) == Piece.BB
+        assert board._get_piece_on_sq(Sq.G8) == Piece.BN
+        assert board._get_piece_on_sq(Sq.H8) == Piece.BR
+
+        assert board._get_piece_on_sq(Sq.A2) == Piece.WP
+        assert board._get_piece_on_sq(Sq.B2) == Piece.WP
+        assert board._get_piece_on_sq(Sq.C2) == Piece.WP
+        assert board._get_piece_on_sq(Sq.D2) == Piece.WP
+        assert board._get_piece_on_sq(Sq.E2) == Piece.WP
+        assert board._get_piece_on_sq(Sq.F2) == Piece.WP
+        assert board._get_piece_on_sq(Sq.G2) == Piece.WP
+        assert board._get_piece_on_sq(Sq.H2) == Piece.WP
+
+        assert board._get_piece_on_sq(Sq.A7) == Piece.BP
+        assert board._get_piece_on_sq(Sq.B7) == Piece.BP
+        assert board._get_piece_on_sq(Sq.C7) == Piece.BP
+        assert board._get_piece_on_sq(Sq.D7) == Piece.BP
+        assert board._get_piece_on_sq(Sq.E7) == Piece.BP
+        assert board._get_piece_on_sq(Sq.F7) == Piece.BP
+        assert board._get_piece_on_sq(Sq.G7) == Piece.BP
+        assert board._get_piece_on_sq(Sq.H7) == Piece.BP
 
     def test_get_sqs_between(self):
         """
