@@ -89,14 +89,14 @@ class TestBoardClass(unittest.TestCase):
         Tests the __str__() function of the Board class
         """
         board = Board()
-        self.assertEqual(str(board), 'rnbqkbnr\n'
-                                     'pppppppp\n'
-                                     '--------\n'
-                                     '--------\n'
-                                     '--------\n'
-                                     '--------\n'
-                                     'PPPPPPPP\n'
-                                     'RNBQKBNR')
+        assert str(board) == ('rnbqkbnr\n'
+                              'pppppppp\n'
+                              '--------\n'
+                              '--------\n'
+                              '--------\n'
+                              '--------\n'
+                              'PPPPPPPP\n'
+                              'RNBQKBNR')
 
     def test_fen(self):
         """
