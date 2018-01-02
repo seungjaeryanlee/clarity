@@ -98,14 +98,7 @@ class TestBoardClass(unittest.TestCase):
                               'PPPPPPPP\n'
                               'RNBQKBNR')
 
-    def test_fen(self):
-        """
-        Tests the fen() function of the Board class
-        """
-        self._test_get_fen()
-        self._test_set_fen()
-
-    def _test_get_fen(self):
+    def test_get_fen(self):
         """
         TODO Add more tests
         Tests the _get_fen() function of the Board class
@@ -123,7 +116,7 @@ class TestBoardClass(unittest.TestCase):
         board.full_move_count = 20
         assert board.fen() == 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b Qq a8 13 20'
 
-    def _test_set_fen(self):
+    def test_set_fen(self):
         """
         Tests the _set_fen() function of the Board class
         """
