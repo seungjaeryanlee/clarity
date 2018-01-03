@@ -760,6 +760,8 @@ class Board:
         ----------
         target_sq : Sq or int
             the target square to attack
+        attack_color: Color
+            the Color to get attacking squares of
 
         Returns
         -------
@@ -782,6 +784,8 @@ class Board:
         ----------
         target_sq : Sq or int
             the target square to attack
+        attack_color: Color
+            the Color to get attacking squares of
 
         Returns
         -------
@@ -809,6 +813,8 @@ class Board:
         ----------
         target_sq : Sq or int
             the target square to attack
+        attack_color: Color
+            the Color to get attacking squares of
 
         Returns
         -------
@@ -886,6 +892,8 @@ class Board:
         ----------
         target_sq : Sq or int
             the target square to attack
+        attack_color: Color
+            the Color to get attacking squares of
 
         Returns
         -------
@@ -908,6 +916,8 @@ class Board:
         ----------
         target_sq : Sq or int
             the target square to attack
+        attack_color: Color
+            the Color to get attacking squares of
 
         Returns
         -------
@@ -930,6 +940,8 @@ class Board:
         ----------
         target_sq : Sq or int
             the target square to attack
+        attack_color: Color
+            the Color to get attacking squares of
 
         Returns
         -------
