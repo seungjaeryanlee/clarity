@@ -650,7 +650,6 @@ class Board:
             if len(attacking_sqs) > 0:
                 for attacking_sq in attacking_sqs:
                     if attacking_sq not in pinned_sqs:
-                        # TODO alter Board.get_attacking_sqs() to return moves instead
                         moves.append(Move(attacking_sq, checks[0], MoveType.CAPTURE))
 
             # block slider piece attacking king
