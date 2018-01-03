@@ -1085,12 +1085,12 @@ class TestBoardClass(unittest.TestCase):
         """
         Tests the _pinned_move_gen() function of the Board class
         """
-        # TODO numerous wrong fen positions. needs review
 
         # pawn pinned by rook
         board = Board('k6K/8/8/8/8/p7/8/R7 b - - 0 1')
         moves = board._pinned_move_gen(Sq.A3, Sq.A1, Direction.U)
-        self.assertEqual(len(moves), 0)
+        assert len(moves) == 1
+        assert sorted(moves) == [Move(Sq.A3, Sq.A2, MoveType. QUIET)]
 
         # knight pinned by rook
         board = Board('k6K/8/8/8/8/n7/8/R7 b - - 0 1')
@@ -1103,31 +1103,39 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(moves), 0)
 
         # rook pinned by rook
-        board = Board('k6K/8/8/8/8/r7/8/R7 b - - 0 1')
+        board = Board('8/8/8/k6K/8/r7/8/R7 b - - 0 1')
         moves = board._pinned_move_gen(Sq.A3, Sq.A1, Direction.U)
-        self.assertEqual(len(moves), 1)
-        self.assertEqual(sorted(moves), [Move(Sq.A3, Sq.A1, MoveType.CAPTURE)])
+        assert len(moves) == 3
+        assert sorted(moves) == [Move(Sq.A3, Sq.A1, MoveType.CAPTURE),
+                                 Move(Sq.A3, Sq.A2, MoveType.QUIET),
+                                 Move(Sq.A3, Sq.A4, MoveType.QUIET)]
 
         # queen pinned by rook
-        board = Board('k6K/8/8/8/8/q7/8/R7 b - - 0 1')
+        board = Board('8/8/8/8/k6K/q7/8/R7 b - - 0 1')
         moves = board._pinned_move_gen(Sq.A3, Sq.A1, Direction.U)
-        self.assertEqual(len(moves), 1)
-        self.assertEqual(sorted(moves), [Move(Sq.A3, Sq.A1, MoveType.CAPTURE)])
+        assert len(moves) == 2
+        assert sorted(moves) == [Move(Sq.A3, Sq.A1, MoveType.CAPTURE),
+                                 Move(Sq.A3, Sq.A2, MoveType.QUIET)]
 
-        # pawn pinned by bishop
+        # pawn pinned by bishop (no attack)
+        board = Board('K6k/8/8/8/3p4/8/1B6/8 b - - 0 1')
+        moves = board._pinned_move_gen(Sq.D4, Sq.B2, Direction.UR)
+        assert len(moves) == 0
+
+        # pawn pinned by bishop (can attack)
         board = Board('K6k/8/8/8/8/2p5/1B6/8 b - - 0 1')
         moves = board._pinned_move_gen(Sq.C3, Sq.B2, Direction.UR)
         self.assertEqual(len(moves), 1)
         self.assertEqual(sorted(moves), [Move(Sq.C3, Sq.B2, MoveType.CAPTURE)])
 
         # pawn pinned by bishop (promo attack)
-        board = Board('K6k/6N1/8/8/8/8/2p5/1B6 b - - 0 1')
-        moves = board._pinned_move_gen(Sq.C2, Sq.B1, Direction.UR)
-        self.assertEqual(len(moves), 4)
-        self.assertEqual(sorted(moves), [Move(Sq.C2, Sq.B1, MoveType.N_PROMO_CAPTURE),
-                                         Move(Sq.C2, Sq.B1, MoveType.B_PROMO_CAPTURE),
-                                         Move(Sq.C2, Sq.B1, MoveType.R_PROMO_CAPTURE),
-                                         Move(Sq.C2, Sq.B1, MoveType.Q_PROMO_CAPTURE)])
+        board = Board('K6k/8/8/8/8/8/1p6/B7 b - - 0 1')
+        moves = board._pinned_move_gen(Sq.B2, Sq.A1, Direction.UR)
+        assert len(moves) == 4
+        assert sorted(moves) == [Move(Sq.B2, Sq.A1, MoveType.N_PROMO_CAPTURE),
+                                 Move(Sq.B2, Sq.A1, MoveType.B_PROMO_CAPTURE),
+                                 Move(Sq.B2, Sq.A1, MoveType.R_PROMO_CAPTURE),
+                                 Move(Sq.B2, Sq.A1, MoveType.Q_PROMO_CAPTURE)]
 
         # knight pinned by bishop
         board = Board('k6K/6N1/8/8/8/8/1b6/8 w - - 0 1')
@@ -1135,21 +1143,23 @@ class TestBoardClass(unittest.TestCase):
         self.assertEqual(len(moves), 0)
 
         # bishop pinned by bishop
-        board = Board('k6K/6B1/8/8/8/8/1b6/8 w - - 0 1')
-        moves = board._pinned_move_gen(Sq.G7, Sq.B2, Direction.UR)
-        self.assertEqual(len(moves), 1)
-        self.assertEqual(sorted(moves), [Move(Sq.G7, Sq.B2, MoveType.CAPTURE)])
+        board = Board('k6K/6B1/8/4b3/8/8/8/8 w - - 0 1')
+        moves = board._pinned_move_gen(Sq.G7, Sq.E5, Direction.UR)
+        assert len(moves) == 2
+        assert sorted(moves) == [Move(Sq.G7, Sq.E5, MoveType.CAPTURE),
+                                 Move(Sq.G7, Sq.F6, MoveType.QUIET)]
 
         # rook pinned by bishop
         board = Board('k6K/6R1/8/8/8/8/1b6/8 w - - 0 1')
         moves = board._pinned_move_gen(Sq.G7, Sq.B2, Direction.UR)
-        self.assertEqual(len(moves), 0)
+        assert len(moves) == 0
 
         # queen pinned by bishop
-        board = Board('k6K/8/5Q2/8/8/8/1b6/8 w - - 0 1')
-        moves = board._pinned_move_gen(Sq.F6, Sq.B2, Direction.UR)
-        self.assertEqual(len(moves), 1)
-        self.assertEqual(sorted(moves), [Move(Sq.F6, Sq.B2, MoveType.CAPTURE)])
+        board = Board('k6K/8/5Q2/4b3/8/8/8/8 w - - 0 1')
+        moves = board._pinned_move_gen(Sq.F6, Sq.E5, Direction.UR)
+        assert len(moves) == 2
+        assert sorted(moves) == [Move(Sq.F6, Sq.E5, MoveType.CAPTURE),
+                                 Move(Sq.F6, Sq.G7, MoveType.QUIET)]
 
     def test_pawn_move_gen(self):
         """
