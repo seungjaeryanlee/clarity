@@ -1020,15 +1020,38 @@ class Board:
         # 2. If knight, return None
         if pinned_type in {Piece.WN, Piece.BN}:
             return []
-        # 3. If pawn, check for both ATTACK bitboard and PROMO-ATTACK bitboard
+        # 3. If pawn, check for both ATTACK  and PROMO-ATTACK bitboards or moving closer to a pinning rook
+        # TODO check the unlikely case where black rook is in A1 and white pawn is in A2
         elif pinned_type in {Piece.WP, Piece.BP}:
             if const.PROMO_CAPTURE_P[pinned_type][pinned_sq][slider_sq] == 1:
                 return [Move(pinned_sq, slider_sq, MoveType.N_PROMO_CAPTURE),
                         Move(pinned_sq, slider_sq, MoveType.B_PROMO_CAPTURE),
                         Move(pinned_sq, slider_sq, MoveType.R_PROMO_CAPTURE),
                         Move(pinned_sq, slider_sq, MoveType.Q_PROMO_CAPTURE)]
-            if const.ATTACK[pinned_type][pinned_sq][slider_sq] == 1:
+            elif const.ATTACK[pinned_type][pinned_sq][slider_sq] == 1:
                 return [Move(pinned_sq, slider_sq, MoveType.CAPTURE)]
+            elif pinned_type == Piece.WP and slider_dir == Direction.D:
+                moves = []
+                all_bb = self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK]
+                if pinned_sq + 16 < slider_sq and pinned_sq in {Sq.A2, Sq.B2, Sq.C2, Sq.D2, Sq.E2, Sq.F2, Sq.G2, Sq.H2}:
+                    if all_bb[pinned_sq + 8] == 0 and all_bb[pinned_sq + 16] == 0:
+                        moves.append(Move(pinned_sq, pinned_sq + 16, MoveType.DOUBLE))
+                if pinned_sq + 8 < slider_sq:
+                    if all_bb[pinned_sq + 8] == 0:
+                        moves.append(Move(pinned_sq, pinned_sq + 8, MoveType.QUIET))
+                return moves
+            elif pinned_type == Piece.BP and slider_dir == Direction.U:
+                moves = []
+                all_bb = self.color_bb[Color.WHITE] | self.color_bb[Color.BLACK]
+                if pinned_sq - 16 > slider_sq and pinned_sq in {Sq.A7, Sq.B7, Sq.C7, Sq.D7, Sq.E7, Sq.F7, Sq.G7, Sq.H7}:
+                    if all_bb[pinned_sq - 8] == 0 and all_bb[pinned_sq - 16] == 0:
+                        moves.append(Move(pinned_sq, pinned_sq - 16, MoveType.DOUBLE))
+                if pinned_sq - 8 > slider_sq:
+                    if all_bb[pinned_sq - 8] == 0:
+                        moves.append(Move(pinned_sq, pinned_sq - 8, MoveType.QUIET))
+                return moves
+
+
         # 4. If slider, check if the slider can move the given direction
         # queen can always capture the pinning slider
         else:
