@@ -1070,7 +1070,6 @@ class Board:
                         moves.append(Move(pinned_sq, pinned_sq - 8, MoveType.QUIET))
                 return moves
 
-
         # 4. If slider, check if the slider can move the given direction
         # queen can always capture the pinning slider
         else:
