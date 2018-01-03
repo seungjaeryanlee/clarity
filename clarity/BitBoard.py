@@ -391,7 +391,6 @@ class BitBoard:
         bool
             True if self and other have the same number, False otherwise.
         """
-        # TODO considering allowing other to be either Int or BitBoard type
         return self.num == other.num
 
     def indices(self):

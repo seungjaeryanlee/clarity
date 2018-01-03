@@ -54,8 +54,6 @@ def negamax(board, depth):
     Move
         the best move determined by Clarity's evaluation algorithm
     """
-    # TODO untested
-
     # TODO check for terminal node (i.e. checkmate, stalemate)
     if depth == 0:
         return board.eval()
@@ -93,8 +91,6 @@ def _negamax_recur(board, depth):
     int
         the evaluation score of the best board position determined by Clarity's evaluation algorithm
     """
-    # TODO untested
-
     # TODO check for terminal node (i.e. checkmate, stalemate)
     if depth == 0:
         return board.eval()
