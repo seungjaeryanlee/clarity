@@ -641,13 +641,12 @@ class Board:
             # king must move out of danger
             return self._king_move_gen()
         elif len(checks) == 1:
-            # TODO fails last unit tests for perft()
             # move king out of danger
             moves = self._king_move_gen()
 
             # capture piece attacking king
             pinned_sqs, pinned_moves = self.find_pinned()
-            attacking_sqs = self.get_attacking_sqs(checks[0])
+            attacking_sqs = self.get_attacking_sqs(checks[0], self.turn)
             if len(attacking_sqs) > 0:
                 for attacking_sq in attacking_sqs:
                     if attacking_sq not in pinned_sqs:
@@ -754,7 +753,7 @@ class Board:
 
         return moves
 
-    def get_attacking_sqs(self, target_sq):
+    def get_attacking_sqs(self, target_sq, attack_color=None):
         """
         Returns a list of squares of pieces that can attack the target square (target_sq).
 
@@ -768,15 +767,15 @@ class Board:
         :param target_sq:
         :return: a list of squares of pieces that can attack the target square (target_sq).
         """
-        checks = self._get_attacking_pawn_sqs(target_sq)
-        checks.extend(self._get_attacking_knight_sqs(target_sq))
-        checks.extend(self._get_attacking_bishop_sqs(target_sq))
-        checks.extend(self._get_attacking_rook_sqs(target_sq))
-        checks.extend(self._get_attacking_queen_sqs(target_sq))
+        checks = self._get_attacking_pawn_sqs(target_sq, attack_color)
+        checks.extend(self._get_attacking_knight_sqs(target_sq, attack_color))
+        checks.extend(self._get_attacking_bishop_sqs(target_sq, attack_color))
+        checks.extend(self._get_attacking_rook_sqs(target_sq, attack_color))
+        checks.extend(self._get_attacking_queen_sqs(target_sq, attack_color))
 
         return checks
 
-    def _get_attacking_pawn_sqs(self, target_sq):
+    def _get_attacking_pawn_sqs(self, target_sq, attack_color=None):
         """
         Returns a list of squares of pawns that can attack the target square (target_sq).
 
@@ -803,7 +802,7 @@ class Board:
 
         return checks
 
-    def _get_attacking_knight_sqs(self, target_sq):
+    def _get_attacking_knight_sqs(self, target_sq, attack_color=None):
         """
         Returns a list of squares of knights that can attack the target square (target_sq).
 
@@ -880,7 +879,7 @@ class Board:
 
         return check_sqs
 
-    def _get_attacking_bishop_sqs(self, target_sq):
+    def _get_attacking_bishop_sqs(self, target_sq, attack_color=None):
         """
         Returns a list of squares of bishops that can attack the target square (target_sq).
 
@@ -894,12 +893,15 @@ class Board:
         list of Sq
             a list of squares of bishops that can attack the target square (target_sq).
         """
-        bishop = Piece.WB if self.turn == Color.WHITE else Piece.BB
-        enemy_bishop = Piece.BB if self.turn == Color.WHITE else Piece.WB
+        if attack_color is None:
+            attack_color = Color.switch(self.turn)
+
+        bishop = Piece.WB if attack_color == Color.BLACK else Piece.BB
+        enemy_bishop = Piece.BB if attack_color == Color.BLACK else Piece.WB
 
         return self._get_attacking_slider_sqs(target_sq, bishop, enemy_bishop)
 
-    def _get_attacking_rook_sqs(self, target_sq):
+    def _get_attacking_rook_sqs(self, target_sq, attack_color=None):
         """
         Returns a list of squares of rooks that can attack the target square (target_sq).
 
@@ -913,12 +915,15 @@ class Board:
         list of Sq
             a list of squares of rooks that can attack the target square (target_sq).
         """
-        rook = Piece.WR if self.turn == Color.WHITE else Piece.BR
-        enemy_rook = Piece.BR if self.turn == Color.WHITE else Piece.WR
+        if attack_color is None:
+            attack_color = Color.switch(self.turn)
+
+        rook = Piece.WR if attack_color == Color.BLACK else Piece.BR
+        enemy_rook = Piece.BR if attack_color == Color.BLACK else Piece.WR
 
         return self._get_attacking_slider_sqs(target_sq, rook, enemy_rook)
 
-    def _get_attacking_queen_sqs(self, target_sq):
+    def _get_attacking_queen_sqs(self, target_sq, attack_color=None):
         """
         Returns a list of squares of queens that can attack the target square (target_sq).
 
@@ -932,8 +937,11 @@ class Board:
         list of Sq
             a list of squares of queens that can attack the target square (target_sq).
         """
-        queen = Piece.WQ if self.turn == Color.WHITE else Piece.BQ
-        enemy_queen = Piece.BQ if self.turn == Color.WHITE else Piece.WQ
+        if attack_color is None:
+            attack_color = Color.switch(self.turn)
+
+        queen = Piece.WQ if attack_color == Color.BLACK else Piece.BQ
+        enemy_queen = Piece.BQ if attack_color == Color.BLACK else Piece.WQ
 
         return self._get_attacking_slider_sqs(target_sq, queen, enemy_queen)
 
