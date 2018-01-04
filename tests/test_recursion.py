@@ -3,8 +3,10 @@
 This file defines unit tests for the recursion module.
 """
 from clarity.Board import Board
+from clarity.Move import Move
+from clarity.MoveType import MoveType
 from clarity.recursion import perft, negamax, _negamax_recur
-
+from clarity.Sq import Sq
 
 class TestRecursion:
     """
@@ -61,3 +63,15 @@ class TestRecursion:
             captured_piece, castling, ep_square, half_move_clock = board.make_move(move)
             assert best_score >= -board.eval()
             board.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+
+    def test_negamax_mate(self):
+        """
+        Tests the negamax() function of the recursion module with mate in X positions.
+        """
+        board = Board('k7/ppp5/8/8/8/8/8/K6R w - - 0 1')
+        best_move = negamax(board, 1)
+        assert best_move == Move(Sq.H1, Sq.H8, MoveType.QUIET)
+
+        board = Board('q6k/8/8/8/8/8/5PPP/7K b - - 0 1')
+        best_move = negamax(board, 1)
+        assert best_move == Move(Sq.A8, Sq.A1, MoveType.QUIET)
