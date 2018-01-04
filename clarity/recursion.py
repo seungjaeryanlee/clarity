@@ -3,7 +3,8 @@
 This file defines the recursion functions.
 """
 from .Board import Board
-
+from .Color import Color
+from .Piece import Piece
 
 def perft(board, depth):
     """
@@ -54,14 +55,23 @@ def negamax(board, depth):
     Move
         the best move determined by Clarity's evaluation algorithm
     """
-    # TODO check for terminal node (i.e. checkmate, stalemate)
-    if depth == 0:
-        return board.eval()
 
     best_score = -999999
     best_move = None
 
     moves = board.move_gen()
+
+    # check for terminal node (i.e. checkmate, stalemate)
+    if len(moves) == 0:
+        king_sq = board.piece_sq[Piece.WK if board.turn == Color.WHITE else Piece.BK][0]
+        attack_color = Color.switch(board.turn)
+        if len(board.get_attacking_sqs(king_sq, attack_color)) == 0:
+            return 0
+        else:
+            return 999999
+    if depth == 0:
+        return board.eval()
+
     for move in moves:
         captured_piece, castling, ep_square, half_move_count = board.make_move(move)
 
@@ -91,13 +101,22 @@ def _negamax_recur(board, depth):
     int
         the evaluation score of the best board position determined by Clarity's evaluation algorithm
     """
-    # TODO check for terminal node (i.e. checkmate, stalemate)
-    if depth == 0:
-        return board.eval()
 
     best_score = -999999
 
     moves = board.move_gen()
+
+    # check for terminal node (i.e. checkmate, stalemate)
+    if len(moves) == 0:
+        king_sq = board.piece_sq[Piece.WK if board.turn == Color.WHITE else Piece.BK][0]
+        attack_color = Color.switch(board.turn)
+        if len(board.get_attacking_sqs(king_sq, attack_color)) == 0:
+            return 0
+        else:
+            return -999999
+    if depth == 0:
+        return board.eval()
+
     for move in moves:
         captured_piece, castling, ep_square, half_move_count = board.make_move(move)
 
