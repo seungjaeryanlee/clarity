@@ -11,7 +11,7 @@ from clarity.Sq import Sq
 
 class TestRecursion:
     """
-    This class tests the Color enum.
+    This class tests the recursion module.
     """
 
     def test_perft(self):
