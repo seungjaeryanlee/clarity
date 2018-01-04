@@ -1472,7 +1472,6 @@ class Board:
         moves : list of Move
             a list of all possible legal moves
         """
-        # TODO untested
         king = Piece.WK if self.turn == Color.WHITE else Piece.BK
         king_sq = self.piece_sq[king][0]
         checks = self.get_attacking_sqs(king_sq)
