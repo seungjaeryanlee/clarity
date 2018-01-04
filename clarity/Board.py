@@ -633,6 +633,17 @@ class Board:
         moves : list of Move
             a list of all possible legal moves
         """
+        return self.legal_move_gen()
+
+    def legal_move_gen(self):
+        """
+        Returns a list of all possible legal moves by checking legality while generating moves.
+
+        Returns
+        -------
+        moves : list of Move
+            a list of all possible legal moves
+        """
         king = Piece.WK if self.turn == Color.WHITE else Piece.BK
         king_sq = self.piece_sq[king][0]
         checks = self.get_attacking_sqs(king_sq)
