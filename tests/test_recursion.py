@@ -8,6 +8,7 @@ from clarity.MoveType import MoveType
 from clarity.recursion import perft, negamax, _negamax_recur
 from clarity.Sq import Sq
 
+
 class TestRecursion:
     """
     This class tests the Color enum.
@@ -41,6 +42,19 @@ class TestRecursion:
         board = Board('r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10')
         assert perft(board, 1) == 46
         assert perft(board, 2) == 2079
+
+        # Perft from https://www.chessprogramming.net/perfect-perft/
+        board = Board('3k4/3p4/8/K1P4r/8/8/8/8 b - - 0 1')
+        assert perft(board, 1) == 18
+        assert perft(board, 2) == 92
+        assert perft(board, 3) == 1670
+        assert perft(board, 4) == 10138
+
+        board = Board('8/8/4k3/8/2p5/8/B2P2K1/8 w - - 0 1')
+        assert perft(board, 1) == 13
+        assert perft(board, 2) == 102
+        assert perft(board, 3) == 1266
+        assert perft(board, 4) == 10276
 
     def test_perft_mate(self):
         """
