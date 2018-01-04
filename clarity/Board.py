@@ -1480,7 +1480,7 @@ class Board:
         if len(checks) == 2:
             # king must move out of danger
             return self._king_move_gen()
-        elif len(checks) == 1:
+        else:
             # generate pseudolegal moves
             moves = self._pawn_move_gen()
             moves.extend(self._knight_move_gen())
@@ -1497,20 +1497,6 @@ class Board:
                     legal_moves.append(move)
                 self.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
             return legal_moves
-        else:
-            pinned_sqs, pinned_moves = self.find_pinned()
-            moves = pinned_moves
-
-            # generate moves
-            moves.extend(self._pawn_move_gen(pinned_sqs))
-            moves.extend(self._knight_move_gen(pinned_sqs))
-            moves.extend(self._bishop_move_gen(pinned_sqs))
-            moves.extend(self._rook_move_gen(pinned_sqs))
-            moves.extend(self._queen_move_gen(pinned_sqs))
-            moves.extend(self._king_move_gen())
-            moves.extend(self._castling_move_gen())
-
-            return moves
 
     def is_legal(self):
         """
