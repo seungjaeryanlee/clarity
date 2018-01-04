@@ -40,6 +40,43 @@ def perft(board, depth):
 
     return nodes
 
+def divide(board, depth):
+    """
+    Returns the number of nodes (depth)-ply deep from the given (board) while printing the number of nodes (depth-1)
+    ply deep for all board positions 1-ply deep.
+
+    Parameters
+    ----------
+    board : Board
+        the board to search nodes from
+    depth : int
+        the depth to search nodes for
+
+    Returns
+    -------
+    int
+        the number of nodes (depth)-ply deep from the given (board).
+    """
+    # check for terminal node (i.e. checkmate, stalemate)
+    moves = board.move_gen()
+    if len(moves) == 0:
+        return 0
+
+    if depth == 1:
+        return len(board.move_gen())
+    if depth == 0:
+        return 1
+
+    nodes = 0
+    for move in moves:
+        captured_piece, castling, ep_square, half_move_count = board.make_move(move)
+        perft_nodes = perft(board, depth-1)
+        print(str(move.short_str()) + ' ' + str(perft_nodes))
+        nodes += perft_nodes
+        board.undo_move(move, captured_piece, castling, ep_square, half_move_count)
+
+    return nodes
+
 
 def negamax(board, depth):
     """
