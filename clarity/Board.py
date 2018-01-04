@@ -633,7 +633,7 @@ class Board:
         moves : list of Move
             a list of all possible legal moves
         """
-        return self.legal_move_gen()
+        return self.pseudolegal_move_gen()
 
     def legal_move_gen(self):
         """
