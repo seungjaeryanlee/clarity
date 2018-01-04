@@ -125,6 +125,18 @@ class Move:
         """
         return MoveType(self.num & np.uint16(15))
 
+    def short_str(self):
+        """
+        Returns a 'e2e4' type representation of a move.
+
+        Returns
+        -------
+        str
+            a 'e2e4' type representation of a move
+        """
+        # TODO untested
+        return Sq.sq_to_filerank(self.init_sq()) + Sq.sq_to_filerank(self.dest_sq())
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':
