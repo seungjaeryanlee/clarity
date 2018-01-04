@@ -4,6 +4,7 @@ This file defines the recursion functions.
 """
 from .Board import Board
 from .Color import Color
+from .Move import Move
 from .Piece import Piece
 
 
