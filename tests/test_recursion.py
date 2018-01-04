@@ -42,6 +42,16 @@ class TestRecursion:
         assert perft(board, 1) == 46
         assert perft(board, 2) == 2079
 
+    def test_perft_mate(self):
+        """
+        Tests the perft() function of the recursion module where terminal node exists.
+        """
+        board = Board('k7/ppp5/8/8/8/8/8/K6R w - - 0 1')
+        assert perft(board, 1) == 16
+        assert perft(board, 2) == 105
+        assert perft(board, 3) == 1747
+        assert perft(board, 4) == 11314
+
     def test_negamax(self):
         """
         Tests the negamax() function of the recursion module.
