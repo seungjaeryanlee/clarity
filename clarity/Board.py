@@ -1446,6 +1446,68 @@ class Board:
 
         return white_advantage if self.turn == Color.WHITE else -white_advantage
 
+    def pseudolegal_move_gen(self):
+        """
+        Returns a list of all possible legal moves by finding pseudolegal moves and checking legality
+
+        Returns
+        -------
+        moves : list of Move
+            a list of all possible legal moves
+        """
+        # TODO untested
+        king = Piece.WK if self.turn == Color.WHITE else Piece.BK
+        king_sq = self.piece_sq[king][0]
+        checks = self.get_attacking_sqs(king_sq)
+
+        if len(checks) == 2:
+            # king must move out of danger
+            return self._king_move_gen()
+        elif len(checks) == 1:
+            # generate pseudolegal moves
+            moves = self._pawn_move_gen()
+            moves.extend(self._knight_move_gen())
+            moves.extend(self._bishop_move_gen())
+            moves.extend(self._rook_move_gen())
+            moves.extend(self._queen_move_gen())
+            moves.extend(self._king_move_gen())
+            moves.extend(self._castling_move_gen())
+
+            legal_moves = []
+            for move in moves:
+                captured_piece, castling, ep_square, half_move_clock = self.make_move(move)
+                if self.is_legal():
+                    legal_moves.append(move)
+                self.undo_move(move, captured_piece, castling, ep_square, half_move_clock)
+            return legal_moves
+        else:
+            pinned_sqs, pinned_moves = self.find_pinned()
+            moves = pinned_moves
+
+            # generate moves
+            moves.extend(self._pawn_move_gen(pinned_sqs))
+            moves.extend(self._knight_move_gen(pinned_sqs))
+            moves.extend(self._bishop_move_gen(pinned_sqs))
+            moves.extend(self._rook_move_gen(pinned_sqs))
+            moves.extend(self._queen_move_gen(pinned_sqs))
+            moves.extend(self._king_move_gen())
+            moves.extend(self._castling_move_gen())
+
+            return moves
+
+    def is_legal(self):
+        """
+        Returns True if the given current position is legal, returns False otherwise.
+
+        Returns
+        -------
+        bool
+            boolean indicating whether the current board position is legal.
+        """
+        # TODO untested
+        enemy_king_sq = self.piece_sq[Piece.BK if self.turn == Color.WHITE else Piece.WK][0]
+        attack_color = self.turn
+        return len(self.get_attacking_sqs(enemy_king_sq, attack_color)) == 0
 
 # only runs when this module is called directly
 if __name__ == '__main__':
