@@ -6,6 +6,7 @@ from .Board import Board
 from .Color import Color
 from .Piece import Piece
 
+
 def perft(board, depth):
     """
     Returns the number of nodes (depth)-ply deep from the given (board).
@@ -39,6 +40,7 @@ def perft(board, depth):
         board.undo_move(move, captured_piece, castling, ep_square, half_move_count)
 
     return nodes
+
 
 def divide(board, depth):
     """
