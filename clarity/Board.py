@@ -646,7 +646,7 @@ class Board:
         """
         king = Piece.WK if self.turn == Color.WHITE else Piece.BK
         king_sq = self.piece_sq[king][0]
-        checks = self.get_attacking_sqs(king_sq)
+        checks = self.get_attacking_sqs(king_sq, Color.switch(self.turn))
 
         if len(checks) == 2:
             # king must move out of danger
@@ -803,11 +803,14 @@ class Board:
         list of Sq
             a list of squares of pawns that can attack the target square (target_sq).
         """
+        if attack_color is None:
+            attack_color = Color.switch(self.turn)
+
         checks = []
 
         # detect color of the target piece since it changes which way pawn can attack
-        pawn = Piece.WP if self.color_bb[Color.WHITE][target_sq] else Piece.BP
-        enemy_pawn = Piece.BP if self.color_bb[Color.WHITE][target_sq]else Piece.WP
+        pawn = Piece.BP if attack_color == Color.WHITE else Piece.WP
+        enemy_pawn = Piece.WP if attack_color  == Color.WHITE else Piece.BP
 
         pawns = const.ATTACK[pawn][target_sq] & self.bitboards[enemy_pawn]
         if pawns != BitBoard(0):
@@ -832,10 +835,13 @@ class Board:
         list of Sq
             a list of squares of knights that can attack the target square (target_sq).
         """
+        if attack_color is None:
+            attack_color = Color.switch(self.turn)
+
         checks = []
 
-        knight = Piece.WN if self.turn == Color.WHITE else Piece.BN
-        enemy_knight = Piece.BN if self.turn == Color.WHITE else Piece.WN
+        knight = Piece.WN if attack_color == Color.BLACK else Piece.BN
+        enemy_knight = Piece.BN if attack_color == Color.BLACK else Piece.WN
 
         # note that const.ATTACK[knight] and const.ATTACK[enemy_knight] uses same bitboards
         knights = const.ATTACK[knight][target_sq] & self.bitboards[enemy_knight]
