@@ -8,14 +8,6 @@ from clarity.MoveType import MoveType
 from clarity.recursion import divide, perft, negamax, _negamax_recur
 from clarity.Sq import Sq
 
-import pytest
-@pytest.mark.now
-def test_temp():
-    board = Board('3k4/8/K6r/2Pp4/8/8/8/8 w - - 0 1')
-    for move in board.move_gen():
-        print(move)
-    assert divide(board, 1) == 5
-
 
 class TestRecursion:
     """
