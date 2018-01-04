@@ -22,6 +22,10 @@ def perft(board, depth):
     int
         the number of nodes (depth)-ply deep from the given (board).
     """
+    # check for terminal node (i.e. checkmate, stalemate)
+    moves = board.move_gen()
+    if len(moves) == 0:
+        return 0
 
     if depth == 1:
         return len(board.move_gen())
@@ -29,8 +33,6 @@ def perft(board, depth):
         return 1
 
     nodes = 0
-
-    moves = board.move_gen()
     for move in moves:
         captured_piece, castling, ep_square, half_move_count = board.make_move(move)
         nodes += perft(board, depth-1)
