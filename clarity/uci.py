@@ -11,7 +11,11 @@ def uci():
     """
     while True:
         command = sys.stdin.readline().strip()
-        print(command)
+
+        if command == 'uci':
+            print('id name Clarity')
+            print('id author Seung Jae (Ryan) Lee')
+            print('uciok')
 
 
 # only runs when this module is called directly
