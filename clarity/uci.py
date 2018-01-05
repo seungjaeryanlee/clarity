@@ -37,7 +37,6 @@ def uci():
                 moves = options[1:]
             else:
                 fen = ' '.join(options[0:6])
-                print(fen)
                 board = Board(fen)
                 moves = options[6:]
 
