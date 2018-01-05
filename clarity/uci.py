@@ -20,6 +20,9 @@ def uci():
         if command == 'isready':
             print('readyok')
 
+        if command == 'quit':
+            return
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':
