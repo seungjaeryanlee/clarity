@@ -10,7 +10,9 @@ def uci():
     Runs Clarity in UCI mode
     """
     while True:
-        command = sys.stdin.readline().strip()
+        line = sys.stdin.readline().strip()
+        command = line.split(' ')[0]
+        options = line.split(' ')[1:]
 
         if command == 'uci':
             print('id name Clarity')
