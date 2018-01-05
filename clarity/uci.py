@@ -4,6 +4,11 @@ This script runs Clarity Chess in UCI (Universal Chess Interface) mode.
 """
 import sys
 
+from .Board import Board
+from .Move import Move
+from .MoveType import MoveType
+from .Sq import Sq
+
 
 def uci():
     """
@@ -24,6 +29,24 @@ def uci():
 
         if command == 'quit':
             return
+
+        if command == 'position':
+            if options[0] == 'startpos':
+                board = Board()
+                moves = options[1:]
+            else:
+                fen = ' '.join(options[0:6])
+                print(fen)
+                board = Board(fen)
+                moves = options[6:]
+
+            for move in moves:
+                # change move format from str to Move
+                init_sq = Sq.filerank_to_sq(move[0:2])
+                dest_sq = Sq.filerank_to_sq(move[2:4])
+                # TODO detect correct movetype
+                move_type = MoveType.QUIET
+                board.make_move(Move(init_sq, dest_sq, move_type))
 
 
 # only runs when this module is called directly
