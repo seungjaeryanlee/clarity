@@ -17,6 +17,9 @@ def uci():
             print('id author Seung Jae (Ryan) Lee')
             print('uciok')
 
+        if command == 'isready':
+            print('readyok')
+
 
 # only runs when this module is called directly
 if __name__ == '__main__':
