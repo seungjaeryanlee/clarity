@@ -2,13 +2,16 @@
 """
 This script runs Clarity Chess in UCI (Universal Chess Interface) mode.
 """
+import sys
 
 
 def uci():
     """
     Runs Clarity in UCI mode
     """
-    pass
+    while True:
+        command = sys.stdin.readline().strip()
+        print(command)
 
 
 # only runs when this module is called directly
