@@ -7,6 +7,7 @@ import sys
 from .Board import Board
 from .Move import Move
 from .MoveType import MoveType
+from .recursion import negamax
 from .Sq import Sq
 
 
@@ -47,6 +48,10 @@ def uci():
                 # TODO detect correct movetype
                 move_type = MoveType.QUIET
                 board.make_move(Move(init_sq, dest_sq, move_type))
+
+        if command == 'go':
+            best_move = negamax(board, 2)
+            print('bestmove ' + best_move.short_str())
 
 
 # only runs when this module is called directly
