@@ -11,6 +11,28 @@ from .recursion import negamax
 from .Sq import Sq
 
 
+def detect_move_type(board, init_sq, dest_sq):
+    """
+
+    Parameters
+    ----------
+    board: Board
+        the board that the move will be made on
+    init_sq: Sq or int
+        the destination square of the move to find the MoveType for
+    dest_sq: Sq or int
+        the destination square of the move to find the MoveType for
+
+    Returns
+    -------
+    Move
+        the Move with the correct MoveType with given init_sq and dest_sq
+    """
+    # TODO implement
+    # TODO untested
+    return Move(init_sq, dest_sq, MoveType.QUIET)
+
+
 def uci():
     """
     Runs Clarity in UCI mode
@@ -44,9 +66,7 @@ def uci():
                 # change move format from str to Move
                 init_sq = Sq.filerank_to_sq(move[0:2])
                 dest_sq = Sq.filerank_to_sq(move[2:4])
-                # TODO detect correct movetype
-                move_type = MoveType.QUIET
-                board.make_move(Move(init_sq, dest_sq, move_type))
+                board.make_move(detect_move_type(board, init_sq, dest_sq))
 
         if command == 'go':
             best_move = negamax(board, 2)
