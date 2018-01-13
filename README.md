@@ -1,3 +1,5 @@
+![CircleCI Token](https://circleci.com/gh/seungjaeryanlee/clarity.svg?style=shield&circle-token=:circle-token)
+
 # Clarity
 
 Clarity is a chess engine written in Python 3.
